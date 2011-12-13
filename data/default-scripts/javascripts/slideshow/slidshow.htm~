@@ -1,0 +1,26 @@
+<script type="text/javascript">
+			function startGallery() {
+				var myGallery = new gallery($('myGallery'), {
+					timed: true
+				});
+			}
+			window.addEvent('domready',startGallery);
+		</script>
+<div class="content">
+			<div id="myGallery">
+				<div class="imageElement">
+					<h3>Sunrisning-WoW-Beta</h3>
+					<p>Sunrisning-WoW-Beta</p>
+					<a href="#" title="open image" class="open"></a>
+					<img src="images/slid/header.jpg" class="full" />
+					<img src="images/brugges2006/1-mini.jpg" class="thumbnail" />
+				</div>
+				<div class="imageElement">
+					<h3>Sunrising-WoW auf Facebook</h3>
+					<p>Folge uns auf Facebook!</p>
+					<a href="http://www.facebook.com/pages/Sunrising-WoW/177802092259412#!/pages/Sunrising-WoW/177802092259412?v=wall" title="open image" class="open"></a>
+					<img src="images/slid/header.jpg" class="full" />
+					<img src="images/brugges2006/2-mini.jpg" class="thumbnail" />
+				</div>
+			</div>
+		</div>

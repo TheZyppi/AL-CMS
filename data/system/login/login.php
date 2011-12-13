@@ -1,0 +1,90 @@
+<?php
+session_start();
+$_SESSION['gruppe'] = 1;
+
+// Benutzer und Passwort aus POST-Request holen...
+$benutzer = ( isset($_POST['benutzer']) ) ? $_POST['benutzer'] : '';
+// Hat der Benutzer abgeschickt?
+$absenden = ( isset($_POST['absenden']) ) ? true : false;
+
+if( $absenden )
+{
+  include('../../config/dbcon.php'); // Fügt die Datei dbcon.php hinzu
+  db_con(); // Führt die Funktion db_con aus
+   $sql = "SELECT Username, GID, Passwort, Passwort_Salt FROM Benutzer WHERE Username = \"".$benutzer."\" LIMIT 1"; // Fragt den Datensatz vom Benutzer X ab
+   $ergebnis = mysql_query($sql);
+   $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);
+   $passsalt=$reihe['Passwort_Salt']; // Passwort wird aus der Datenbank geholt
+  $passsaltc=sha1($passsalt); // Salt Gecryptet
+  $passn=$_POST['passwort']; // Passwort Normal
+  $passnc=sha1($passn); //Passwort Gecryptet
+  $passall="$passnc $passsaltc"; // Passwort in SHA1 und SALT in SHA1 werden zusammengefügt
+   $passwort = ( isset($_POST['passwort']) ) ? sha1($passall) : ''; //Hier werden die beiden SHA1 gecrypteten Passwörter nochmals zusammen SHA1 gecryptet
+   if( $reihe['Passwort'] == $passwort ) //
+   {
+      session_regenerate_id(); // Generiert aus Sicherheitsgründen eine neue Session
+      $ses=session_id(); // Fragt die aktuelle Session ID des Benutzers ab
+      $ipadresse =$_SERVER['REMOTE_ADDR']; // Fragt die aktuelle IP-Adresse des Benutzers ab
+      $_SESSION['benutzer'] = $benutzer; // Trage Benutzer in die Session ein
+      $_SESSION['login'] = true; // Trage Login-Status ein
+      $_SESSION['gruppe'] = $reihe['GID']; // Die Gruppen ID wird in die Session abgespeichert
+        db_con();
+       $sql1 = "UPDATE Benutzer SET Session_ID='$ses', IP_Adresse='$ipadresse' WHERE Username = '$benutzer' LIMIT 1";
+       mysql_query($sql1);
+      // Wichtig ist, dass die Eintragungen in die Session vor der Ausgabe stattfinden.
+      // Mit der ersten Ausgabe werden die Header bereits gesendet und können dann nicht mehr
+      // verändert werden.
+      $eingeloggt = true;
+      die("Du wurdest erfolgreich eingeloggt.");
+   }
+   else
+   {
+      die("Falsches Passwort");
+   }
+}
+
+if( isset($_GET['logout']) )
+{
+   // Benutzer will sich ausloggen
+   session_start(); // Zu löschende Session starten
+   // Löschen aller Session-Daten
+   $_SESSION = array(); // Auf ein leeres Array setzen
+   // Wenn die Session-ID über Cookies gespeichert wurden, Cookies löschen
+   if( isset($_COOKIE[session_name()]) )
+   {
+      setCookie(session_name(), "", time()-42000, "/");
+   }
+   session_destroy();
+   die("Du wurdest ausgeloggt."); 
+   }
+
+if( !$absenden )
+{
+   // Der Benutzer hat nicht abgeschickt. Loginformular anzeigen.
+
+?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+          "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Login</title>
+</head>
+<body>
+<h1>Login</h1>
+<?php
+echo $_SESSION['gruppe'];
+echo "<p>";
+?>
+Bitte gib deinen Benutzernamen und dein Passwort ein. (Groß- und Kleinschreibung beachten!)<br />
+<form action="<?=$_SERVER['PHP_SELF']?>" method="post">
+<strong>Benutzername:</strong> <input type="text" name="benutzer" /><br />
+<strong>Passwort:</strong> <input type="password" name="passwort" /><br />
+<input type="submit" name="absenden" value="Login!" />
+</form>
+</body>
+</html>
+<?php
+
+}
+
+?>
