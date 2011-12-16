@@ -7,7 +7,8 @@ Diese Datei enthält 1 Funktion:
 */
 
 // Wichtige Daten werden aus der URL und Session ausgelesen
-$group=$user->data['GID'];
+$group=$_SESSION['gruppe'];
+
 
 include ('../../../config/dbcon.php');
 

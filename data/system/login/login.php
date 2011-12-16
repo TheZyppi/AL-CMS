@@ -11,7 +11,7 @@ if( $absenden )
 {
   include('../../config/dbcon.php'); // Fügt die Datei dbcon.php hinzu
   db_con(); // Führt die Funktion db_con aus
-   $sql = "SELECT Username, GID, Passwort, Passwort_Salt FROM Benutzer WHERE Username = \"".$benutzer."\" LIMIT 1"; // Fragt den Datensatz vom Benutzer X ab
+   $sql = "SELECT UID, Username, GID, Passwort, Passwort_Salt FROM Benutzer WHERE Username = \"".$benutzer."\" LIMIT 1"; // Fragt den Datensatz vom Benutzer X ab
    $ergebnis = mysql_query($sql);
    $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);
    $passsalt=$reihe['Passwort_Salt']; // Passwort wird aus der Datenbank geholt
@@ -28,6 +28,8 @@ if( $absenden )
       $_SESSION['benutzer'] = $benutzer; // Trage Benutzer in die Session ein
       $_SESSION['login'] = true; // Trage Login-Status ein
       $_SESSION['gruppe'] = $reihe['GID']; // Die Gruppen ID wird in die Session abgespeichert
+      $_SESSION['uid'] = $reihe['UID']; // BenutzerID wird in der Session abgespeichert
+      
         db_con();
        $sql1 = "UPDATE Benutzer SET Session_ID='$ses', IP_Adresse='$ipadresse' WHERE Username = '$benutzer' LIMIT 1";
        mysql_query($sql1);

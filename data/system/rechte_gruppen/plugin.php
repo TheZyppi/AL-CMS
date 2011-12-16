@@ -7,7 +7,7 @@ Diese Datei enthält 1 Funktion:
 */
 
 // Wichtige Daten werden aus der URL und Session ausgelesen
-$group=$user->data['GID'];
+$group=$_SESSION['gruppe'];
 
 include ('../../../config/dbcon.php');
 
@@ -17,7 +17,7 @@ echo "Es wurde keine Plugin Angegeben.";
 exit;
 }
 else {	
-db_con_sn();
+db_con();
 	if (preg_match ("/^([0-9]+)$/",$pl)) {
 		$sql = "SELECT PLID, PLName, hdatei, aktiv FROM plugins WHERE PLID= ".mysql_real_escape_string($pl)." LIMIT 1";
    $ergebnis = mysql_query($sql);

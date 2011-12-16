@@ -196,7 +196,7 @@ CREATE TABLE IF NOT EXISTS `plugin_funktion` (
   `Funktionsname` varchar(30),
   `hdatei` vachar(100),
   `parents` int(1),
-  `parent` int(11),
+  `parent` int(1),
   `aktiv` int(1),
   `Beschreibung` text,
   PRIMARY KEY (`PLFID`)
@@ -235,18 +235,19 @@ CREATE TABLE IF NOT EXISTS `Design` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `Einstellungen`
+-- Tabellenstruktur für Tabelle `al_config`
 --
 
-CREATE TABLE IF NOT EXISTS `Einstellungen` (
-  `EID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `EName` varchar(45),
+CREATE TABLE IF NOT EXISTS `al_config` (
+  `CID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `CName` varchar(45),
   `funktion` varchar(60),
   `aktiv` int(1) UNSIGNED NOT NULL,
-	PRIMARY KEY (`EID`)
+	PRIMARY KEY (`CID`)
 ); 
 
 -- --------------------------------------------------------
+
 -- --------------------------------------------------------
 
 --
