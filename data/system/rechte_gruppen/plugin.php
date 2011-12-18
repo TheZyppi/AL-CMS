@@ -13,8 +13,21 @@ include ('../../../config/dbcon.php');
 
 // Es wird nachgeguckt ob eine PluginID angegeben wurde.
 if ($pl=="") {
-echo "Es wurde keine Plugin Angegeben.";
-exit;
+// Wenn kein Plugin anegeben wurde
+
+// Verbindung zur Datenbank wird aufgebaut in dem die Funktion db_con aufgerufen wird.
+	db_con();
+	// Abfrage um herauszufinden was das Standart Plugin ist.
+	$splugin="SELECT * FROM al_config WHERE CID='3'";
+	$ergebnis = mysql_query($splugin);
+   	$reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);
+	// Abfrage um den Titel des Standart Plugin zu laden
+	$spluginl = "SELECT * FROM plugins WHERE PLID=".mysql_real_escape_string($reihe['funktion'])." LIMIT 1";
+   	$ergebnis2 = mysql_query($spluginl);
+   	$reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);	
+	// Der Titel vom Standart Plugin wird angezeigt.
+	include ($reihe2['hdatei']);
+	exit;
 }
 else {	
 db_con();

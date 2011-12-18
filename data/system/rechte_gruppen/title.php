@@ -36,7 +36,7 @@ else {
 $sql = "SELECT PLFID, PLID, Funktionsname, hdatei, aktiv FROM plugin_funktion WHERE PLFID = ".mysql_real_escape_string($plf)." AND ".mysql_real_escape_string($plid)." LIMIT 1";
    $ergebnis = mysql_query($sql);
    $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);	
-$sql2 = "SELECT PLFID, GID, Y_N FROM plugin_funktion_rechte WHERE PLID=".mysql_real_escape_string($plf)." LIMIT 1";
+$sql2 = "SELECT * FROM plugin_funktion_title WHERE PLID=".mysql_real_escape_string($plf)." LIMIT 1";
 	$ergebnis2 = mysql_query($sql2);
    $reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
 	}
@@ -48,7 +48,7 @@ $sql2 = "SELECT * FROM plugin_funktion_title WHERE PLID=".mysql_real_escape_stri
 	$ergebnis2 = mysql_query($sql2);
    $reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
 	}
-		// Fragt ab ob die Funktion Parnts ist oder nicht.
+		// Fragt ab ob die Funktion Parntsist oder nicht.
 		if ($reihe['parent']==1) {
 			include($reihe2['titled']);
 		}
@@ -80,7 +80,7 @@ $sql2 = "SELECT PLID, GID, Y_N FROM rechte_plugins WHERE PLID=".mysql_real_escap
    $reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
      if ($reihe2['titled']=="")
    {
-   // Wenn keuine Title Datei angegeben wurde
+   // Wenn keine Title Datei angegeben wurde
    }
    else {
    include($reihe2['titled']);
