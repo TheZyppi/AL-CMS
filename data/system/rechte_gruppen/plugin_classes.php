@@ -19,10 +19,15 @@ class pluginsystem {
 		
 		include('plugin.php');
 	}
-	public function title($pl=$plugin)
+	private function title()
 	{
 		include('title.php');
 	}	
+	
+	private function meta()
+	{
+		include('meta.php');
+	}
 }
 
 	$pluginsys = new pluginsystem();

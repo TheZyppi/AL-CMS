@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * Headclasses.php
+ * Dient dazu um die Obesreten HTML und eitenstruktur aufzubauen.
+ */
+
+ // Title + Meta System werden reingeladen
+ include('../rechte_gruppen/plugin_classes.php');
 	class headp {
 	public function meta()
 	{
@@ -8,12 +15,11 @@
 	}
 	public function title()
 	{
-	include ('../../dbcon.php');	
-	db_con();
-	$title="SELECT * FROM Einstellungen WHERE EID=1";
-	$ergebnis = mysql_query($title);
-	$reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);
-	echo $reihe['text'];
+	$pluginsys->title();
+	}
+	public function meta()
+	{
+	$pluginsys->meta();
 	}
 	public function css_script()
 	{ 
