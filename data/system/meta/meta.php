@@ -1,5 +1,6 @@
 <?php
-$pl=$_GET['pl'];
+$pl=$_GET['pl']; // Plugin
+$plf=$_GET['plf']; // Plugin Funktion
 include('../config/dbcon.php');
 
 if ($pl=="") {
@@ -15,7 +16,7 @@ if ($pl=="") {
 	$spluginl = "SELECT PLID, metad FROM plugin_meta WHERE PLID=".mysql_real_escape_string($reihe['funktion'])." LIMIT 1";
    	$ergebnis2 = mysql_query($spluginl);
    	$reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);	
-	// Der Titel vom Standart Plugin wird angezeigt.
+	// Der Meta vom Standart Plugin wird angezeigt.
 	include ($reihe2['metad']);
 	exit;
 }
@@ -37,18 +38,32 @@ else {
 			if (preg_match ("/^([0-9]+)$/",$plf)) {
 $sql = "SELECT PLFID, PLID, Funktionsname, hdatei, aktiv FROM plugin_funktion WHERE PLFID = ".mysql_real_escape_string($plf)." AND ".mysql_real_escape_string($plid)." LIMIT 1";
    $ergebnis = mysql_query($sql);
+   // Schaut nach ob es diese Funktion überhaupt gibt
+     if($plf==$reihe['PLFID'])
+   {
    $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);	
 $sql2 = "SELECT * FROM plugin_funktion_meta WHERE PLID=".mysql_real_escape_string($plf)." LIMIT 1";
 	$ergebnis2 = mysql_query($sql2);
    $reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
+   }
+	 else {
+	 	echo "Keine Plugin Funktion gefunden.";
+	 }
 	}
 	else {
 $sql = "SELECT PLFID, PLID, Funktionsname, hdatei, aktiv FROM plugin_funktion WHERE Funktionsname = ".mysql_real_escape_string($plf)." AND ".mysql_real_escape_string($plid)." LIMIT 1";
    $ergebnis = mysql_query($sql);
    $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);	
+    // Schaut nach ob es diese Funktion überhaupt gibt
+     if($plf==$reihe['PLID'])
+   {
 $sql2 = "SELECT * FROM plugin_funktion_meta WHERE PLID=".mysql_real_escape_string($reihe['PLFID'])." LIMIT 1";
 	$ergebnis2 = mysql_query($sql2);
    $reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
+   }
+	 else {
+	 	echo "Keine Plugin Funktion gefunden.";
+	 }
 	}
 		// Fragt ab ob die Funktion Parnt ist oder nicht.
 		if ($reihe['parent']==1) {
@@ -60,10 +75,17 @@ $sql2 = "SELECT * FROM plugin_funktion_meta WHERE PLID=".mysql_real_escape_strin
 	if (preg_match ("/^([0-9]+)$/",$pl)) {
 		$sql = "SELECT PLID, PLName, hdatei,  aktiv FROM plugins WHERE PLID= ".mysql_real_escape_string($pl)." LIMIT 1";
    $ergebnis = mysql_query($sql);
+ // Schaut nach ob es dieses Plugin überhaupt gibt
+        if($pl==$reihe['PLID'])
+   {
    $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);	
 $sql2 = "SELECT PLID, metad FROM plugin_meta WHERE PLID=".mysql_real_escape_string($pl)." LIMIT 1";
 	$ergebnis2 = mysql_query($sql2);
    $reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
+   }
+else {
+	echo "Kein Plugin gefunden.";
+}
    if ($reihe2['metad']=="")
    {
    // Wenn keine Meta Datei angegeben wurde
@@ -77,9 +99,16 @@ $sql2 = "SELECT PLID, metad FROM plugin_meta WHERE PLID=".mysql_real_escape_stri
 $sql = "SELECT PLID, PLName, hdatei, aktiv FROM plugins WHERE PLName = ".mysql_real_escape_string($pl)." LIMIT 1";
    $ergebnis = mysql_query($sql);
    $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);	
+    // Schaut nach ob es dieses Plugin überhaupt gibt
+            if($pl==$reihe['PLID'])
+   {
 $sql2 = "SELECT * FROM plugin_meta WHERE PLID=".mysql_real_escape_string($reihe['PLID'])." LIMIT 1";
 	$ergebnis2 = mysql_query($sql2);
    $reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
+   }
+			else {
+				echo "Kein Plugin gefunden.";
+			}
      if ($reihe2['metad']=="")
    {
    // Wenn keine Meta Datei angegeben wurde

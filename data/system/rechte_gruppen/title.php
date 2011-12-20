@@ -1,5 +1,6 @@
 <?php
-$group=$_SESSION['gruppe'];
+$pl=$_GET['pl']; // Plugin
+$plf=$_GET['plf']; // Plugin Funktion
 
 include ('../../../config/dbcon.php');
 
@@ -36,17 +37,31 @@ else {
 $sql = "SELECT PLFID, PLID, Funktionsname, hdatei, aktiv FROM plugin_funktion WHERE PLFID = ".mysql_real_escape_string($plf)." AND ".mysql_real_escape_string($plid)." LIMIT 1";
    $ergebnis = mysql_query($sql);
    $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);	
+   // Schaut nach ob es diese Funktion überhaupt gibt
+        if($plf==$reihe['PLFID'])
+   {
 $sql2 = "SELECT * FROM plugin_funktion_title WHERE PLID=".mysql_real_escape_string($plf)." LIMIT 1";
 	$ergebnis2 = mysql_query($sql2);
    $reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
+   }
+		else {
+			echo "Keine Plugin Funktion gefunden.";
+		}
 	}
 	else {
 $sql = "SELECT PLFID, PLID, Funktionsname, hdatei, aktiv FROM plugin_funktion WHERE Funktionsname = ".mysql_real_escape_string($plf)." AND ".mysql_real_escape_string($plid)." LIMIT 1";
    $ergebnis = mysql_query($sql);
    $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);	
+      // Schaut nach ob es diese Funktion überhaupt gibt
+        if($plf==$reihe['PLFID'])
+   {
 $sql2 = "SELECT * FROM plugin_funktion_title WHERE PLID=".mysql_real_escape_string($reihe['PLFID'])." LIMIT 1";
 	$ergebnis2 = mysql_query($sql2);
    $reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
+   }
+		else {
+			echo "Keine Plugin Funktion gefunden.";
+		}
 	}
 		// Fragt ab ob die Funktion Parntsist oder nicht.
 		if ($reihe['parent']==1) {
@@ -59,9 +74,16 @@ $sql2 = "SELECT * FROM plugin_funktion_title WHERE PLID=".mysql_real_escape_stri
 		$sql = "SELECT PLID, PLName, hdatei,  aktiv FROM plugins WHERE PLID= ".mysql_real_escape_string($pl)." LIMIT 1";
    $ergebnis = mysql_query($sql);
    $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);	
+    // Schaut nach ob es dieses Plugin überhaupt gibt
+        if($pl==$reihe['PLID'])
+   {
 $sql2 = "SELECT PLID, titled FROM plugins_title WHERE PLID=".mysql_real_escape_string($pl)." LIMIT 1";
 	$ergebnis2 = mysql_query($sql2);
    $reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
+   }
+else {
+	echo "Kein Plugin gefunden.";
+}
    if ($reihe2['titled']=="")
    {
    // Wenn keine Title Datei angegeben wurde
@@ -75,9 +97,16 @@ $sql2 = "SELECT PLID, titled FROM plugins_title WHERE PLID=".mysql_real_escape_s
 $sql = "SELECT PLID, PLName, hdatei, aktiv FROM plugins WHERE PLName = ".mysql_real_escape_string($pl)." LIMIT 1";
    $ergebnis = mysql_query($sql);
    $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);	
+       // Schaut nach ob es dieses Plugin überhaupt gibt
+        if($pl==$reihe['PLID'])
+   {
 $sql2 = "SELECT PLID, GID, Y_N FROM rechte_plugins WHERE PLID=".mysql_real_escape_string($reihe['PLID'])." LIMIT 1";
 	$ergebnis2 = mysql_query($sql2);
    $reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
+   }
+		else {
+			echo "Kein Plugin gefunden.";
+		}
      if ($reihe2['titled']=="")
    {
    // Wenn keine Title Datei angegeben wurde
