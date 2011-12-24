@@ -11,9 +11,12 @@ function head_html()
 include('head_classes.php');
 // Der Head Bereich beginnt
 echo '
+<!DOCTYPE xhtml PUBLIC "-//W3C//DTDB XHTML 1.0 Strict// EN" "http://www.w3.org/TR/xhtml/
+  DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 ';
-$objhead->meta();
+//$objhead->meta();
 echo "<title>".$objhead->title()."</title>";
 $objhead->css_script();
 echo'

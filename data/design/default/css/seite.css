@@ -1,0 +1,333 @@
+@charset "utf-8";
+/**
+-----------------------
+Farben und Hintergr�nde
+-----------------------**/
+/* Alle kritischen Werte instanziieren */
+* {
+  margin: 0;
+  padding: 0;
+  vertical-align: top;
+  border-spacing: 0;
+}
+
+
+/* Farben und Hintergrund setzen */
+body {
+	color: #f2c777; /*Farbwert f�r den Gesamten Inhaltsbereich unter Google Chrome und Opera*/
+	background-color: #000000;
+}
+
+/* Normale Link Farbe*/
+  a:link {color:#ff0000;}/*News Link Farbe*/
+.news:link {
+	text-decoration: none;
+	color: #f2c777;
+}
+
+/*Hilfeverwalten Anzeige Ende */
+
+/* Schriftgr��e kontrollieren */
+body, td, th, div {
+	font-size: 11px;
+	font:  Verdana, Helvetica, sans-serif;
+  	font-family: Verdana, Helvetica, sans-serif;
+}
+ol{
+	list-style-type: none;
+}
+
+textarea{
+	color: #f2c777;
+	background-color: #212121;
+	border-width: 0.5px;
+  	border-style: solid;
+  	border-color: #0d0d0d;
+}
+
+.inputan{
+	color: #f2c777;
+	background-color: #212121;
+	border-width: 0.5px;
+  	border-style: solid;
+  	border-color: #0d0d0d;
+}
+
+h1 {
+	font-size: 1.5em;
+  	margin: 0 0 1.5em 0;
+}
+
+hbox {
+ 	font: normal 12px Verdana, sans-serif;
+ 	color: #f2c777;
+	}
+		
+/* Abs�tze */
+  p {
+  margin: .8em 0;
+}
+
+/* Bilder */
+img {
+  vertical-align: bottom;
+}
+
+
+/**
+----------------------------------------------------------
+Regeln f�r besondere Bereiche
+---------------------------------------------------------- **/
+
+/* Standardm��ig nicht sichtbare Inhalte zur Erleichterung der
+   Orientierung mit assistiven Technologien */
+.invisible {
+  position: absolute;
+  left: -9999px;
+}
+
+/**
+-------------------------------------------------------------------
+Hauptbereich
+--------------------------------------------------------------------**/
+
+#obermens{
+	background-color: #1d1d1d;
+	width: 1000px;
+	height: 5px;
+	border-bottom-width: 2px;
+  	border-bottom-style: solid;
+  	border-bottom-color: #000000;
+	}
+	
+	/**Logo**/
+#logo {
+	color: #000000;
+	background: url(../images/logo.jpg) no-repeat;
+	height: 250px;
+	width: 1000px;
+	background-color: #0f0f0f;
+  	border-top-width: 2px;
+  	border-top-style: solid;
+
+}
+
+#utost {
+	color: #000000;
+	background-color: #0f0f0f;
+	width: 100%;
+	height: 20px;
+	border-top-width: 2px;
+  	border-top-style: solid;
+  	border-top-color: #000000;
+}
+
+#top {
+  	color:#FFFFFF;
+   background-color: #1d1d1d;
+   width: 1000px;
+	margin: auto;   
+}
+
+
+
+/**Slideshow Box**/
+
+#sball {
+	width: 680px;
+	height: 240px;	
+	margin: 20px 0px 0px 300px;
+	background-color: #0f0f0f;
+}
+
+#sboben {
+	background: url(../images/slidoben.gif);
+	width: 680px;
+	height: 20px;
+}
+
+#sbmitte {
+	background-color: transparent;
+	width: 1px;
+	height: 10px;
+}
+
+
+/**Slideshow Box Ende**/
+
+
+/**Linke Informationsboxen**/
+#linkemasterbox {
+	float: left;
+	width: 260px;
+	background-color: transparent;	
+	margin: 20px 0 140px 10px;
+	}
+	
+.linkeboxalloben {
+	float: left;
+	color: #f2c777;
+	background: url(../images/linkeboxoben.gif);
+	width: 260px;
+	height: 20px;
+	text-align: center;
+	}
+	
+.linkebox{
+	float: left;
+	width: 260px;
+	background-color: #0f0f0f;
+	text-align: center;
+}
+
+.linkeboxa {
+	float: left;
+	width: 260px;
+	background-color: #0f0f0f;
+	border-width: 0.5px;
+
+  	border-style: solid;
+
+  	border-color: #0d0d0d;
+  		margin: 0 0 20px 0;
+}
+
+/**Linke Informationsboxen Ende**/
+
+ table, td, th {
+  	max-width: 680px;
+  }
+
+
+#menuuo {
+	color: white;
+	background-color: rgba(54, 53, 53, 0.544);
+	width: 80%;
+	margin: auto;
+	}
+
+/**Text**/
+
+div#text {
+  margin: 20px 80px 40px 280px;
+  padding: 10px 100px 80px 20px;
+  color: #f2c777;
+  width: 680px;
+  text-align: left;
+}
+
+div#textnews {
+  margin: 30px 80px 40px 280px;
+  padding: 10px 100px 80px 20px;
+  color: #f2c777;
+  width: 680px;
+  text-align: center;
+}
+
+div#texth {
+	margin: 40px 80px 40px 280px;
+ 	padding: 0 0 80px 20px;
+ 	color: #f2c777;
+ 	width: 680px;
+ 	text-decoration: none; 
+}
+
+div#texte {
+	margin: 40px 80px 40px 160px;
+	padding: 54px 100px 80px 20px;
+	color: #f2c777;
+	width: 580px;
+ 	text-align: center;
+ 	background: #171717;
+  text-decoration: none; 
+}
+
+div#textwinfo {
+	margin: 40px 80px 40px 160px;
+	padding: 54px 100px 80px 20px;
+ 	color: #f2c777;
+ 	width: 580px;
+ 	background: #171717;
+ 	text-decoration: none; 
+}
+
+div#textgr {
+	margin: 40px 80px 40px 160px;
+	padding: 54px 100px 80px 20px;
+ 	color: #f2c777;
+ 	width: 680px;
+ 	text-align: center;
+ 	text-decoration: none; 
+}
+
+div#textan {
+	margin: 0px 20px 40px 300px;
+ 	padding: 10px 100px 80px 20px;
+ 	color: #f2c777;
+ 	text-align: left;
+ 	background: #131313;
+ 	text-decoration: none; 
+}
+
+#textanoben {
+ 	margin: 20px 20px 0px 300px;
+ 	width: 680px;
+ 	height: 20px;
+ 	color: #f2c777;
+ 	text-align: left;
+ 	background: url(../images/slidoben.gif);
+ 	text-decoration: none; 
+}
+
+/** Textbox f�r anemdeln.php **/
+
+#boxanmelden{
+background: #131313;
+width: 400px;
+padding: 100px 100px 100px 100px;
+margin: 200px auto;
+	}
+
+/** Textbox f�r anemdeln.php Ende**/
+
+	
+/**Text Ende**/
+
+
+/**Foot**/
+
+/* Links und Anker */
+.linkfoot:link {
+ 	text-decoration: none; 
+	color: #f2c777;
+  
+}
+.linkfoot:visited {
+ 	text-decoration: none; 
+	color: #f2c777;
+}
+.linkfoot:hover,
+.linkfoot:focus {
+ 	color: #ffffff;
+
+}
+.linkfoot:active {
+ 	color: #ffffff;
+
+}
+
+div#foot {
+ 	color:#FFFFFF;
+ 	background-color: #0f0f0f;
+  	border-top-width: 2px;
+  	border-top-style: solid;
+  	border-top-color: #000000;
+  	border-bottom-width: 2px;
+  	border-bottom-style: solid;
+  	border-bottom-color: #000000;
+  	height: 24px;
+  	text-align: center; 
+  	text-decoration: none; 
+  	padding: 5px 24px;
+  	clear: both;
+}

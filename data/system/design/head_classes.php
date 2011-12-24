@@ -8,15 +8,13 @@
  // Title + Meta System werden reingeladen
  include('../rechte_gruppen/plugin_classes.php');
 	class headp {
-	public function meta()
-	{
-	// Datein für die Head werden geladen
-	include('../../meta/meta.php');
-	}
+
+// Title System vom Head und dem Rechte Gruppe System
 	public function title()
 	{
 	$pluginsys->title();
 	}
+// Meta System vom Head und dem Rechte Gruppe System
 	public function meta()
 	{
 	$pluginsys->meta();

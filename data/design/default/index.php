@@ -13,7 +13,7 @@ function head_main() {
 
 /*Body*/
 function body_main() {
-	include(top.php);
+	include('top.php');
 	}
 /*Foot*/
 function foot_main() {

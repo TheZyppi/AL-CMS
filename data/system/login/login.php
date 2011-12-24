@@ -13,14 +13,14 @@ if( $absenden )
   db_con(); // Führt die Funktion db_con aus
    $sql = "SELECT UID, Username, GID, Passwort, Passwort_Salt FROM Benutzer WHERE Username = \"".$benutzer."\" LIMIT 1"; // Fragt den Datensatz vom Benutzer X ab
    $ergebnis = mysql_query($sql);
-   $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);
+   $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC) or die (mysql_error());
    $passsalt=$reihe['Passwort_Salt']; // Passwort wird aus der Datenbank geholt
   $passsaltc=sha1($passsalt); // Salt Gecryptet
   $passn=$_POST['passwort']; // Passwort Normal
   $passnc=sha1($passn); //Passwort Gecryptet
   $passall="$passnc $passsaltc"; // Passwort in SHA1 und SALT in SHA1 werden zusammengefügt
    $passwort = ( isset($_POST['passwort']) ) ? sha1($passall) : ''; //Hier werden die beiden SHA1 gecrypteten Passwörter nochmals zusammen SHA1 gecryptet
-   if( $reihe['Passwort'] == $passwort ) //
+   if( $reihe['Passwort'] == $passwort ) // Schaut nach ob das Passwort auch mit dem Eingegebenden überinstimmt
    {
       session_regenerate_id(); // Generiert aus Sicherheitsgründen eine neue Session
       $ses=session_id(); // Fragt die aktuelle Session ID des Benutzers ab
@@ -32,7 +32,7 @@ if( $absenden )
       
         db_con();
        $sql1 = "UPDATE Benutzer SET Session_ID='$ses', IP_Adresse='$ipadresse' WHERE Username = '$benutzer' LIMIT 1";
-       mysql_query($sql1);
+      $ergebnis=mysql_query($sql1);
       // Wichtig ist, dass die Eintragungen in die Session vor der Ausgabe stattfinden.
       // Mit der ersten Ausgabe werden die Header bereits gesendet und können dann nicht mehr
       // verändert werden.

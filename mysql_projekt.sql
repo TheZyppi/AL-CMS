@@ -3,7 +3,7 @@
 --
 
 CREATE TABLE IF NOT EXISTS `Benutzer` (
-  `BID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `UID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `GID` int(11) UNSIGNED NOT NULL,
   `Username` varchar(25),
   `Passwort` varchar(50),
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `Benutzer` (
   `PLZ` varchar(25),
   `Adresse` varchar(25),
   `Geburtsdatum` date,
-  PRIMARY KEY (`BID`)
+  PRIMARY KEY (`UID`)
 );
 
 -- --------------------------------------------------------
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `Benutzer` (
 
 CREATE TABLE IF NOT EXISTS `Reservierungen` (
   `RID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `BID` int(11) UNSIGNED NOT NULL,
+  `UID` int(11) UNSIGNED NOT NULL,
   `BAID` int(11) UNSIGNED NOT NULL,
   `RNRID` int(11) UNSIGNED NOT NULL,
   `Session_ID` varchar(50),
@@ -102,7 +102,6 @@ CREATE TABLE IF NOT EXISTS `Information_Pages` (
   `IPID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `IPTitel` varchar(45),
   `IPInhalt` text,
-  `IPMeta` vachar(60),
   PRIMARY KEY (`IPID`)
 ); 
 
@@ -194,7 +193,7 @@ CREATE TABLE IF NOT EXISTS `plugin_funktion` (
   `PLFID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `PLID` int(11) UNSIGNED NOT NULL,
   `Funktionsname` varchar(30),
-  `hdatei` vachar(100),
+  `hdatei` varchar(100),
   `parents` int(1),
   `parent` int(1),
   `aktiv` int(1),
@@ -210,7 +209,7 @@ CREATE TABLE IF NOT EXISTS `plugin_funktion` (
 
 CREATE TABLE IF NOT EXISTS `plugin_funktion_rechte` (
   `PLFID` int(11) UNSIGNED NOT NULL,
-  `GID` mediumint(8) UNSIGNED NOT NULL,
+  `GID` int(11) UNSIGNED NOT NULL,
   `Y_N` int(1)
 ); 
 
@@ -225,7 +224,7 @@ CREATE TABLE IF NOT EXISTS `plugin_funktion_rechte` (
 CREATE TABLE IF NOT EXISTS `Design` (
   `DID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `DName` varchar(45),
-  `DDatei` vachar(60),
+  `DDatei` varchar(60),
   `aktiv` int(1) UNSIGNED NOT NULL,
 	PRIMARY KEY (`DID`)
 ); 
@@ -313,7 +312,7 @@ CREATE TABLE IF NOT EXISTS `plugin_title` (
 
 CREATE TABLE IF NOT EXISTS `Rechte_Plugins` (
 	`PLID` int(11) UNSIGNED NOT NULL,
-  `GID` mediumint(8) UNSIGNED NOT NULL,
+  `GID` int(11) UNSIGNED NOT NULL,
   `Y_N` int(1)
 ); 
 
@@ -346,7 +345,7 @@ add foreign key (GID) REFERENCES Gruppen (GID) ON DELETE restrict ON UPDATE rest
 
 
 ALTER TABLE Reservierungen 
-add foreign key (BID) REFERENCES Benutzer (BID) ON DELETE restrict ON UPDATE restrict;
+add foreign key (UID) REFERENCES Benutzer (UID) ON DELETE restrict ON UPDATE restrict;
 
 
 ALTER TABLE Reservierungen 
@@ -367,10 +366,10 @@ add foreign key (RAID) REFERENCES Räume (RAID) ON DELETE restrict ON UPDATE res
 ALTER TABLE Tische
 add foreign key (RAID) REFERENCES Räume (RAID) ON DELETE restrict ON UPDATE restrict;
 
-ALTER TABLE Rechte_Plugins
+ALTER TABLE rechte_plugins
 add foreign key (GID) REFERENCES Gruppen (GID) ON DELETE restrict ON UPDATE restrict;
 
-ALTER TABLE Rechte_Plugins
+ALTER TABLE rechte_plugins
 add foreign key (PLID) REFERENCES Plugins (PLID) ON DELETE restrict ON UPDATE restrict;
 
 ALTER TABLE Plugin_Funktion
