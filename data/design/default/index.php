@@ -17,6 +17,5 @@ function body_main() {
 	}
 /*Foot*/
 function foot_main() {
-	include();
 	}
 ?>

@@ -21,7 +21,7 @@
 	}
 	public function css_script()
 	{ 
-		include ('".$pfad."css/index.php');
+		include (''.$pfad.'css/index.php');
 	}
 	
 	}	
