@@ -1,10 +1,29 @@
 <?php
 
 function head() {
-$sql = "SELECT DID, DName, DDatei, aktiv FROM design WHERE aktiv=1";
-   $ergebnis = mysql_query($sql);
-   $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);	
-include('head_main.php');
-head_main(); // head_main Funktion wird ausgeführt
+	// Die login_pruefen.php wird eingefügt
+//	include('../login/login_pruefen.php');
+	/* Die Funktion login_pruefen wird ausgeführt. Sie muss über allen HTML-Befehlen
+	 * stehen, da es ansonsten zu Fehlern führen kann.
+	 */
+	//login_pruefen();
+// Fügt die Head_classes.php ein.
+include('head_classes.php');
+// Der Head Bereich beginnt
+echo '
+<!DOCTYPE xhtml PUBLIC "-//W3C//DTDB XHTML 1.0 Strict// EN" "http://www.w3.org/TR/xhtml/
+  DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+';
+//$objhead->meta();
+echo "<title>".$objhead->title()."</title>";
+$objhead->css_script();
+echo'
+</head>
+';
+
+
+	
 	}
 ?>

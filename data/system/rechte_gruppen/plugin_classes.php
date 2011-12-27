@@ -1,10 +1,9 @@
 <?php
-$plugin=$_GET['pl'];
-$plugin_f=$_GET['plf'];
 
 class pluginsystem {
-	
-	public function funktion($plf=$plugin_f)
+
+
+	public function funktion()
 	{
 		include('funktion.php');
 	}
@@ -14,7 +13,7 @@ class pluginsystem {
 		include('show.php');
 	}
 	
-	public function plugin($pl=$plugin)
+	public function plugin()
 	{
 		
 		include('plugin.php');
@@ -22,7 +21,12 @@ class pluginsystem {
 	private function title()
 	{
 		include('title.php');
-	}	
+	}
+	
+	public function stitle()
+	{
+		$this->title();
+	}
 	
 	private function meta()
 	{
