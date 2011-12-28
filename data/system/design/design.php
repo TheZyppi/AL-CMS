@@ -1,7 +1,6 @@
 <?php
 // Die dbcon.php wird eingefügt
 include(''.$scurl.'dbcon.php');
-$url=$scurl;
 db_con();
 // Abfrage welches Design aktiv ist
 $sql = "SELECT DID, DName, DDatei, aktiv FROM design WHERE aktiv=1";
