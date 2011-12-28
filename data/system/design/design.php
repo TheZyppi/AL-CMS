@@ -10,6 +10,6 @@ $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC) or die (mysql_error());
 $pfad=$reihe['DDatei'];
 include(''.$pfad.'index.php');
 // Die Head Funktion wird reingeladen dient dazu den Header darzustellen
-//include('head_function.php');
+include('head_function.php');
 
 ?>

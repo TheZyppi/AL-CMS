@@ -259,7 +259,6 @@ $sql2 = "SELECT * FROM plugin_meta WHERE PLID=".mysql_real_escape_string($reihe[
 	}
 	public function css_script()
 	{
-		include(''.$scurl.'dbcon.php');
 		db_con();
 		// Abfrage welches Design aktiv ist
 $sql = "SELECT DID, DName, DDatei, aktiv FROM design WHERE aktiv=1";
