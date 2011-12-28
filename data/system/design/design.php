@@ -1,6 +1,6 @@
 <?php
 // Die dbcon.php wird eingefügt
-include(''.$scurl.'dbcon.php');
+include('/data/config/dbcon.php');
 db_con();
 // Abfrage welches Design aktiv ist
 $sql = "SELECT DID, DName, DDatei, aktiv FROM design WHERE aktiv=1";
@@ -10,9 +10,6 @@ $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC) or die (mysql_error());
 $pfad=$reihe['DDatei'];
 include(''.$pfad.'index.php');
 // Die Head Funktion wird reingeladen dient dazu den Header darzustellen
-include('head_function.php');
-// Die Body Funktion wird reingeladen sie dient dazu den Body anzuzeigen
-include('body_function.php');
-// Die Foot Funktion wird reingeladen sie dient dazu den Foot anzuzeigen
-include('foot_function.php');
+//include('head_function.php');
+
 ?>

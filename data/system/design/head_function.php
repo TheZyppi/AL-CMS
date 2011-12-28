@@ -17,7 +17,7 @@ echo '
 <head>
 ';
 //$objhead->meta();
-echo "<title>".$objhead->title()."</title>";
+//echo "<title>".$objhead->title()."</title>";
 $objhead->css_script();
 echo'
 </head>
