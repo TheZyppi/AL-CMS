@@ -4,6 +4,8 @@ Standartindex-Datei
 */
 
 /*
+ * WICHTIG FÜR ALLE ENTICKLER!
+ * 
  *Standart Root DATA Pfad
  * Das ist der Standartpfad der in jeder Index Datei egal in welchem Ordner sie liegt
  * passend angegeben werden muss, damit die Daten geladen werden könne.
@@ -14,9 +16,13 @@ Standartindex-Datei
 $srdp="data/";
 
 // Include Datein
-include('/data/system/design/design.php');
+include(''.$srdp.'config/dbcon.php'); // Der Datenbank-Connctor wird eingefügt
+include(''.$srdp.'system/design/design.php'); //Designsystem wird reingeladen
+//include(''.$srdp.'system/rechte_gruppen/plugin.php'); // Plugin-System wird reingelanden
+//include(''.$srdp.'system/rechte_gruppen/funktion.php'); // Plugin-System Funktionssystem wird reingeladen
+
 // Der Headbereich wird ausgeführt.
-head();
+head($srdp);
 // Body-Bereich
 body();
 // Foot-Bereich

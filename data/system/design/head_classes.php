@@ -256,9 +256,9 @@ $sql2 = "SELECT * FROM plugin_meta WHERE PLID=".mysql_real_escape_string($reihe[
 	}
 }
 	}
-	public function css_script()
+	public function css_script($rsp)
 	{
-		db_con();
+		
 		// Abfrage welches Design aktiv ist
 $sql = "SELECT DID, DName, DDatei, aktiv FROM design WHERE aktiv=1";
 $ergebnis = mysql_query($sql);
@@ -266,7 +266,7 @@ $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC) or die (mysql_error());
 // Die Hauptdatei vom Design wird reingeladen
 $pfad=$reihe['DDatei'];
 
-		include (''.$pfad.'css/index.php');
+		include (''.$rsp.'design/'.$pfad.'css/index.php');
 	}
 	
 	}	

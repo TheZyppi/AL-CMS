@@ -1,6 +1,7 @@
 <?php
-
-function head() {
+function head(&$srdp) {
+	// Root Daten Pfad
+	$rsp=$srdp;
 	// Die login_pruefen.php wird eingefügt
 //	include('../login/login_pruefen.php');
 	/* Die Funktion login_pruefen wird ausgeführt. Sie muss über allen HTML-Befehlen
@@ -18,7 +19,7 @@ echo '
 ';
 //$objhead->meta();
 //echo "<title>".$objhead->title()."</title>";
-$objhead->css_script();
+$objhead->css_script($rsp);
 echo'
 </head>
 ';
