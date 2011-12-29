@@ -224,7 +224,7 @@ CREATE TABLE IF NOT EXISTS `plugin_funktion_rechte` (
 CREATE TABLE IF NOT EXISTS `Design` (
   `DID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `DName` varchar(45),
-  `DDatei` varchar(60),
+  `DDatei` varchar(100),
   `aktiv` int(1) UNSIGNED NOT NULL,
 	PRIMARY KEY (`DID`)
 ); 

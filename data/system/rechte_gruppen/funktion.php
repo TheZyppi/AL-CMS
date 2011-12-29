@@ -9,8 +9,8 @@ Diese Datei enthält 1 Funktion:
 // Wichtige Daten werden aus der URL und Session ausgelesen
 $group=$_SESSION['gruppe'];
 
-
-include ('../../../config/dbcon.php');
+// Die Datei zum Datenbank Connecten wird reingeladen
+include (''.$srdp.'config/dbcon.php');
 
 // Es wird überprüft ob oben oder in der Funktion eine Plugin FunktionsID angegeben wurde
 if ($plf=="") {

@@ -136,7 +136,6 @@ $sql2 = "SELECT PLID, GID, Y_N FROM rechte_plugins WHERE PLID=".mysql_real_escap
 	{
 $pl=$_GET['pl']; // Plugin
 $plf=$_GET['plf']; // Plugin Funktion
-include('data/config/dbcon.php');
 
 if ($pl=="") {
 	// Wenn kein Plugin anegeben wurde

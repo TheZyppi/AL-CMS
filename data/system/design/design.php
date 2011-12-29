@@ -1,6 +1,6 @@
 <?php
 // Die dbcon.php wird eingefügt
-include('/data/config/dbcon.php');
+include(''.$srdp.'config/dbcon.php');
 db_con();
 // Abfrage welches Design aktiv ist
 $sql = "SELECT DID, DName, DDatei, aktiv FROM design WHERE aktiv=1";
