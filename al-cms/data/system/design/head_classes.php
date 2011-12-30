@@ -256,6 +256,7 @@ $sql2 = "SELECT * FROM plugin_meta WHERE PLID=".mysql_real_escape_string($reihe[
 	}
 }
 	}
+// Public Funktion für das Laden der CSS Scripte
 	public function css_script($rsp)
 	{
 		
