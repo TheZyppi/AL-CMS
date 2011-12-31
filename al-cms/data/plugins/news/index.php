@@ -1,4 +1,4 @@
 <?php
-echo "JURI!!! :D";
+echo "Testausgabe2";
 
 ?>

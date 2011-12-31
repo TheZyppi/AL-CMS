@@ -55,7 +55,7 @@ $sql = "SELECT PLID, PLName, hdatei, aktiv FROM plugins WHERE PLName = ".mysql_r
     // Überprüfung ob es das Plugin überhaupt gibt
       if($pl==$reihe['PLID'])
    {
-$sql2 = "SELECT PLID, GID, Y_N FROM rechte_plugins WHERE PLID=".mysql_real_escape_string($reihe['PLID'])." LIMIT 1";
+$sql2 = "SELECT PLID, GID, Y_N FROM rechte_plugins WHERE PLID=".mysql_real_escape_string($reihe['PLID'])."";
 	$ergebnis2 = mysql_query($sql2);
    $reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
 $plid=$reihe['PLID'];
@@ -72,7 +72,7 @@ if ($reihe['aktiv']==1) {
 	// Prüfung ob die Gruppe das Plugin ausführen darf
 if ($group==$reihe2['GID']) {
 	if($reihe2['Y_N']==1) {
-		include($reihe['datei']);
+		include(''.$srdp.'plugins/'.$reihe['hdatei'].'');
 		}
 		else {
 			echo "Sie duerfen das Plugin nicht benutzen!";

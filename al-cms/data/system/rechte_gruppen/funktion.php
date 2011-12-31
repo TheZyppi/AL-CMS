@@ -8,9 +8,7 @@ Diese Datei enthält 1 Funktion:
 
 // Wichtige Daten werden aus der URL und Session ausgelesen
 $group=$_SESSION['gruppe'];
-
-// Die Datei zum Datenbank Connecten wird reingeladen
-include (''.$srdp.'config/dbcon.php');
+$plf=$_GET['plf'];
 
 // Es wird überprüft ob oben oder in der Funktion eine Plugin FunktionsID angegeben wurde
 if ($plf=="") {
@@ -42,12 +40,12 @@ if ($reihe['aktiv']==1) {
 if ($group==$reihe2['GID']) {
 	if($reihe2['Y_N']==1) {
 		// Es wird geguckt ob eine Funktionsdatei vorhanden ist.
-		if ($reihe['datei']=="")
+		if ($reihe['hdatei']=="")
 		{
 			echo "Funktionsdatei konnte nicht geladen werden.";
 		}
 		else {
-		include($reihe['datei']); // Funktionsdatei wird reingeladen
+		include(''.$rsdp.'plugins/'.$reihe['hdatei'].''); // Funktionsdatei wird reingeladen
 		$reihe['Funktionsname'](); // Funktion wird ausgeführt
 		}
 		}

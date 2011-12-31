@@ -1,5 +1,5 @@
 <?php
-echo "TESTTEST :D";
+echo "Testausgabe 1";
 $pluginsys->plugin(2);
 
 ?>
