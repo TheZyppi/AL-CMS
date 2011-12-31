@@ -18,13 +18,10 @@ $srdp="data/";
 // Include Datein
 include(''.$srdp.'config/dbcon.php'); // Der Datenbank-Connctor wird eingefügt
 include(''.$srdp.'system/design/design.php'); //Designsystem wird reingeladen
-//include(''.$srdp.'system/rechte_gruppen/plugin.php'); // Plugin-System wird reingelanden
-//include(''.$srdp.'system/rechte_gruppen/funktion.php'); // Plugin-System Funktionssystem wird reingeladen
+//include(''.$srdp.'system/rechte_gruppen/plugin_classes.php'); // Plugin-System wird reingelanden
 
 // Der Headbereich wird ausgeführt.
 head($srdp);
 // Body-Bereich
-body();
-// Foot-Bereich
-foot();
+body($srdp);
 ?>

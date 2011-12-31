@@ -3,7 +3,7 @@
 class pluginsystem {
 
 
-	public function funktion()
+	public function funktion($srdp)
 	{
 		include('funktion.php');
 	}
@@ -13,7 +13,7 @@ class pluginsystem {
 		include('show.php');
 	}
 	
-	public function plugin()
+	public function plugin($srdp)
 	{
 		
 		include('plugin.php');

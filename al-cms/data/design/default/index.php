@@ -10,10 +10,8 @@ Hauptdatei jedes Designs. Die Datei dient dazu um alle Datein in ihre verscheide
  */
 
 /*Body*/
-function body() {
+function body(&$srdp) {
+	//include(''.$srdp.'system/rechte_gruppen/plugin_classes.php'); // Plugin-System wird reingelanden
 	include('top.php');
-	}
-/*Foot*/
-function foot() {
 	}
 ?>

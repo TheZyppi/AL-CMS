@@ -5,12 +5,10 @@ Diese Datei enthält 1 Funktion:
 - Plugin Aktiv/Rechte Checker
 
 */
-
 // Wichtige Daten werden aus der URL und Session ausgelesen
 $group=$_SESSION['gruppe'];
-
+$pl=$_GET['pl'];
 // Die Datei zum Datenbank Connecten wird reingeladen
-include (''.$srdp.'config/dbcon.php');
 
 // Es wird nachgeguckt ob eine PluginID angegeben wurde.
 if ($pl=="") {
@@ -27,7 +25,7 @@ if ($pl=="") {
    	$ergebnis2 = mysql_query($spluginl);
    	$reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);	
 	// Der Titel vom Standart Plugin wird angezeigt.
-	include ($reihe2['hdatei']);
+	include (''.$srdp.'plugins/'.$reihe2['hdatei'].'');
 	exit;
 }
 else {	
