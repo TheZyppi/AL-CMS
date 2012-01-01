@@ -7,11 +7,10 @@ Diese Datei enthält 1 Funktion:
 */
 // Wichtige Daten werden aus der URL und Session ausgelesen
 $group=$_SESSION['gruppe'];
-$pl=$_GET['pl'];
 // Die Datei zum Datenbank Connecten wird reingeladen
 
 // Es wird nachgeguckt ob eine PluginID angegeben wurde.
-if ($pl=="") {
+if (isset($_GET['pl'])=="") {
 // Wenn kein Plugin anegeben wurde
 
 // Verbindung zur Datenbank wird aufgebaut in dem die Funktion db_con aufgerufen wird.
@@ -28,7 +27,8 @@ if ($pl=="") {
 	include (''.$srdp.'plugins/'.$reihe2['hdatei'].'');
 	exit;
 }
-else {	
+else {
+$pl=$_GET['pl'];	
 db_con();
 	if (preg_match ("/^([0-9]+)$/",$pl)) {
 		$sql = "SELECT PLID, PLName, hdatei, aktiv FROM plugins WHERE PLID= ".mysql_real_escape_string($pl)." LIMIT 1";
@@ -67,24 +67,38 @@ $plid=$reihe['PLID'];
 	  }
 	}
 // Prüfung ob das Plugin aktiv ist
-
 if ($reihe['aktiv']==1) {
 	// Prüfung ob die Gruppe das Plugin ausführen darf
 if ($group==$reihe2['GID']) {
 	if($reihe2['Y_N']==1) {
-		include(''.$srdp.'plugins/'.$reihe['hdatei'].'');
+		// Prüft ob eine Pluginfunktion angegeben wurde oder nicht
+		if (isset($_GET['plf'])=="")
+		{
+			include(''.$srdp.'plugins/'.$reihe['hdatei'].'');
 		}
+		// Wenn eine Plugin Funktion angeben wurde wird else ausgeführt
+		else {
+			// Ruft aus der URL die Pluginfunktion auf
+			$plf=$_GET['plf'];
+			// Das Plugin Funktionssystem wird ausgeführt
+			$this->funktion($srdp);
+		}
+		
+		}
+	// Wenn die Gruppe das Plugin nicht benutzen darf
 		else {
 			echo "Sie duerfen das Plugin nicht benutzen!";
 			exit;
 			}	
 	}
+// Wenn keine Gruppe angegeben wurde
 	else {
 		echo "Um dieses Plugin nutzen zu können bitte einloggen!";
 		exit;
 		}
 	
 	}
+// Wenn das Plugin deaktiviert wurde.
 	else {
 		echo "Plugin ist deaktiviert";
 		exit;

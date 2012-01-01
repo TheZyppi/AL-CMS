@@ -1,8 +1,7 @@
 <?php
 
 class pluginsystem {
-
-
+	
 	public function funktion($srdp)
 	{
 		include('funktion.php');
@@ -14,8 +13,7 @@ class pluginsystem {
 	}
 	
 	public function plugin($srdp)
-	{
-		
+	{	
 		include('plugin.php');
 	}
 
