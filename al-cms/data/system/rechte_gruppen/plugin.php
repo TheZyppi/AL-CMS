@@ -44,16 +44,16 @@ $plid=$reihe['PLID'];
    }
    // Wenn es das Plugin nicht gibt wird ein Fehler ausgegeben
 else {
-	echo "Kein Plugin mit dem angebenen Namen gefunden";
+	echo "Kein Plugin mit der Angegeben ID gefunden.";
 }
 
 	}
 	else {
-$sql = "SELECT PLID, PLName, hdatei, aktiv FROM plugins WHERE PLName = ".mysql_real_escape_string($pl)." LIMIT 1";
-   $ergebnis = mysql_query($sql);
+$sql = "SELECT PLID, PLName, hdatei, aktiv FROM plugins WHERE PLName = '".mysql_real_escape_string($pl)."'";
+   $ergebnis = mysql_query($sql) or die (mysql_error());
    $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);	
     // Überprüfung ob es das Plugin überhaupt gibt
-      if($pl==$reihe['PLID'])
+      if($pl==$reihe['PLName'])
    {
 $sql2 = "SELECT PLID, GID, Y_N FROM rechte_plugins WHERE PLID=".mysql_real_escape_string($reihe['PLID'])."";
 	$ergebnis2 = mysql_query($sql2);
@@ -63,7 +63,7 @@ $plid=$reihe['PLID'];
       // Wenn es das Plugin nicht gibt wird ein Fehler ausgegeben
    
 	  else {
-	  	echo "Kein Plugin mit der Angegeben ID gefunden.";
+	  	echo "Kein Plugin mit dem angebenen Namen gefunden";
 	  }
 	}
 // Prüfung ob das Plugin aktiv ist

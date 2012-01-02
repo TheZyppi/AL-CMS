@@ -194,10 +194,10 @@ CREATE TABLE IF NOT EXISTS `plugin_funktion` (
   `PLID` int(11) UNSIGNED NOT NULL,
   `Funktionsname` varchar(30),
   `hdatei` varchar(100),
-  `parents` int(1),
+  `Beschreibung` text,
+  `parent_id` int(1),
   `parent` int(1),
   `aktiv` int(1),
-  `Beschreibung` text,
   PRIMARY KEY (`PLFID`)
 ); 
 

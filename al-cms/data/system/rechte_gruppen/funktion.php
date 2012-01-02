@@ -8,17 +8,30 @@ Diese Datei enthält 1 Funktion:
 
 // Wichtige Daten werden aus der URL und Session ausgelesen
 $group=$_SESSION['gruppe'];
-$plf=$_GET['plf'];
 
 // Es wird überprüft ob oben oder in der Funktion eine Plugin FunktionsID angegeben wurde
-if ($plf=="") {
+if (isset($_GET['plf'])=="") {
 echo "Es wurde keine Plugin Funktion angegeben.";
 exit;	
 }
 else {
+$pl=$_GET['pl'];
+$plf=$_GET['plf'];
 db_con();
+if (preg_match ("/^([0-9]+)$/",$pl)) {
+		$sql = "SELECT PLID, PLName, hdatei, aktiv FROM plugins WHERE PLID= ".mysql_real_escape_string($pl)." LIMIT 1";
+   $ergebnis = mysql_query($sql);
+      $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);
+	  $plid=$reihe['PLID'];
+}
+else {
+	$sql = "SELECT PLID, PLName, hdatei, aktiv FROM plugins WHERE PLName = '".mysql_real_escape_string($pl)."'";
+   $ergebnis = mysql_query($sql) or die (mysql_error());
+   $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);
+   $plid=$reihe['PLID'];	
+}
 	if (preg_match ("/^([0-9]+)$/",$plf)) {
-$sql = "SELECT PLFID, PLID, Funktionsname, hdatei, aktiv FROM plugin_funktion WHERE PLFID = ".mysql_real_escape_string($plf)." AND ".mysql_real_escape_string($plid)." LIMIT 1";
+$sql = "SELECT PLFID, PLID, Funktionsname, hdatei, aktiv FROM plugin_funktion WHERE PLFID = ".mysql_real_escape_string($plf)." AND PLID=".mysql_real_escape_string($plid)." LIMIT 1";
    $ergebnis = mysql_query($sql);
    $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);	
 $sql2 = "SELECT PLFID, GID, Y_N FROM plugin_funktion_rechte WHERE PLID=".mysql_real_escape_string($plf)." LIMIT 1";
@@ -26,7 +39,7 @@ $sql2 = "SELECT PLFID, GID, Y_N FROM plugin_funktion_rechte WHERE PLID=".mysql_r
    $reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
 	}
 	else {
-$sql = "SELECT PLFID, PLID, Funktionsname, hdatei, aktiv FROM plugin_funktion WHERE Funktionsname = ".mysql_real_escape_string($plf)." AND ".mysql_real_escape_string($plid)." LIMIT 1";
+$sql = "SELECT PLFID, PLID, Funktionsname, hdatei, aktiv FROM plugin_funktion WHERE Funktionsname = '".mysql_real_escape_string($plf)."' AND PLID=".mysql_real_escape_string($plid)." LIMIT 1";
    $ergebnis = mysql_query($sql);
    $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);	
 $sql2 = "SELECT PLFID, GID, Y_N FROM plugin_funktion_rechte WHERE PLID=".mysql_real_escape_string($reihe['PLFID'])." LIMIT 1";
