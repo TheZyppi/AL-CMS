@@ -4,9 +4,9 @@
  * 
  * Copyright (C) Dennis Falkenberg (http://www.sunrising-network.de) Email: DFalkenberg@gmx.de
  * 
- * AL-CMS is free software, you can you can redistribute it and/or modify
- *it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 3 of the License, or
+ * AL-CMS is a free software, you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
  *(at your option) any later version.  
  *   
  */
@@ -20,7 +20,7 @@ $user="root"; //Benutzername
 $pass=""; //Passwort
 $db="restaurantcms"; //Datenbank
 $adresse="localhost"; //Adresse
-mysql_connect($adresse, $user, $pass); // Verbindung aufbauen
+mysql_connect($adresse, $user, $pass); // Verbindungs aufbauen
 mysql_select_db($db); // Datenbank wählen	
 	}
 ?>

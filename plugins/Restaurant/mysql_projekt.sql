@@ -11,8 +11,72 @@ CREATE TABLE IF NOT EXISTS `Benutzer` (
   `Session_ID` varchar(50),
   `IP_Adresse` varchar(50),
   `Mail` varchar(45),
+  `Name` varchar(25),
+  `Vorname` varchar(25),
+  `Ort` varchar(40),
+  `PLZ` varchar(25),
+  `Adresse` varchar(25),
+  `Geburtsdatum` date,
   PRIMARY KEY (`UID`)
 );
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `Reservierungen`
+--
+
+CREATE TABLE IF NOT EXISTS `Reservierungen` (
+  `RID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `UID` int(11) UNSIGNED NOT NULL,
+  `BAID` int(11) UNSIGNED NOT NULL,
+  `RNRID` int(11) UNSIGNED NOT NULL,
+  `Session_ID` varchar(50),
+  `IP_Adresse` varchar(50),
+  PRIMARY KEY (`RID`)
+);  
+
+
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `Reservierungen_Tisch_Räume`
+--
+
+CREATE TABLE IF NOT EXISTS `Reservierungen_Tisch_Räume` (
+  `RID` int(11) UNSIGNED NOT NULL,
+  `RAID` int(11) UNSIGNED NOT NULL,
+  `TID` int(11) UNSIGNED NOT NULL
+); 
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `Tische`
+--
+
+CREATE TABLE IF NOT EXISTS `Tische` (
+  `TID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `RAID` int(11) UNSIGNED NOT NULL,
+  `TBezeichnung` text,
+  `TMaxPersonen` int(1),
+  PRIMARY KEY (`TID`)
+); 
+
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `Räume`
+--
+
+CREATE TABLE IF NOT EXISTS `Räume` (
+  `RAID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `RBeschreibung` text,
+  PRIMARY KEY (`RAID`)
+); 
+
 
 -- --------------------------------------------------------
 
@@ -27,7 +91,96 @@ CREATE TABLE IF NOT EXISTS `Gruppen` (
   PRIMARY KEY (`GID`)
 ); 
 
+
+
+
+--
+-- Tabellenstruktur für Tabelle `Information_Pages`
+--
+
+CREATE TABLE IF NOT EXISTS `Information_Pages` (
+  `IPID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `IPTitel` varchar(45),
+  `IPInhalt` text,
+  PRIMARY KEY (`IPID`)
+); 
+
+
 -- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `Bezahlung_Arten`
+--
+
+CREATE TABLE IF NOT EXISTS `Bezahlung_Arten` (
+  `BAID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `BAName` varchar(45),
+  `BABeschreibung` text,
+  `BAImage` varchar(50),
+  PRIMARY KEY (`BAID`)
+); 
+
+
+
+--
+-- Tabellenstruktur für Tabelle `Reservierung_Essen`
+--
+
+CREATE TABLE IF NOT EXISTS `Reservierung_Essen` (
+  `RID` int(11) UNSIGNED NOT NULL,
+  `SPID` int(11) UNSIGNED NOT NULL
+); 
+
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `Reservierung_Vorab`
+--
+
+CREATE TABLE IF NOT EXISTS `Reservierung_Vorab` (
+  `Session_ID` varchar(45),
+  `IP_Adresse` varchar(45),
+  `TID` int(11) UNSIGNED NOT NULL,
+  `SPID` int(11) UNSIGNED NOT NULL
+); 
+
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `Speisekarte`
+--
+
+CREATE TABLE IF NOT EXISTS `Speisekarte` (
+  `SPID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `SPName` varchar(45),
+  `SPBeschreibung` text,
+  `SPPreis` decimal(4.2),
+  PRIMARY KEY (`SPID`)
+); 
+
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `Reservierungen_Non_Reg`
+--
+
+CREATE TABLE IF NOT EXISTS `Reservierungen_Non_Reg` (
+  `RNRID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `Session_ID` varchar(45),
+  `Email` varchar(45),
+  `IP_Adresse` varchar(45),
+  `RName` varchar(25),
+  `RVorname` varchar(25),
+  `ROrt` varchar(40),
+  `RPLZ` varchar(25),
+  `RAdresse` varchar(25),
+  `Geburtsdatum` date,
+	PRIMARY KEY (`RNRID`)
+); 
+
 
 
 -- --------------------------------------------------------
@@ -107,6 +260,8 @@ CREATE TABLE IF NOT EXISTS `plugin_funktion_meta` (
 
 -- --------------------------------------------------------
 
+
+-- --------------------------------------------------------
 -- --------------------------------------------------------
 
 --
@@ -134,6 +289,8 @@ CREATE TABLE IF NOT EXISTS `plugin_meta` (
 
 -- --------------------------------------------------------
 
+
+-- --------------------------------------------------------
 -- --------------------------------------------------------
 
 --
@@ -186,6 +343,29 @@ CREATE TABLE IF NOT EXISTS `plugins` (
 ALTER TABLE Benutzer 
 add foreign key (GID) REFERENCES Gruppen (GID) ON DELETE restrict ON UPDATE restrict;
 
+
+ALTER TABLE Reservierungen 
+add foreign key (UID) REFERENCES Benutzer (UID) ON DELETE restrict ON UPDATE restrict;
+
+
+ALTER TABLE Reservierungen 
+add foreign key (BAID) REFERENCES Bezahlung_Arten (BAID) ON DELETE restrict ON UPDATE restrict;
+
+
+ALTER TABLE Reservierungen_Tisch_Räume
+add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE restrict ON UPDATE restrict;
+
+
+ALTER TABLE Reservierungen_Tisch_Räume
+add foreign key (TID) REFERENCES Tische (TID) ON DELETE restrict ON UPDATE restrict;
+
+
+ALTER TABLE Reservierungen_Tisch_Räume
+add foreign key (RAID) REFERENCES Räume (RAID) ON DELETE restrict ON UPDATE restrict;
+
+ALTER TABLE Tische
+add foreign key (RAID) REFERENCES Räume (RAID) ON DELETE restrict ON UPDATE restrict;
+
 ALTER TABLE rechte_plugins
 add foreign key (GID) REFERENCES Gruppen (GID) ON DELETE restrict ON UPDATE restrict;
 
@@ -197,6 +377,18 @@ add foreign key (PLID) REFERENCES Plugins (PLID) ON DELETE restrict ON UPDATE re
 
 ALTER TABLE Plugin_Funktion_Rechte
 add foreign key (GID) REFERENCES Gruppen (GID) ON DELETE restrict ON UPDATE restrict;
+
+ALTER TABLE Reservierung_Essen
+add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE restrict ON UPDATE restrict;
+
+ALTER TABLE Reservierung_Essen
+add foreign key (SPID) REFERENCES Speisekarte (SPID) ON DELETE restrict ON UPDATE restrict;
+
+ALTER TABLE Reservierung_Vorab
+add foreign key (TID) REFERENCES Tische (TID) ON DELETE restrict ON UPDATE restrict;
+
+ALTER TABLE Reservierung_Vorab
+add foreign key (SPID) REFERENCES Speisekarte (SPID) ON DELETE restrict ON UPDATE restrict;
 
 -- --------------------------------------------------------
 
