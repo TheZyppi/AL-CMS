@@ -1,5 +1,17 @@
 <?php
 /*
+ * AL-CMS -- Gernal Information --
+ * 
+ * Copyright (C) Dennis Falkenberg (http://www.sunrising-network.de) Email: DFalkenberg@gmx.de
+ * 
+ * AL-CMS is free software, you can you can redistribute it and/or modify
+ *it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ *(at your option) any later version.  
+ *   
+ */
+
+/*
 Standartindex-Datei
 */
 
@@ -18,7 +30,6 @@ $srdp="data/";
 // Include Datein
 include(''.$srdp.'config/dbcon.php'); // Der Datenbank-Connctor wird eingefügt
 include(''.$srdp.'system/design/design.php'); //Designsystem wird reingeladen
-//include(''.$srdp.'system/rechte_gruppen/plugin_classes.php'); // Plugin-System wird reingelanden
 
 // Der Headbereich wird ausgeführt.
 head($srdp);
