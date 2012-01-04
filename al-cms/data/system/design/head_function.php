@@ -29,8 +29,11 @@ echo '
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 ';
-//$objhead->meta();
-//echo "<title>".$objhead->title()."</title>";
+// Meta Daten werden gelanden
+$objhead->meta();
+// Title wird angezeigt
+echo "<title>".$objhead->title()."</title>";
+// CSS Scripte für das Design werden gelanden
 $objhead->css_script($rsp);
 echo'
 </head>

@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `Benutzer` (
   `Passwort_Salt` varchar(50),
   `Session_ID` varchar(50),
   `IP_Adresse` varchar(50),
-  `Mail` varchar(45)
+  `Mail` varchar(45),
   PRIMARY KEY (`UID`)
 );
 
