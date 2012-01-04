@@ -25,7 +25,7 @@ if (isset($_GET['pl'])=="") {
    	$ergebnis2 = mysql_query($spluginl) or die (mysql_error());
    	$reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);	
 	// Der Titel vom Standart Plugin wird angezeigt.
-	include (''.$srdp.'plugins/'.$reihe2['metad'].'');
+	include (''.$rsp.'plugins/'.$reihe2['metad'].'');
 	exit;
 }
 else {
@@ -69,7 +69,7 @@ $spluginl = "SELECT PLID, metad FROM plugin_meta WHERE PLID=".mysql_real_escape_
 	}
 	if (isset($_GET['plf'])=="")
 		{
-			include(''.$srdp.'plugins/'.$reihe2['metad'].'');
+			include(''.$rsp.'plugins/'.$reihe2['metad'].'');
 		}
 		// Wenn eine Plugin Funktion angeben wurde wird else ausgeführt
 		else {
@@ -96,7 +96,7 @@ $sql2 = "SELECT * FROM plugin_funktion_meta WHERE PLFID=".mysql_real_escape_stri
 			echo "Meta konnte nicht geladen werden.";
 		}
 		else {
-		include(''.$rsdp.'plugins/'.$reihe['metad'].''); // Funktionsdatei wird reingeladen
+		include(''.$rsp.'plugins/'.$reihe['metad'].''); // Funktionsdatei wird reingeladen
 		}
 		}
 }

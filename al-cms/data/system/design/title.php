@@ -25,7 +25,7 @@ if (isset($_GET['pl'])=="") {
    	$ergebnis2 = mysql_query($spluginl) or die (mysql_error());
    	$reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);	
 	// Der Titel vom Standart Plugin wird angezeigt.
-	include (''.$srdp.'plugins/'.$reihe2['titled'].'');
+	include (''.$rsp.'plugins/'.$reihe2['titled'].'');
 	exit;
 }
 else {
@@ -69,7 +69,7 @@ $spluginl = "SELECT PLID, titled FROM plugin_title WHERE PLID=".mysql_real_escap
 	}
 	if (isset($_GET['plf'])=="")
 		{
-			include(''.$srdp.'plugins/'.$reihe2['titled'].'');
+			include(''.$rsp.'plugins/'.$reihe2['titled'].'');
 		}
 		// Wenn eine Plugin Funktion angeben wurde wird else ausgeführt
 		else {
@@ -96,7 +96,7 @@ $sql2 = "SELECT * FROM plugin_funktion_title WHERE PLFID=".mysql_real_escape_str
 			echo "Title konnte nicht geladen werden.";
 		}
 		else {
-		include(''.$rsdp.'plugins/'.$reihe['titled'].''); // Funktionsdatei wird reingeladen
+		include(''.$rsp.'plugins/'.$reihe['titled'].''); // Funktionsdatei wird reingeladen
 		}
 		}
 }

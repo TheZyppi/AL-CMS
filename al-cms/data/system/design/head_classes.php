@@ -22,12 +22,12 @@
 	class headp {
 
 // Title System vom Head und dem Rechte Gruppe System
-	public function title()
+	public function title($rsp)
 	{
 		include('title.php');	
 	}
 // Meta System vom Head und dem Rechte Gruppe System
-	public function meta()
+	public function meta($rsp)
 	{
 		include('meta.php');
 	}
