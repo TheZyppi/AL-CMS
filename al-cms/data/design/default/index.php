@@ -12,8 +12,8 @@
  */
 
 /*
-Hauptdatei jedes Designs. Die Datei dient dazu um alle Datein in ihre verscheidenen Bereiche head, body und foot einzuteilen.
-*/
+Hauptdatei jedes Designs. Die Datei dient dazu um alle Datein in ihre verscheidenen Bereiche head und body einzuteilen.
+*/ 
 
 /*
  * Es gibt keine Head da der bereits in der Design.php automatisch generiert wird.
