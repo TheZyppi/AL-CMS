@@ -39,9 +39,9 @@
 $sql = "SELECT DID, DName, DDatei, aktiv FROM design WHERE aktiv=1";
 $ergebnis = mysql_query($sql);
 $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC) or die (mysql_error());	
-// Die Hauptdatei vom Design wird reingeladen
+// Pfad zum CSS Script
 $pfad=$reihe['DDatei'];
-
+// Das CSS Script wird eingefügt.
 		include (''.$rsp.'design/'.$pfad.'css/index.php');
 	}
 	

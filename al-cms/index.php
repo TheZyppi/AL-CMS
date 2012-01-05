@@ -25,6 +25,8 @@ Standartindex-Datei
  * Das Designsystem, Plugin-, Funktionssystem und Gruppen und Rechtesystem sind davon abhängig.
  *  
  */
+
+ // Standart Root Data Pfad
 $srdp="data/";
 
 // Include Datein
