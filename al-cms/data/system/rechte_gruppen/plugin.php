@@ -37,6 +37,7 @@ if (isset($_GET['pl'])=="") {
    	$reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);	
 	// Der Titel vom Standart Plugin wird angezeigt.
 	include (''.$srdp.'plugins/'.$reihe2['hdatei'].'');
+	mysql_close();
 	exit;
 }
 else {
@@ -117,5 +118,5 @@ if ($group==$reihe2['GID']) {
 		}
 		}
 
-
+mysql_close();
 ?>

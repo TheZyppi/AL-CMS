@@ -1,3 +1,4 @@
+-- --------------------------------------------------------
 --
 -- Tabellenstruktur für Tabelle `Benutzer`
 --
@@ -184,19 +185,19 @@ CREATE TABLE IF NOT EXISTS `plugins` (
 --
 
 ALTER TABLE Benutzer 
-add foreign key (GID) REFERENCES Gruppen (GID) ON DELETE restrict ON UPDATE restrict;
+add foreign key (GID) REFERENCES Gruppen (GID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE rechte_plugins
-add foreign key (GID) REFERENCES Gruppen (GID) ON DELETE restrict ON UPDATE restrict;
+add foreign key (GID) REFERENCES Gruppen (GID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE rechte_plugins
-add foreign key (PLID) REFERENCES Plugins (PLID) ON DELETE restrict ON UPDATE restrict;
+add foreign key (PLID) REFERENCES Plugins (PLID)ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE Plugin_Funktion
-add foreign key (PLID) REFERENCES Plugins (PLID) ON DELETE restrict ON UPDATE restrict;
+add foreign key (PLID) REFERENCES Plugins (PLID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE Plugin_Funktion_Rechte
-add foreign key (GID) REFERENCES Gruppen (GID) ON DELETE restrict ON UPDATE restrict;
+add foreign key (GID) REFERENCES Gruppen (GID) ON DELETE cascade ON UPDATE cascade;
 
 -- --------------------------------------------------------
 

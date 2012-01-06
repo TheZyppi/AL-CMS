@@ -26,6 +26,7 @@ if (isset($_GET['pl'])=="") {
    	$reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);	
 	// Der Titel vom Standart Plugin wird angezeigt.
 	include (''.$rsp.'plugins/'.$reihe2['metad'].'');
+	mysql_close();
 	exit;
 }
 else {
@@ -100,4 +101,5 @@ $sql2 = "SELECT * FROM plugin_funktion_meta WHERE PLFID=".mysql_real_escape_stri
 		}
 		}
 }
+mysql_close();
 ?>

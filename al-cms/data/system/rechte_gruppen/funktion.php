@@ -24,6 +24,7 @@ $group=$_SESSION['gruppe'];
 // Es wird überprüft ob oben oder in der Funktion eine Plugin FunktionsID angegeben wurde
 if (isset($_GET['plf'])=="") {
 echo "Es wurde keine Plugin Funktion angegeben.";
+mysql_close();
 exit;	
 }
 else {
@@ -76,20 +77,25 @@ if ($group==$reihe2['GID']) {
 		}
 		else {
 			// Wenn die Gruppe es nicht benutzen darf
+			echo "Ihre Gruppe hat nicht die Berechtigung diese Funktion zu Benutzen.";
+			mysql_close();
 			exit;
 			}	
 	}
+// Wenn keine Berechtigung vergeben wurde
 	else {
-		echo "Sie duerfen die Funktion nicht benutzen.";
+		echo "Auf ihre Gruppe wurde keine Berechtigung gesetzt.";
+		mysql_close();
 		exit;
 		}
 	
 	}
 	else {
 	// Wenn es nicht aktiv ist
+	mysql_close();
 	exit;	
 		}
 	
 		}	
-
+mysql_close();
 ?>

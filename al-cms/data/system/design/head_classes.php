@@ -43,6 +43,7 @@ $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC) or die (mysql_error());
 $pfad=$reihe['DDatei'];
 // Das CSS Script wird eingefügt.
 		include (''.$rsp.'design/'.$pfad.'css/index.php');
+		mysql_close();
 	}
 	
 	}	
