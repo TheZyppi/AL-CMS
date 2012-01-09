@@ -29,15 +29,19 @@ $sql2 = "SELECT PLFID, GID, Y_N FROM plugin_funktion_rechte WHERE PLID=".mysql_r
    	
 	
 // Wenn der Benutzer nicht regestriert ist wird das UFormular gelanden (Unregister Formular)
-	if ($group==1 && $reihe2['Y_N']==1)
+	if ($group==1)
 	{
+		// Überprüft ob das Unregestriert Bestellungsformular aktiviert ist.
+		if($reihe2['Y_N']==1)
+		{
 	include('UBF.php');
+		}
+		else {
+			echo "Unregestrierte Benutzung des Bestellsystems ist deaktiviert.";
+		}
 	}
 // Wenn der User eingeloggt ist dann wird das RFormular gelanden (Register Formular)
 	else {
 include('RBF.php');
  }
-		
-
-	
 ?>
