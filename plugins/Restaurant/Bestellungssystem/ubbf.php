@@ -15,13 +15,40 @@
   * Das Datum und Uhrzeit aus der UBDF.php werden wegen den Sonderzeichen erstmal "normalisiert",
   * um mit mktime weiter verarbeitet werden zu können.
   */
-	$datum=explode( '.', $_POST['datum'] );
-	$uhrzeit=explode( ':', $_POST['uhrzeit'] );
-	
+ 	if (isset($_POST['datum'])=="" && isset($_POST['uhrzeit'])=="")
+ 	{
+ 		echo "Sie haben vergessen ein Datum und die Uhrzeit anzugeben.";
+		exit;
+ 	}
+	else {
+		
+	if(isset($_POST['datum'])=="")
+	{
+		echo "Sie haben kein Datum angegeben.";
+		exit;
+	}
+	else {
+		$datum=explode( '.', $_POST['datum'] );
+	}
+	if(isset($_POST['uhrzeit'])=="")
+	{
+	echo "Sie haben keine Uhrzeit angegeben.";
+	exit;
+	}
+	else {
+	$uhrzeit=explode( ':', $_POST['uhrzeit'] );	
+	}
 	// Hier wird nach der normalisierung der Daten die Daten mit mktime in timestamp umgewandelt.
-	$datumt=mktime( 0, 0, 0, $datum[1], $datum[0], $datum[2] );
-	$uhrzeitt=mktime( $uhrzeit[0], $uhrzeit[1], 0, 0, 0, 0 );
+	$datum_u_t=mktime( $uhrzeit[4], $uhrzeit[5], 0, $datum[1], $datum[0], $datum[2] );
 	
+	
+	if($datum_u_t >= $reihe['maxtime'])
+	{
+		
+		
+	}
+	
+	}
 	
 
 ?>
