@@ -41,12 +41,20 @@
 	// Hier wird nach der normalisierung der Daten die Daten mit mktime in timestamp umgewandelt.
 	$datum_u_t=mktime( $uhrzeit[4], $uhrzeit[5], 0, $datum[1], $datum[0], $datum[2] );
 	
+	// Abfrage um herauszufinden, welche Resavierungen es an dem Tag für welchen Tisch gab und welche frei sind.
+	$tisch=mysql_query("SELECT Reservierungen.RID, Reservierungen.maxtime, Reservierungen_Tisch.RID, Reservierungen_Tisch.TID
+	 FROM Reservierungen, Reservierungen_Tisch WHERE Reservierungen.RID=Reservierungen_Tisch.RID AND Reservierungen.maxtime <= ".$datum_u_t."");
 	
-	if($datum_u_t >= $reihe['maxtime'])
-	{
-		
-		
-	}
+	// Array für die TIDs			
+	$tichids=array();
+	
+	// While-Schleife zum Befüllen des Arrays
+	while ($zeile = mysql_fetch_array( $tisch))
+		{
+		array_push($tichids, $zeile['TID']);
+			
+		}
+
 	
 	}
 	

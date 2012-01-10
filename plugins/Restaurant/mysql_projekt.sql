@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `Reservierungen` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `Reservierungen`
+-- Tabellenstruktur für Tabelle `Reservierungen_User`
 --
 
 CREATE TABLE IF NOT EXISTS `Reservierungen_User` (
