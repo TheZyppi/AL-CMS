@@ -28,12 +28,10 @@ CREATE TABLE IF NOT EXISTS `Benutzer` (
 
 CREATE TABLE IF NOT EXISTS `Reservierungen` (
   `RID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `UID` int(11) UNSIGNED NOT NULL,
-  `BAID` int(11) UNSIGNED NOT NULL,
   `Session_ID` varchar(50),
   `IP_Adresse` varchar(50),
   `maxtime` varchar(40),
-  `U_N` init(1),
+  `U_N` int(1),
   PRIMARY KEY (`RID`)
 );  
 
@@ -96,11 +94,12 @@ CREATE TABLE IF NOT EXISTS `Tische` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `Räume`
+-- Tabellenstruktur für Tabelle `Rauume`
 --
 
 CREATE TABLE IF NOT EXISTS `Rauume` (
   `RAID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `Name` varchar(40),
   `RBeschreibung` text,
   PRIMARY KEY (`RAID`)
 ); 
@@ -143,7 +142,7 @@ CREATE TABLE IF NOT EXISTS `Bezahlung_Arten` (
   `BAID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `BAName` varchar(45),
   `BABeschreibung` text,
-  `BAImage` varchar(50),
+  `BAImage` varchar(60),
   PRIMARY KEY (`BAID`)
 ); 
 
@@ -156,6 +155,21 @@ CREATE TABLE IF NOT EXISTS `Bezahlung_Arten` (
 CREATE TABLE IF NOT EXISTS `Reservierung_Essen` (
   `RID` int(11) UNSIGNED NOT NULL,
   `SPID` int(11) UNSIGNED NOT NULL
+); 
+
+
+-- --------------------------------------------------------
+
+-- --------------------------------------------------------
+--
+-- Tabellenstruktur für Tabelle `Reservierung_Bezahlung`
+--
+
+CREATE TABLE IF NOT EXISTS `Reservierung_Bezahlung` (
+  `RID` int(11) UNSIGNED NOT NULL,
+  `BAID` int(11) UNSIGNED NOT NULL,
+  `bz1` varchar(40),
+  `bz2` varchar(40)
 ); 
 
 
@@ -184,15 +198,14 @@ CREATE TABLE IF NOT EXISTS `Speisekarte` (
 
 CREATE TABLE IF NOT EXISTS `Reservierungen_Non_Reg` (
   `RID` int(11) UNSIGNED NOT NULL,
-  `Session_ID` varchar(45),
-  `Email` varchar(45),
-  `IP_Adresse` varchar(45),
   `RName` varchar(25),
   `RVorname` varchar(25),
   `ROrt` varchar(40),
   `RPLZ` varchar(25),
   `RAdresse` varchar(25),
-  `Geburtsdatum` varchar(40)
+  `Email` varchar(45),
+  `IP_Adresse` varchar(45),
+  `Session_ID` varchar(45)
 ); 
 
 
@@ -357,28 +370,32 @@ CREATE TABLE IF NOT EXISTS `plugins` (
 ALTER TABLE Benutzer 
 add foreign key (GID) REFERENCES Gruppen (GID) ON DELETE restrict ON UPDATE restrict;
 
-
-ALTER TABLE Reservierungen 
-add foreign key (UID) REFERENCES Benutzer (UID) ON DELETE restrict ON UPDATE restrict;
-
-
-ALTER TABLE Reservierungen 
-add foreign key (BAID) REFERENCES Bezahlung_Arten (BAID) ON DELETE restrict ON UPDATE restrict;
-
-
-ALTER TABLE Reservierungen_Tisch_Räume
+ALTER TABLE Reservierungen_Non_Reg 
 add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE restrict ON UPDATE restrict;
 
+ALTER TABLE Reservierung_Bezahlung
+add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE restrict ON UPDATE restrict;
 
-ALTER TABLE Reservierungen_Tisch_Räume
+ALTER TABLE Reservierung_Bezahlung
+add foreign key (BAID) REFERENCES Bezahlung_Arten (BAID) ON DELETE restrict ON UPDATE restrict;
+
+ALTER TABLE Reservierungen_User 
+add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE restrict ON UPDATE restrict;
+
+ALTER TABLE Reservierungen_User 
+add foreign key (RID) REFERENCES Benutzer (UID) ON DELETE restrict ON UPDATE restrict;
+
+ALTER TABLE Reservierungen_Rauume
+add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE restrict ON UPDATE restrict;
+
+ALTER TABLE Reservierungen_Rauume
+add foreign key (RAID) REFERENCES Rauume (RAID) ON DELETE restrict ON UPDATE restrict;
+
+ALTER TABLE Reservierungen_Tisch
+add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE restrict ON UPDATE restrict;
+
+ALTER TABLE Reservierungen_Tisch
 add foreign key (TID) REFERENCES Tische (TID) ON DELETE restrict ON UPDATE restrict;
-
-
-ALTER TABLE Reservierungen_Tisch_Räume
-add foreign key (RAID) REFERENCES Räume (RAID) ON DELETE restrict ON UPDATE restrict;
-
-ALTER TABLE Tische
-add foreign key (RAID) REFERENCES Räume (RAID) ON DELETE restrict ON UPDATE restrict;
 
 ALTER TABLE rechte_plugins
 add foreign key (GID) REFERENCES Gruppen (GID) ON DELETE restrict ON UPDATE restrict;
@@ -398,11 +415,6 @@ add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE restrict ON UPDA
 ALTER TABLE Reservierung_Essen
 add foreign key (SPID) REFERENCES Speisekarte (SPID) ON DELETE restrict ON UPDATE restrict;
 
-ALTER TABLE Reservierung_Vorab
-add foreign key (TID) REFERENCES Tische (TID) ON DELETE restrict ON UPDATE restrict;
-
-ALTER TABLE Reservierung_Vorab
-add foreign key (SPID) REFERENCES Speisekarte (SPID) ON DELETE restrict ON UPDATE restrict;
 
 -- --------------------------------------------------------
 
