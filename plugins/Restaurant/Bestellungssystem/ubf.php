@@ -16,9 +16,21 @@ if(isset($_POST['submit']))
 {
 	include('ubbf.php');
 }
-// Wird dann ausgeführt wenn man die eigentliche Bestellung abschickt.
+/* Hier her werden die Bestellungsdaten versand und danach wird die.
+ * Bezahlungsart abgefragt
+ */
 else if(isset($_POST['sumbit2'])) {
-	include('ubsf.php');
+	include('ubpaf.php');
+}
+ /*Ausgewählte Bezahlungsart wird angezeigt
+  *Bezahlungsdaten werden eingegeben 
+  */
+ else if(isset($_POST['sumbit3'])) {
+	include('ubpf.php');
+}
+// Beendung der Bestellung in dem die Bezahlungsdaten eingetragen werden.
+else if(isset($_POST['sumbit4'])) {
+	include('ubef.php');
 }
 // Die Standartseite die gelanden wird wenn nichts von dem beiden oben zutrifft.
 else {

@@ -368,52 +368,52 @@ CREATE TABLE IF NOT EXISTS `plugins` (
 --
 
 ALTER TABLE Benutzer 
-add foreign key (GID) REFERENCES Gruppen (GID) ON DELETE restrict ON UPDATE restrict;
+add foreign key (GID) REFERENCES Gruppen (GID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE Reservierungen_Non_Reg 
-add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE restrict ON UPDATE restrict;
+add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE Reservierung_Bezahlung
-add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE restrict ON UPDATE restrict;
+add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE Reservierung_Bezahlung
-add foreign key (BAID) REFERENCES Bezahlung_Arten (BAID) ON DELETE restrict ON UPDATE restrict;
+add foreign key (BAID) REFERENCES Bezahlung_Arten (BAID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE Reservierungen_User 
-add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE restrict ON UPDATE restrict;
+add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE Reservierungen_User 
-add foreign key (RID) REFERENCES Benutzer (UID) ON DELETE restrict ON UPDATE restrict;
+add foreign key (RID) REFERENCES Benutzer (UID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE Reservierungen_Rauume
-add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE restrict ON UPDATE restrict;
+add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE Reservierungen_Rauume
-add foreign key (RAID) REFERENCES Rauume (RAID) ON DELETE restrict ON UPDATE restrict;
+add foreign key (RAID) REFERENCES Rauume (RAID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE Reservierungen_Tisch
-add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE restrict ON UPDATE restrict;
+add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE Reservierungen_Tisch
-add foreign key (TID) REFERENCES Tische (TID) ON DELETE restrict ON UPDATE restrict;
+add foreign key (TID) REFERENCES Tische (TID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE rechte_plugins
-add foreign key (GID) REFERENCES Gruppen (GID) ON DELETE restrict ON UPDATE restrict;
+add foreign key (GID) REFERENCES Gruppen (GID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE rechte_plugins
-add foreign key (PLID) REFERENCES Plugins (PLID) ON DELETE restrict ON UPDATE restrict;
+add foreign key (PLID) REFERENCES Plugins (PLID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE Plugin_Funktion
-add foreign key (PLID) REFERENCES Plugins (PLID) ON DELETE restrict ON UPDATE restrict;
+add foreign key (PLID) REFERENCES Plugins (PLID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE Plugin_Funktion_Rechte
-add foreign key (GID) REFERENCES Gruppen (GID) ON DELETE restrict ON UPDATE restrict;
+add foreign key (GID) REFERENCES Gruppen (GID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE Reservierung_Essen
-add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE restrict ON UPDATE restrict;
+add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE Reservierung_Essen
-add foreign key (SPID) REFERENCES Speisekarte (SPID) ON DELETE restrict ON UPDATE restrict;
+add foreign key (SPID) REFERENCES Speisekarte (SPID) ON DELETE cascade ON UPDATE cascade;
 
 
 -- --------------------------------------------------------
