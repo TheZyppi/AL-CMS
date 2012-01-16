@@ -94,10 +94,10 @@ CREATE TABLE IF NOT EXISTS `Tische` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `Rauume`
+-- Tabellenstruktur für Tabelle `Raeume`
 --
 
-CREATE TABLE IF NOT EXISTS `Rauume` (
+CREATE TABLE IF NOT EXISTS `Raeume` (
   `RAID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Name` varchar(40),
   `RBeschreibung` text,
@@ -385,11 +385,11 @@ add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE cascade ON UPDAT
 ALTER TABLE Reservierungen_User 
 add foreign key (RID) REFERENCES Benutzer (UID) ON DELETE cascade ON UPDATE cascade;
 
-ALTER TABLE Reservierungen_Rauume
+ALTER TABLE Reservierungen_Raeume
 add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE cascade ON UPDATE cascade;
 
-ALTER TABLE Reservierungen_Rauume
-add foreign key (RAID) REFERENCES Rauume (RAID) ON DELETE cascade ON UPDATE cascade;
+ALTER TABLE Reservierungen_Raeume
+add foreign key (RAID) REFERENCES Raeume (RAID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE Reservierungen_Tisch
 add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE cascade ON UPDATE cascade;

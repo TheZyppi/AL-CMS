@@ -39,7 +39,7 @@
 	$uhrzeit=explode( ':', $_POST['uhrzeit'] );	
 	}
 	// Hier wird nach der normalisierung der Daten die Daten mit mktime in timestamp umgewandelt.
-	$datum_u_t=mktime( $uhrzeit[4], $uhrzeit[5], 0, $datum[1], $datum[0], $datum[2] );
+	$datum_u_t=mktime( $uhrzeit[0], $uhrzeit[1], $uhrzeit[2], $datum[1], $datum[0], $datum[2] );
 
 //ANFANG FORMULAR FÜR DIE DATENEINGABE
 echo '<form method="post" action="'; print $_SERVER['PHP_SELF']; echo'">';
@@ -78,9 +78,6 @@ echo '<form method="post" action="'; print $_SERVER['PHP_SELF']; echo'">';
 		<input type="text" name="ort" size="40" maxlength="40">
 		</td>
 		</tr>
-		</tr>
-		</tr>
-		<tr>
 		<tr>
 		<td height=20px>
 		</td>
@@ -106,7 +103,7 @@ echo '<form method="post" action="'; print $_SERVER['PHP_SELF']; echo'">';
 	 FROM Reservierungen, Reservierungen_Tisch WHERE Reservierungen.RID=Reservierungen_Tisch.RID AND Reservierungen.maxtime <= ".$datum_u_t."");
 	
 	// Array für die TIDs			
-	$tichids=array();
+	$tischids=array();
 	
 	// While-Schleife zum Befüllen des Arrays
 	while ($zeile = mysql_fetch_array($tischa))
@@ -119,7 +116,7 @@ echo '<form method="post" action="'; print $_SERVER['PHP_SELF']; echo'">';
 	
 		while ($zeile2 = mysql_fetch_assoc( $tische))
 		{
-		if (in_array($zeile2['TID'], $tichids)) {
+		if (in_array($zeile2['TID'], $tischids)) {
 					
 } 
 		
@@ -152,28 +149,28 @@ else {
 		
 		
 	// Abfrage um herauszufinden, welche Resavierungen es an dem Tag für welche Räume gab und welche frei sind.
-	$rauuma=mysql_query("SELECT Reservierungen.RID, Reservierungen.maxtime, Reservierungen_Rauume.RID, Reservierungen_Rauume.RAID
-	 FROM Reservierungen, Reservierungen_Rauume WHERE Reservierungen.RID=Reservierungen_Rauume.RID AND Reservierungen.maxtime <= ".$datum_u_t."");
+	$rauma=mysql_query("SELECT Reservierungen.RID, Reservierungen.maxtime, Reservierungen_Raeume.RID, Reservierungen_Raeume.RAID
+	 FROM Reservierungen, Reservierungen_Raeume WHERE Reservierungen.RID=Reservierungen_Raeume.RID AND Reservierungen.maxtime <= ".$datum_u_t."");
 	
 	// Array für die RAIDs			
-	$rauumids=array();
+	$raumids=array();
 	
 	// While-Schleife zum Befüllen des Arrays
-	while ($zeile = mysql_fetch_array($rauuma))
+	while ($zeile = mysql_fetch_array($rauma))
 		{
-		array_push($rauumids, $zeile['RAID']);
+		array_push($raumids, $zeile['RAID']);
 			
 		}
 	// Räume Abfrage
-	$rauume=mysql_query("SELECT RAID, Name, RBeschreibung FROM Rauume"); 
+	$raume=mysql_query("SELECT RAID, Name, RBeschreibung FROM Raeume"); 
 	
-		while ($zeile2 = mysql_fetch_assoc($rauume))
+		while ($zeile2 = mysql_fetch_assoc($raume))
 		{
-		if (in_array($zeile2['RAID'], $rauumids)) {
+		if (in_array($zeile2['RAID'], $raumids)) {
 					
 } 
 	// Wenn keine Räume mehr vorhanden sind	
-		else if($rauumids=="") {
+		else if($raumids=="") {
 		echo "Keine Räume mehr vorhanden.";	
 		}
 		// Hier werden die Räume angezeigt die noch frei sind.
