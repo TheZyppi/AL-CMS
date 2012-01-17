@@ -16,25 +16,42 @@
   */
  if (isset($_POST['tisch'])=="" && isset($_POST['raum'])=="" && isset($_POST['name'])=="" && isset($_POST['vorname'])=="" && isset($_POST['postleitzahl'])=="" && isset($_POST['ort'])=="")
  {
- 	echo "Sie haben nichts angegeben.";	
+ 	echo "Sie haben nichts angegeben.";
+	exit;
  }
  else if (isset($_POST['name'])=="")
  {
- echo "Sie haben vergessen ihren Namen anzugeben.";	
+ echo "Sie haben vergessen ihren Namen anzugeben.";
+ exit;	
  }
  else if (isset($_POST['vorname'])=="")
  {
- echo "Sie haben vergessen ihren Vornamen anzugeben.";	
+ echo "Sie haben vergessen ihren Vornamen anzugeben.";
+ exit;	
  }
  else if (isset($_POST['postleitzahl'])=="")
  {
- echo "Sie haben vergessen ihre Postleitzahl anzugeben.";	
+ echo "Sie haben vergessen ihre Postleitzahl anzugeben.";
+ exit;	
  }
  else if (isset($_POST['ort'])=="")
  {
- echo "Sie haben vergessen ihren Ort anzugeben.";	
+ echo "Sie haben vergessen ihren Ort anzugeben.";
+ exit;	
  }
  else {
+ 	
+	 /*
+  * Eintragen der Reservierung
+  */
+ 	$time=$_POST['time'];
+ 	$ipadresse =$_SERVER['REMOTE_ADDR']; 
+ 	$session=session_id();
+ 
+ 	$reintragen="INSERT INTO reservierungen (Session_ID, IP_Adresse, maxtime, U_N) VALUES ('".$session."', '".$ipadresse."', '".$time."', '1')";
+ 	$pr=mysql_query($reintragen) or die (mysql_error());
+	
+	
   if (isset($_POST['tisch'])=="") {
   	echo "Sie haben keinen Tisch ausgewählt.";
 	exit; 

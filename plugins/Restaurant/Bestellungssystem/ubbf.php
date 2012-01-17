@@ -20,27 +20,25 @@
  		echo "Sie haben vergessen ein Datum und die Uhrzeit anzugeben.";
 		exit;
  	}
-	else {
-		
-	if(isset($_POST['datum'])=="")
+	else if(isset($_POST['datum'])=="")
 	{
 		echo "Sie haben kein Datum angegeben.";
 		exit;
 	}
-	else {
-		$datum=explode( '.', $_POST['datum'] );
-	}
-	if(isset($_POST['uhrzeit'])=="")
+	else if(isset($_POST['uhrzeit'])=="") 
 	{
 	echo "Sie haben keine Uhrzeit angegeben.";
 	exit;
 	}
 	else {
+	$datum=explode( '.', $_POST['datum'] );
 	$uhrzeit=explode( ':', $_POST['uhrzeit'] );	
-	}
+	
 	// Hier wird nach der normalisierung der Daten die Daten mit mktime in timestamp umgewandelt.
 	$datum_u_t=mktime( $uhrzeit[0], $uhrzeit[1], $uhrzeit[2], $datum[1], $datum[0], $datum[2] );
-
+	$time=mktime( $uhrzeit[0], $uhrzeit[1], $uhrzeit[2], 0, 0, 0);
+	$dauer="2";
+	$timer= strtotime("+". $dauer. " hours" ,$time);
 //ANFANG FORMULAR FÜR DIE DATENEINGABE
 echo '<form method="post" action="'; print $_SERVER['PHP_SELF']; echo'">';
 
@@ -135,7 +133,7 @@ else {
 		</td>
 		</tr>
 		<td colspan=2 align="center">
-		<h3>Rauume:</h3>
+		<h3>Raeume:</h3>
 		</td>
 		</tr>
 		<tr>
@@ -175,7 +173,7 @@ else {
 		}
 		// Hier werden die Räume angezeigt die noch frei sind.
 else {
-			echo '<input type="checkbox"  name="raum[]" value='. $zeile2['RAID'] .'>'. $zeile2['Name'].'  <br>';	
+			echo '<input type="checkbox"  name="raum[]" value='.$zeile2['RAID'] .'>'. $zeile2['Name'].'  <br>';	
 		}
 			}
 		// ENDE VON OBERABFRAGE RÄUME
@@ -186,6 +184,7 @@ else {
 		</tr>
 		<tr>
 		<td colspan=2 align="center">
+		<INPUT name="time" TYPE="HIDDEN" value='.$timer.'>
 		<br>
 		<p>
 		<input type="submit" value="Absenden" name="submit2">
@@ -195,6 +194,6 @@ else {
 		</table>
 ';
 	}
-	
+
 
 ?>
