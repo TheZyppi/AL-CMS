@@ -62,6 +62,14 @@ echo '<form method="post" action="'; print $_SERVER['PHP_SELF']; echo'">';
 		</tr>
 		<tr>
 		<td width="20%">
+		Adresse:<p>
+		</td>
+		<td width="20%">
+		<input type="text" name="adresse" size="40" maxlength="40">
+		</td>
+		</tr>
+		<tr>
+		<td width="20%">
 		Postleitzahl:<p>
 		</td>
 		<td width="20%">
@@ -74,6 +82,14 @@ echo '<form method="post" action="'; print $_SERVER['PHP_SELF']; echo'">';
 		</td>
 		<td width="20%">
 		<input type="text" name="ort" size="40" maxlength="40">
+		</td>
+		</tr>
+		<tr>
+		<td width="20%">
+		Email:<p>
+		</td>
+		<td width="20%">
+		<input type="text" name="email" size="40" maxlength="40">
 		</td>
 		</tr>
 		<tr>

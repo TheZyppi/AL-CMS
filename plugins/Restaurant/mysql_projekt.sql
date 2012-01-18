@@ -68,10 +68,10 @@ CREATE TABLE IF NOT EXISTS `Reservierungen_Tisch` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `Reservierungen_Rauume`
+-- Tabellenstruktur für Tabelle `Reservierungen_Raeume`
 --
 
-CREATE TABLE IF NOT EXISTS `Reservierungen_Rauume` (
+CREATE TABLE IF NOT EXISTS `Reservierungen_Raeume` (
   `RID` int(11) UNSIGNED NOT NULL,
   `RAID` int(11) UNSIGNED NOT NULL
 ); 
@@ -203,9 +203,7 @@ CREATE TABLE IF NOT EXISTS `Reservierungen_Non_Reg` (
   `ROrt` varchar(40),
   `RPLZ` varchar(25),
   `RAdresse` varchar(25),
-  `Email` varchar(45),
-  `IP_Adresse` varchar(45),
-  `Session_ID` varchar(45)
+  `Email` varchar(45)
 ); 
 
 

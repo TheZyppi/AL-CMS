@@ -48,7 +48,18 @@
  	$ipadresse =$_SERVER['REMOTE_ADDR']; 
  	$session=session_id();
  
+ 	// Benutzerdaten werden gesammelt
+ 	$name=$_POST['name'];
+	$vorname=$_POST['vorname'];
+	$plz=$_POST['postleitzahl'];
+	$ort=$_POST['ort'];
+	$adresse=$_POST['adresse'];
+	$email=$_POST['email'];
+	
  	$reintragen="INSERT INTO reservierungen (Session_ID, IP_Adresse, maxtime, U_N) VALUES ('".$session."', '".$ipadresse."', '".$time."', '1')";
+ 	$pr=mysql_query($reintragen) or die (mysql_error());
+	
+	$reintragen="INSERT INTO reservierungen_non_reg (RName, RVorname, ROrt, RPLZ, RAdresse, Email) VALUES ('".$session."', '".$ipadresse."', '".$time."', '1')";
  	$pr=mysql_query($reintragen) or die (mysql_error());
 	
 	
