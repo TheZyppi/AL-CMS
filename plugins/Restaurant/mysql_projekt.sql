@@ -141,6 +141,7 @@ CREATE TABLE IF NOT EXISTS `Information_Pages` (
 CREATE TABLE IF NOT EXISTS `Bezahlung_Arten` (
   `BAID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `BAName` varchar(45),
+  `BADatei``varchar(100),
   `BABeschreibung` text,
   `BAImage` varchar(60),
   PRIMARY KEY (`BAID`)
@@ -413,7 +414,17 @@ add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE cascade ON UPDAT
 ALTER TABLE Reservierung_Essen
 add foreign key (SPID) REFERENCES Speisekarte (SPID) ON DELETE cascade ON UPDATE cascade;
 
+ALTER TABLE plugin_title
+add foreign key (PLID) REFERENCES Plugins (PLID) ON DELETE cascade ON UPDATE cascade;
 
+ALTER TABLE plugin_meta
+add foreign key (PLID) REFERENCES Plugins (PLID) ON DELETE cascade ON UPDATE cascade;
+
+ALTER TABLE plugin_funktion_title
+add foreign key (PLFID) REFERENCES plugin_funktion (PLFID) ON DELETE cascade ON UPDATE cascade;
+
+ALTER TABLE plugin_funktion_meta
+add foreign key (PLFID) REFERENCES plugin_funktion (PLFID) ON DELETE cascade ON UPDATE cascade;
 -- --------------------------------------------------------
 
 

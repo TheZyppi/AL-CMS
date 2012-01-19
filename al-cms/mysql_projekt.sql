@@ -199,6 +199,17 @@ add foreign key (PLID) REFERENCES Plugins (PLID) ON DELETE cascade ON UPDATE cas
 ALTER TABLE Plugin_Funktion_Rechte
 add foreign key (GID) REFERENCES Gruppen (GID) ON DELETE cascade ON UPDATE cascade;
 
+ALTER TABLE plugin_title
+add foreign key (PLID) REFERENCES Plugins (PLID) ON DELETE cascade ON UPDATE cascade;
+
+ALTER TABLE plugin_meta
+add foreign key (PLID) REFERENCES Plugins (PLID) ON DELETE cascade ON UPDATE cascade;
+
+ALTER TABLE plugin_funktion_title
+add foreign key (PLFID) REFERENCES plugin_funktion (PLFID) ON DELETE cascade ON UPDATE cascade;
+
+ALTER TABLE plugin_funktion_meta
+add foreign key (PLFID) REFERENCES plugin_funktion (PLFID) ON DELETE cascade ON UPDATE cascade;
 -- --------------------------------------------------------
 
 

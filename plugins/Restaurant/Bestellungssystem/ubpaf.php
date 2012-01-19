@@ -14,7 +14,7 @@
  /*
   * Eintragen von den Benutzerdaten aus dem ubbf.php Formular. 
   */
- if (isset($_POST['tisch'])=="" && isset($_POST['raum'])=="" && isset($_POST['name'])=="" && isset($_POST['vorname'])=="" && isset($_POST['postleitzahl'])=="" && isset($_POST['ort'])=="")
+ if (isset($_POST['tisch'])=="" && isset($_POST['raum'])=="" && isset($_POST['name'])=="" && isset($_POST['vorname'])=="" && isset($_POST['postleitzahl'])=="" && isset($_POST['ort'])=="" && isset($_POST['adresse'])=="" && isset($_POST['email']))
  {
  	echo "Sie haben nichts angegeben.";
 	exit;
@@ -39,11 +39,21 @@
  echo "Sie haben vergessen ihren Ort anzugeben.";
  exit;	
  }
+ else if (isset($_POST['adresse'])=="")
+ {
+ echo "Sie haben vergessen ihre Adresse anzugeben.";
+ exit;	
+ }
+ else if (isset($_POST['email'])=="")
+ {
+ echo "Sie haben vergessen ihre Email-Adresse anzugeben.";
+ exit;	
+ }
  else {
  	
-	 /*
-  * Eintragen der Reservierung
-  */
+	/*
+  	* Eintragen der Reservierung
+  	*/
  	$time=$_POST['time'];
  	$ipadresse =$_SERVER['REMOTE_ADDR']; 
  	$session=session_id();
@@ -59,8 +69,12 @@
  	$reintragen="INSERT INTO reservierungen (Session_ID, IP_Adresse, maxtime, U_N) VALUES ('".$session."', '".$ipadresse."', '".$time."', '1')";
  	$pr=mysql_query($reintragen) or die (mysql_error());
 	
-	$reintragen="INSERT INTO reservierungen_non_reg (RName, RVorname, ROrt, RPLZ, RAdresse, Email) VALUES ('".$session."', '".$ipadresse."', '".$time."', '1')";
- 	$pr=mysql_query($reintragen) or die (mysql_error());
+	//Reservierungs-ID wird abgefragt
+	$rida=mysql_insert_id();
+	
+	// Eintragen der Benutzer-Daten
+	$rnreintragen="INSERT INTO reservierungen_non_reg (RID, RName, RVorname, ROrt, RPLZ, RAdresse, Email) VALUES ('".$rida."', '".$name."', '".$vorname."', '".$ort."', '".$plz."', '".$adresse."', '".$email."')";
+ 	$pr2=mysql_query($rnreintragen) or die (mysql_error());
 	
 	
   if (isset($_POST['tisch'])=="") {
@@ -71,7 +85,7 @@
      foreach($_POST['tisch'] as $tisch)
 {
 $eintrag="INSERT INTO reservierungen_tisch(RID, TID)
-VALUES ('".$rid."', '".$tisch."')";
+VALUES ('".$rida."', '".$tisch."')";
 mysql_query($eintrag) or die (mysql_error());
 }
  }
@@ -84,10 +98,41 @@ mysql_query($eintrag) or die (mysql_error());
      foreach($_POST['raum'] as $raum)
 {
 $eintrag2="INSERT INTO reservierungen_raeume(RID, RAID)
-VALUES ('".$rid."', '".$raum."')";
+VALUES ('".$rida."', '".$raum."')";
 mysql_query($eintrag2) or die (mysql_error());
 }
  }
- $paa="SELECT * FROM";
+ 
+ 		echo '<form method="post" action="';print $_SERVER['PHP_SELF']; echo'>';
+		echo '<table border=0 width="650">
+		<tr>
+		<td width="20%">
+		Bezahlungsarten::<p>
+		</td>
+		</tr>
+		<tr>
+		<td>';
+		
+ 		$paa="SELECT * FROM bezahlung_arten";
+		$db_erg = mysql_query( $paa );
+		if ( ! $db_erg )
+		{	
+  		die('Ungültige Abfrage: ' . mysql_error());
+		}
+		while ($zeile = mysql_fetch_array( $db_erg, MYSQL_ASSOC))
+		{
+		echo '<input type="radio" name="bezahlung" value='. $zeile['BAID'] .'>'. $zeile['BAName'].' <br>';	
+		}
+		echo '
+		</td>
+		</tr>
+		<tr>
+		<td>
+		<input type="submit" value="Weiter" name="submit3">
+		</td>
+		</tr>
+		</form>
+		</table>
+		';	
  }
 ?>
