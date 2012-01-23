@@ -10,27 +10,24 @@
  *(at your option) any later version.  
  *   
  */
-//$pl=$_GET['pid'];
-db_con();
-$query="SELECT * FROM news";
-		$db_erg2 = mysql_query( $query);
-		if ( ! $db_erg2 )
-		{	
-  		die('Ungültige Abfrage: ' . mysql_error());
-		}
 
-		echo '<table border=0>';	
-while ($zeile2 = mysql_fetch_array( $db_erg2))
-		{
-			echo '
+function news_lesen()
+{
+$nid=$_GET['nid'];
+	db_con();
+$query="SELECT * FROM news WHERE NID = ".mysql_real_escape_string($nid)."";
+$result=mysql_query($query) or die(mysql_error());
+$reihe = mysql_fetch_array($result, MYSQL_ASSOC) or die (mysql_error());	
+
+echo '<table border=0>
 			<tr>
 			<td>';
-		echo '<a href="index.php?pl=1&plf=news_lesen&nid='.$zeile2['NID'].'">'.$zeile2['NID'].' '.$zeile2['title'].'</a>';
+		echo ''.$reihe['NID'].' '.$reihe['title'].'</a>';
 		echo '</td></tr><tr>
 		<td>
-		'.$zeile2['text'].'
+		'.$reihe['text'].'
 		</td>
-		</tr>';
-		}	
-echo '</table>';
+		</tr>
+		</table>';
+}
 ?>

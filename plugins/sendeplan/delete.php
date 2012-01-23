@@ -11,16 +11,13 @@
  *   
  */
 
- if ($_POST['bezahlung']=="")
- {
- 	echo "Sie haben keine Bezahlungsart angegeben.";
-	exit;
- }
- else {
-     $sql = "SELECT BADatei FROM Bezahlung_Arten WHERE BAID=".$_POST['bezahlung']."";
-$ergebnis = mysql_query($sql);
-$reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC) or die (mysql_error());
-include($reihe['BADatei']);
- }
+db_con();
+$said=$_GET['said'];
+$sql = "DELETE from sendeplan WHERE SAID = ".mysql_real_escape_string($said)."";
+if (@mysql_query($sql)) {
+echo("<p>Sendung mit der SAID: $said erfolgreich gel&ouml;scht!</p>");
+} else {
+echo("<p>Fehler beim löschen: " . mysql_error() . "</p>");
+}
 
 ?>

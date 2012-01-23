@@ -14,37 +14,37 @@
  /*
   * Eintragen von den Benutzerdaten aus dem ubbf.php Formular. 
   */
- if (isset($_POST['tisch'])=="" && isset($_POST['raum'])=="" && isset($_POST['name'])=="" && isset($_POST['vorname'])=="" && isset($_POST['postleitzahl'])=="" && isset($_POST['ort'])=="" && isset($_POST['adresse'])=="" && isset($_POST['email']))
+ if ($_POST['tisch']=="" && $_POST['raum']=="" && $_POST['name']=="" && $_POST['vorname']=="" && $_POST['postleitzahl']=="" && $_POST['ort']=="" && $_POST['adresse']=="" && $_POST['email'])
  {
  	echo "Sie haben nichts angegeben.";
 	exit;
  }
- else if (isset($_POST['name'])=="")
+ else if ($_POST['name']=="")
  {
  echo "Sie haben vergessen ihren Namen anzugeben.";
  exit;	
  }
- else if (isset($_POST['vorname'])=="")
+ else if ($_POST['vorname']=="")
  {
  echo "Sie haben vergessen ihren Vornamen anzugeben.";
  exit;	
  }
- else if (isset($_POST['postleitzahl'])=="")
+ else if ($_POST['postleitzahl']=="")
  {
  echo "Sie haben vergessen ihre Postleitzahl anzugeben.";
  exit;	
  }
- else if (isset($_POST['ort'])=="")
+ else if ($_POST['ort']=="")
  {
  echo "Sie haben vergessen ihren Ort anzugeben.";
  exit;	
  }
- else if (isset($_POST['adresse'])=="")
+ else if ($_POST['adresse']=="")
  {
  echo "Sie haben vergessen ihre Adresse anzugeben.";
  exit;	
  }
- else if (isset($_POST['email'])=="")
+ else if ($_POST['email']=="")
  {
  echo "Sie haben vergessen ihre Email-Adresse anzugeben.";
  exit;	

@@ -15,17 +15,17 @@
   * Das Datum und Uhrzeit aus der UBDF.php werden wegen den Sonderzeichen erstmal "normalisiert",
   * um mit mktime weiter verarbeitet werden zu können.
   */
- 	if (isset($_POST['datum'])=="" && isset($_POST['uhrzeit'])=="")
+ 	if ($_POST['datum']=="" && $_POST['uhrzeit']=="")
  	{
  		echo "Sie haben vergessen ein Datum und die Uhrzeit anzugeben.";
 		exit;
  	}
-	else if(isset($_POST['datum'])=="")
+	else if($_POST['datum']=="")
 	{
 		echo "Sie haben kein Datum angegeben.";
 		exit;
 	}
-	else if(isset($_POST['uhrzeit'])=="") 
+	else if($_POST['uhrzeit']=="") 
 	{
 	echo "Sie haben keine Uhrzeit angegeben.";
 	exit;
@@ -36,7 +36,7 @@
 	
 	// Hier wird nach der normalisierung der Daten die Daten mit mktime in timestamp umgewandelt.
 	$datum_u_t=mktime( $uhrzeit[0], $uhrzeit[1], $uhrzeit[2], $datum[1], $datum[0], $datum[2] );
-	$time=mktime( $uhrzeit[0], $uhrzeit[1], $uhrzeit[2], 0, 0, 0);
+	$time=mktime( $uhrzeit[0], $uhrzeit[1], 0, 0, 0, 0);
 	$dauer="2";
 	$timer= strtotime("+". $dauer. " hours" ,$time);
 //ANFANG FORMULAR FÜR DIE DATENEINGABE
@@ -210,6 +210,4 @@ else {
 		</table>
 ';
 	}
-
-
 ?>

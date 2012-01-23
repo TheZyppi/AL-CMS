@@ -10,27 +10,27 @@
  *(at your option) any later version.  
  *   
  */
-//$pl=$_GET['pid'];
+
 db_con();
-$query="SELECT * FROM news";
+$query="SELECT * FROM sendeplan";
 		$db_erg2 = mysql_query( $query);
 		if ( ! $db_erg2 )
 		{	
   		die('Ungültige Abfrage: ' . mysql_error());
 		}
 
-		echo '<table border=0>';	
+			
 while ($zeile2 = mysql_fetch_array( $db_erg2))
 		{
-			echo '
+			echo '<table border=0>
 			<tr>
 			<td>';
-		echo '<a href="index.php?pl=1&plf=news_lesen&nid='.$zeile2['NID'].'">'.$zeile2['NID'].' '.$zeile2['title'].'</a>';
-		echo '</td></tr><tr>
+		echo '<a href="edit.php?said='.$zeile2['SAID'].'">'.$zeile2['SAID'].' '.$zeile2['showname'].'</a>';
+		echo '</td>
 		<td>
-		'.$zeile2['text'].'
+		<a href="delete.php?said='.$zeile2['SAID'].'">Loeschen</a>
 		</td>
-		</tr>';
+		</tr></table>';
 		}	
-echo '</table>';
+
 ?>

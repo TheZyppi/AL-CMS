@@ -408,6 +408,9 @@ add foreign key (PLID) REFERENCES Plugins (PLID) ON DELETE cascade ON UPDATE cas
 ALTER TABLE Plugin_Funktion_Rechte
 add foreign key (GID) REFERENCES Gruppen (GID) ON DELETE cascade ON UPDATE cascade;
 
+ALTER TABLE Plugin_Funktion_Rechte
+add foreign key (PLFID) REFERENCES Plugin_Funktion (PLFID) ON DELETE cascade ON UPDATE cascade;
+
 ALTER TABLE Reservierung_Essen
 add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE cascade ON UPDATE cascade;
 

@@ -94,7 +94,7 @@ Bitte gib deinen Benutzernamen und dein Passwort ein. (Groß- und Kleinschreibun
 <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
 <strong>Benutzername:</strong> <input type="text" name="benutzer" /><br />
 <strong>Passwort:</strong> <input type="password" name="passwort" /><br />
-<input type="submit" name="absenden" value="Login!" />
+<input type="submit" name="absenden" value="Login" />
 </form>
 </body>
 </html>

@@ -85,7 +85,7 @@ if ($reihe['aktiv']==1) {
 if ($group==$reihe2['GID']) {
 	if($reihe2['Y_N']==1) {
 		// Prüft ob eine Pluginfunktion angegeben wurde oder nicht
-		if (isset($_GET['plf'])=="")
+		if ($_GET['plf']=="")
 		{
 			include(''.$srdp.'plugins/'.$reihe['hdatei'].'');
 		}
@@ -102,12 +102,14 @@ if ($group==$reihe2['GID']) {
 		else {
 			echo "Sie duerfen das Plugin nicht benutzen!";
 			exit;
+			mysql_close();
 			}	
 	}
 // Wenn keine Gruppe angegeben wurde
 	else {
-		echo "Um dieses Plugin nutzen zu können bitte einloggen!";
+		echo "Auf ihre Gruppe wurde keine Berechtigung gesetzt.";
 		exit;
+		mysql_close();
 		}
 	
 	}
@@ -115,8 +117,7 @@ if ($group==$reihe2['GID']) {
 	else {
 		echo "Plugin ist deaktiviert";
 		exit;
+		mysql_close();
 		}
 		}
-
-mysql_close();
 ?>
