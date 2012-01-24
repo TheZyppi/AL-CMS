@@ -22,7 +22,7 @@ $group=$_SESSION['gruppe'];
 // Die Datei zum Datenbank Connecten wird reingeladen
 
 // Es wird nachgeguckt ob eine PluginID angegeben wurde.
-if (isset($_GET['pl'])=="") {
+if (isset($_GET['pl'])=="" || $_GET['pl']=="") {
 // Wenn kein Plugin anegeben wurde
 
 // Verbindung zur Datenbank wird aufgebaut in dem die Funktion db_con aufgerufen wird.
@@ -85,7 +85,7 @@ if ($reihe['aktiv']==1) {
 if ($group==$reihe2['GID']) {
 	if($reihe2['Y_N']==1) {
 		// Prüft ob eine Pluginfunktion angegeben wurde oder nicht
-		if ($_GET['plf']=="")
+		if (isset($_GET['plf'])=="")
 		{
 			include(''.$srdp.'plugins/'.$reihe['hdatei'].'');
 		}

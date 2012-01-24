@@ -141,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `Information_Pages` (
 CREATE TABLE IF NOT EXISTS `Bezahlung_Arten` (
   `BAID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `BAName` varchar(45),
-  `BADatei``varchar(100),
+  `BADatei` varchar(100),
   `BABeschreibung` text,
   `BAImage` varchar(60),
   PRIMARY KEY (`BAID`)
@@ -329,6 +329,21 @@ CREATE TABLE IF NOT EXISTS `plugin_title` (
   ); 
 
 -- --------------------------------------------------------
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `news`
+--
+
+CREATE TABLE IF NOT EXISTS `news` (
+  `nid` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `title` varchar(50),
+  `text` text,
+  `newsdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`nid`)
+);
+
 
 -- --------------------------------------------------------
 

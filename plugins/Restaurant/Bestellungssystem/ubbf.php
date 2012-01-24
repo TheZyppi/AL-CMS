@@ -35,7 +35,7 @@
 	$uhrzeit=explode( ':', $_POST['uhrzeit'] );	
 	
 	// Hier wird nach der normalisierung der Daten die Daten mit mktime in timestamp umgewandelt.
-	$datum_u_t=mktime( $uhrzeit[0], $uhrzeit[1], $uhrzeit[2], $datum[1], $datum[0], $datum[2] );
+	$datum_u_t=mktime( $uhrzeit[0], $uhrzeit[1], 0, $datum[1], $datum[0], $datum[2] );
 	$time=mktime( $uhrzeit[0], $uhrzeit[1], 0, 0, 0, 0);
 	$dauer="2";
 	$timer= strtotime("+". $dauer. " hours" ,$time);
@@ -98,7 +98,7 @@ echo '<form method="post" action="'; print $_SERVER['PHP_SELF']; echo'">';
 		</tr>
 		<tr>
 		<td colspan=2 align="center">
-		<h3>Art des Zimmers</h3>
+		<h3>Tische:</h3>
 		</td>
 		</tr>
 		<tr>
