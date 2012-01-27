@@ -2,7 +2,7 @@
 /*
  * AL-CMS -- Gernal Information --
  * 
- * Copyright (C) Dennis Falkenberg (http://www.sunrising-network.de) Email: DFalkenberg@gmx.de
+ * Copyright (C) 2011-2012 Dennis Falkenberg (http://www.sunrising-network.de) Email: DFalkenberg@gmx.de
  * 
  * AL-CMS is a free software, you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -10,7 +10,6 @@
  *(at your option) any later version.  
  *   
  */
-
 db_con();
 $said=$_GET['said'];
 $sql = "DELETE from sendeplan WHERE SAID = ".mysql_real_escape_string($said)."";

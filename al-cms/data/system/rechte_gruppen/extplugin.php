@@ -11,48 +11,18 @@
  *   
  */
 
-
-// Wichtige Daten werden aus der URL und Session ausgelesen
-$group=$_SESSION['gruppe'];
+ 
+ $group=$_SESSION['gruppe'];
 // Die Datei zum Datenbank Connecten wird reingeladen
 
 // Es wird nachgeguckt ob eine PluginID angegeben wurde.
-if (isset($_GET['pl'])=="" || $_GET['pl']=="") {
+if ($plugin==0) {
 // Wenn kein Plugin anegeben wurde
-
-// Verbindung zur Datenbank wird aufgebaut in dem die Funktion db_con aufgerufen wird.
-	db_con();
-	// Abfrage um herauszufinden was das Standart Plugin ist.
-	$splugin="SELECT * FROM al_config WHERE CID='3'";
-	$ergebnis = mysql_query($splugin);
-   	$reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);
-	if ($reihe['funktion']=="")
-	{
-		echo "Sie haben kein Stnadart-Plugin angegeben.";
-		mysql_close();
-		exit;
-	}
-	else {
-	// Abfrage um den Titel des Standart Plugin zu laden
-	$spluginl = "SELECT * FROM plugins WHERE PLID=".mysql_real_escape_string($reihe['funktion'])." LIMIT 1";
-   	$ergebnis2 = mysql_query($spluginl);
-   	$reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
-	if ($reihe['funktion']==$reihe2['PLID'])
-	{
-	// Der Titel vom Standart Plugin wird angezeigt.
-	include (''.$srdp.'plugins/'.$reihe2['hdatei'].'');
-	mysql_close();
+	echo "Sie haben kein Plugin angegeben.";
 	exit;
-	}
-	else {
-		echo "Dieses Plugin Exestiert nicht.";
-		mysql_close();
-		exit;
-	}
-	}
 }
 else {
-$pl=$_GET['pl'];
+$pl=$plugin;
 db_con();
 	if (preg_match ("/^([0-9]+)$/",$pl)) {
 		$sql = "SELECT PLID, PLName, hdatei, aktiv FROM plugins WHERE PLID= ".mysql_real_escape_string($pl)." LIMIT 1";
@@ -69,8 +39,6 @@ $plid=$reihe['PLID'];
    // Wenn es das Plugin nicht gibt wird ein Fehler ausgegeben
 else {
 	echo "Kein Plugin mit der Angegeben ID gefunden.";
-	mysql_close();
-	exit;
 }
 
 	}
@@ -90,8 +58,6 @@ $plid=$reihe['PLID'];
    
 	  else {
 	  	echo "Kein Plugin mit dem angebenen Namen gefunden";
-	  	mysql_close();
-	  	exit;
 	  }
 	}
 // Prüfung ob das Plugin aktiv ist
@@ -134,5 +100,7 @@ if ($group==$reihe2['GID']) {
 		mysql_close();
 		exit;
 		}
+		return $plugin;
 		}
+
 ?>

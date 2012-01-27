@@ -2,7 +2,7 @@
 /*
  * AL-CMS -- Gernal Information --
  * 
- * Copyright (C) Dennis Falkenberg (http://www.sunrising-network.de) Email: DFalkenberg@gmx.de
+ * Copyright (C) 2011-2012 Dennis Falkenberg (http://www.sunrising-network.de) Email: DFalkenberg@gmx.de
  * 
  * AL-CMS is a free software, you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
     {
     $swap = mt_rand(0,count($zeichen)-1);
     $tmp = $zeichen[$swap];
-    $zecihen[$swap] = $zeichen[0];
+    $zeichen[$swap] = $zeichen[0];
     $zeichen[0] = $tmp;
     }
     return substr(implode('',$zeichen),0,$laenge);

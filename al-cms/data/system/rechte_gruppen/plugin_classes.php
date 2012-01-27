@@ -2,7 +2,7 @@
 /*
  * AL-CMS -- Gernal Information --
  * 
- * Copyright (C) Dennis Falkenberg (http://www.sunrising-network.de) Email: DFalkenberg@gmx.de
+ * Copyright (C) 2011-2012 Dennis Falkenberg (http://www.sunrising-network.de) Email: DFalkenberg@gmx.de
  * 
  * AL-CMS is a free software, you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,12 +22,22 @@ class pluginsystem {
 	{
 		include('show.php');
 	}
-	
-	public function plugin($srdp)
-	{	
+	private function plugina ($srdp)
+	{
 		include('plugin.php');
 	}
-
+	public function plugin($srdp)
+	{	
+		$this->plugina($srdp);
+	}
+	private function extplugina ($srdp, $plugin=0)
+	{
+		include('extplugin.php');
+	}
+	public function extplugin($srdp, $plugin=0)
+	{
+		$this->extplugina($srdp, $plugin);
+	}
 }
 
 	$pluginsys = new pluginsystem();
