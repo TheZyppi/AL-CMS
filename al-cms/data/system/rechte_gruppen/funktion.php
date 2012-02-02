@@ -11,12 +11,6 @@
  *   
  */
 
-/* 
-Diese Datei enthält 1 Funktion:
-
-- Plugin_Funktion Aktiv/Rechte Checker
-
-*/
 
 // Wichtige Daten werden aus der URL und Session ausgelesen
 $group=$_SESSION['gruppe'];
@@ -32,13 +26,13 @@ $pl=$_GET['pl'];
 $plf=$_GET['plf'];
 db_con();
 if (preg_match ("/^([0-9]+)$/",$pl)) {
-		$sql = "SELECT PLID, PLName, hdatei, aktiv FROM plugins WHERE PLID= ".mysql_real_escape_string($pl)." LIMIT 1";
+		$sql = "SELECT PLID, PLName, hdatei, sysp, aktiv FROM plugins WHERE PLID= ".mysql_real_escape_string($pl)." LIMIT 1";
    $ergebnis = mysql_query($sql);
       $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);
 	  $plid=$reihe['PLID'];
 }
 else {
-	$sql = "SELECT PLID, PLName, hdatei, aktiv FROM plugins WHERE PLName = '".mysql_real_escape_string($pl)."'";
+	$sql = "SELECT PLID, PLName, hdatei, sysp, aktiv FROM plugins WHERE PLName = '".mysql_real_escape_string($pl)."'";
    $ergebnis = mysql_query($sql) or die (mysql_error());
    $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);
    $plid=$reihe['PLID'];	
@@ -79,6 +73,31 @@ if ($reihe['aktiv']==1) {
 	// Prüfung ob die Gruppe das Plugin ausführen darf
 if ($group==$reihe2['GID']) {
 	if($reihe2['Y_N']==1) {
+		// Überprüft ob es ein Systemplugin ist oder nicht
+		if (preg_match ("/^([0-9]+)$/",$pl)) {
+		$sqlp = "SELECT PLID, PLName, hdatei, sysp, aktiv FROM plugins WHERE PLID= ".mysql_real_escape_string($pl)." LIMIT 1";
+   $ergebnisp = mysql_query($sqlp);
+      $reihep = mysql_fetch_array($ergebnisp, MYSQL_ASSOC);
+}
+else {
+	$sqlp = "SELECT PLID, PLName, hdatei, sysp, aktiv FROM plugins WHERE PLName = '".mysql_real_escape_string($pl)."'";
+   $ergebnisp = mysql_query($sqlp) or die (mysql_error());
+   $reihep = mysql_fetch_array($ergebnisp, MYSQL_ASSOC);
+}
+		if ($reihep['sysp']==1)
+		{
+		// Es wird geguckt ob eine Funktionsdatei vorhanden ist.
+		if ($reihe['hdatei']=="")
+		{
+			echo "Funktionsdatei konnte nicht geladen werden.";
+		}
+		else {
+		include(''.$srdp.'system/'.$reihe['hdatei'].''); // Funktionsdatei wird reingeladen
+		$reihe['Funktionsname']($srdp); // Funktion wird ausgeführt
+		}	
+		}
+		else {
+	
 		// Es wird geguckt ob eine Funktionsdatei vorhanden ist.
 		if ($reihe['hdatei']=="")
 		{
@@ -87,6 +106,7 @@ if ($group==$reihe2['GID']) {
 		else {
 		include(''.$srdp.'plugins/'.$reihe['hdatei'].''); // Funktionsdatei wird reingeladen
 		$reihe['Funktionsname']($srdp); // Funktion wird ausgeführt
+		}
 		}
 		}
 		else {

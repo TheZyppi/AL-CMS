@@ -14,7 +14,7 @@
 // Die dbcon.php wird eingefügt
 db_con();
 // Abfrage welches Design aktiv ist
-$sql = "SELECT DID, DName, DDatei, aktiv FROM design";
+$sql = "SELECT DID, DName, DDatei, aktiv FROM panel_design";
 $ergebnis = mysql_query($sql);
 $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC) or die (mysql_error());	
 
@@ -22,7 +22,7 @@ $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC) or die (mysql_error());
 	if ($reihe['aktiv']==1)
 	{
 $pfad=$reihe['DDatei'];
-include(''.$srdp.'design/'.$pfad.'index.php');
+include(''.$srdp.'panel_design/'.$pfad.'index.php');
 // Die Head Funktion wird reingeladen dient dazu den Header darzustellen
 include('head_function.php');
 	}

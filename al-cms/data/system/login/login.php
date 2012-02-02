@@ -11,9 +11,8 @@
  *   
  */
 
-
-session_start();
-$_SESSION['gruppe'] = 1;
+function login()
+{
 
 // Benutzer und Passwort aus POST-Request holen...
 $benutzer = ( isset($_POST['benutzer']) ) ? $_POST['benutzer'] : '';
@@ -22,9 +21,8 @@ $absenden = ( isset($_POST['absenden']) ) ? true : false;
 
 if( $absenden )
 {
-  include('../../config/dbcon.php'); // Fügt die Datei dbcon.php hinzu
   db_con(); // Führt die Funktion db_con aus
-   $sql = "SELECT UID, Username, GID, Passwort, Passwort_Salt FROM Benutzer WHERE Username = \"".$benutzer."\" LIMIT 1"; // Fragt den Datensatz vom Benutzer X ab
+   $sql = "SELECT UID, Username, GID, Passwort, Passwort_Salt FROM benutzer WHERE Username = \"".$benutzer."\" LIMIT 1"; // Fragt den Datensatz vom Benutzer X ab
    $ergebnis = mysql_query($sql);
    $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC) or die (mysql_error());
    $passsalt=$reihe['Passwort_Salt']; // Passwort wird aus der Datenbank geholt
@@ -44,7 +42,7 @@ if( $absenden )
       $_SESSION['uid'] = $reihe['UID']; // BenutzerID wird in der Session abgespeichert
       
         db_con();
-       $sql1 = "UPDATE Benutzer SET Session_ID='$ses', IP_Adresse='$ipadresse' WHERE Username = '$benutzer' LIMIT 1";
+       $sql1 = "UPDATE benutzer SET Session_ID='$ses', IP_Adresse='$ipadresse' WHERE Username = '$benutzer' LIMIT 1";
       $ergebnis=mysql_query($sql1);
       // Wichtig ist, dass die Eintragungen in die Session vor der Ausgabe stattfinden.
       // Mit der ersten Ausgabe werden die Header bereits gesendet und können dann nicht mehr
@@ -76,7 +74,7 @@ echo $_SESSION['gruppe'];
 echo "<p>";
 ?>
 Bitte gib deinen Benutzernamen und dein Passwort ein. (Groß- und Kleinschreibung beachten!)<br />
-<form action="<?=$_SERVER['PHP_SELF']?>" method="post">
+<form action="index.php?pl=1&plf=login" method="post">
 <strong>Benutzername:</strong> <input type="text" name="benutzer" /><br />
 <strong>Passwort:</strong> <input type="password" name="passwort" /><br />
 <input type="submit" name="absenden" value="Login" />
@@ -86,5 +84,5 @@ Bitte gib deinen Benutzernamen und dein Passwort ein. (Groß- und Kleinschreibun
 <?php
 
 }
-
+}
 ?>

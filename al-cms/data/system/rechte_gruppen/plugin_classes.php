@@ -24,11 +24,11 @@ class pluginsystem {
 	}
 	private function plugina ($srdp)
 	{
-		include('plugin.php');
+		include('pluginm.php');
 	}
 	public function plugin($srdp)
 	{	
-		$this->plugina($srdp);
+		include('plugin.php');
 	}
 	private function extplugina ($srdp, $plugin=0)
 	{

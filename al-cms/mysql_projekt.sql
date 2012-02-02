@@ -3,7 +3,7 @@
 -- Tabellenstruktur für Tabelle `Benutzer`
 --
 
-CREATE TABLE IF NOT EXISTS `Benutzer` (
+CREATE TABLE IF NOT EXISTS `benutzer` (
   `UID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `GID` int(11) UNSIGNED NOT NULL,
   `Username` varchar(25),
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `Benutzer` (
 -- Tabellenstruktur für Tabelle `Gruppen`
 --
 
-CREATE TABLE IF NOT EXISTS `Gruppen` (
+CREATE TABLE IF NOT EXISTS `gruppen` (
   `GID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `GName` varchar(45),
   `GBeschreibung` text,
@@ -69,12 +69,28 @@ CREATE TABLE IF NOT EXISTS `plugin_funktion_rechte` (
 -- Tabellenstruktur für Tabelle `Design`
 --
 
-CREATE TABLE IF NOT EXISTS `Design` (
+CREATE TABLE IF NOT EXISTS `design` (
   `DID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `DName` varchar(45),
   `DDatei` varchar(100),
   `aktiv` int(1) UNSIGNED NOT NULL,
-	PRIMARY KEY (`DID`)
+   PRIMARY KEY (`DID`)
+); 
+
+-- --------------------------------------------------------
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `Panel-Design`
+--
+
+CREATE TABLE IF NOT EXISTS `panel_design` (
+  `PDID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `pdname` varchar(45),
+  `pdatei` varchar(100),
+  `aktiv` int(1) UNSIGNED NOT NULL,
+   PRIMARY KEY (`PDID`)
 ); 
 
 -- --------------------------------------------------------
@@ -154,7 +170,7 @@ CREATE TABLE IF NOT EXISTS `plugin_title` (
 -- Tabellenstruktur für Tabelle `Rechte_Plugins`
 --
 
-CREATE TABLE IF NOT EXISTS `Rechte_Plugins` (
+CREATE TABLE IF NOT EXISTS `rechte_plugins` (
 	`PLID` int(11) UNSIGNED NOT NULL,
   `GID` int(11) UNSIGNED NOT NULL,
   `Y_N` int(1)
@@ -172,6 +188,7 @@ CREATE TABLE IF NOT EXISTS `plugins` (
   `PLName` varchar(45),
   `hdatei` varchar(100),
   `PLBeschreibung` text,
+  `sysp` int(1) NOT NULL,
   `aktiv` int(1) NOT NULL,
   PRIMARY KEY (`PLID`)
 ); 
@@ -184,29 +201,29 @@ CREATE TABLE IF NOT EXISTS `plugins` (
 -- Fremdschlüssel setzen
 --
 
-ALTER TABLE Benutzer 
-add foreign key (GID) REFERENCES Gruppen (GID) ON DELETE cascade ON UPDATE cascade;
+ALTER TABLE benutzer 
+add foreign key (GID) REFERENCES gruppen (GID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE rechte_plugins
-add foreign key (GID) REFERENCES Gruppen (GID) ON DELETE cascade ON UPDATE cascade;
+add foreign key (GID) REFERENCES gruppen (GID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE rechte_plugins
-add foreign key (PLID) REFERENCES Plugins (PLID)ON DELETE cascade ON UPDATE cascade;
+add foreign key (PLID) REFERENCES plugins (PLID)ON DELETE cascade ON UPDATE cascade;
 
-ALTER TABLE Plugin_Funktion
-add foreign key (PLID) REFERENCES Plugins (PLID) ON DELETE cascade ON UPDATE cascade;
+ALTER TABLE plugin_funktion
+add foreign key (PLID) REFERENCES plugins (PLID) ON DELETE cascade ON UPDATE cascade;
 
-ALTER TABLE Plugin_Funktion_Rechte
-add foreign key (GID) REFERENCES Gruppen (GID) ON DELETE cascade ON UPDATE cascade;
+ALTER TABLE plugin_funktion_rechte
+add foreign key (GID) REFERENCES gruppen (GID) ON DELETE cascade ON UPDATE cascade;
 
-ALTER TABLE Plugin_Funktion_Rechte
-add foreign key (PLFID) REFERENCES Plugin_Funktion (PLFID) ON DELETE cascade ON UPDATE cascade;
+ALTER TABLE plugin_funktion_rechte
+add foreign key (PLFID) REFERENCES plugin_funktion (PLFID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE plugin_title
-add foreign key (PLID) REFERENCES Plugins (PLID) ON DELETE cascade ON UPDATE cascade;
+add foreign key (PLID) REFERENCES plugins (PLID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE plugin_meta
-add foreign key (PLID) REFERENCES Plugins (PLID) ON DELETE cascade ON UPDATE cascade;
+add foreign key (PLID) REFERENCES plugins (PLID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE plugin_funktion_title
 add foreign key (PLFID) REFERENCES plugin_funktion (PLFID) ON DELETE cascade ON UPDATE cascade;
@@ -220,7 +237,7 @@ add foreign key (PLFID) REFERENCES plugin_funktion (PLFID) ON DELETE cascade ON 
 -- Standart Gruppen setzen
 --
 
-INSERT INTO `Gruppen` (
+INSERT INTO `gruppen` (
 `GName` ,
 `GBeschreibung`
 )
@@ -228,21 +245,21 @@ VALUES (
 'anonym', 'Anonymer User der noch uneingeloggt ist.'
 );
 
-INSERT INTO `Gruppen` (
+INSERT INTO `gruppen` (
 `GName` ,
 `GBeschreibung`
 )
 VALUES (
 'user', 'Normaler Benutzer.'
 );
-INSERT INTO `Gruppen` (
+INSERT INTO `gruppen` (
 `GName` ,
 `GBeschreibung`
 )
 VALUES (
 'mod', 'Moderrator'
 );
-INSERT INTO `Gruppen` (
+INSERT INTO `gruppen` (
 `GName` ,
 `GBeschreibung`
 )

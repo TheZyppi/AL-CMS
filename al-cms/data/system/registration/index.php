@@ -10,10 +10,8 @@
  *(at your option) any later version.  
  *   
  */
-
-
-
-session_start();
+function register()
+{
 $absenden = ( isset($_POST['absenden']) ) ? true : false;
 if( $absenden )
 {
@@ -29,9 +27,6 @@ if( $absenden )
 		echo "Die Passwörter stimmen nicht überein!";
 		exit;
 		}
-		
-				
-include('../../config/dbcon.php');
 include('passgen.php');
   db_con();
   $passsalt=generatePW(18); // Normal Salt
@@ -41,12 +36,12 @@ include('passgen.php');
   $passall="$passnc $passsaltc"; // Passwort in SHA1 und SALT in SHA1 werden zusammengefügt
   $pass=sha1($passall); //Hier werden die beiden SHA1 gecrypteten Passwörter nochmals zusammen SHA1 gecryptet
 // Hier wird nun der Benutzer Eingetragen und der entstandene SHA1 Wert der aus dem Gecrypteten Passwort + Salt besteht wird nun hier eingetragen + der ungecryptete Salt Wert  
-  $eintragen = "INSERT INTO Benutzer (GID, Username, Passwort, Passwort_Salt) 
+  $eintragen = "INSERT INTO benutzer (GID, Username, Passwort, Passwort_Salt) 
     VALUES ('2', '". $_POST['benutzer']."', '". $pass."', '".$passsalt."')"; 
 
 $ausgabe="<center>Erfolg!</center>";
 
-mysql_query($eintragen) or die ("Fehler beim Eintragen!");
+mysql_query($eintragen) or die (mysql_error());
 
 echo $ausgabe;
 }
@@ -65,7 +60,7 @@ if( !$absenden )
 <body>
 <h1>Regestrieren</h1>
 Bitte gib deinen Benutzernamen und dein Passwort ein. (Groß- und Kleinschreibung beachten!)<br />
-<form action="<?=$_SERVER['PHP_SELF']?>" method="post">
+<form action="index.php?pl=1&plf=register" method="post">
 <strong>Benutzername:</strong> <input type="text" name="benutzer" /><br />
 <strong>Passwort:</strong> <input type="password" name="passwort" /><br />
 <strong>Passwort Wiederholen:</strong> <input type="password" name="passwort2" /><br />
@@ -76,6 +71,6 @@ Bitte gib deinen Benutzernamen und dein Passwort ein. (Groß- und Kleinschreibun
 <?php
 
 }
-
+}
 
 ?>

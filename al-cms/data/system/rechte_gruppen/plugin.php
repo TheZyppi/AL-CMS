@@ -11,128 +11,58 @@
  *   
  */
 
-
-// Wichtige Daten werden aus der URL und Session ausgelesen
-$group=$_SESSION['gruppe'];
-// Die Datei zum Datenbank Connecten wird reingeladen
-
-// Es wird nachgeguckt ob eine PluginID angegeben wurde.
-if (isset($_GET['pl'])=="" || $_GET['pl']=="") {
-// Wenn kein Plugin anegeben wurde
-
-// Verbindung zur Datenbank wird aufgebaut in dem die Funktion db_con aufgerufen wird.
-	db_con();
-	// Abfrage um herauszufinden was das Standart Plugin ist.
-	$splugin="SELECT * FROM al_config WHERE CID='3'";
-	$ergebnis = mysql_query($splugin);
-   	$reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);
-	if ($reihe['funktion']=="")
-	{
-		echo "Sie haben kein Stnadart-Plugin angegeben.";
-		mysql_close();
-		exit;
-	}
-	else {
-	// Abfrage um den Titel des Standart Plugin zu laden
-	$spluginl = "SELECT * FROM plugins WHERE PLID=".mysql_real_escape_string($reihe['funktion'])." LIMIT 1";
-   	$ergebnis2 = mysql_query($spluginl);
-   	$reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
-	if ($reihe['funktion']==$reihe2['PLID'])
-	{
-	// Der Titel vom Standart Plugin wird angezeigt.
-	include (''.$srdp.'plugins/'.$reihe2['hdatei'].'');
-	mysql_close();
-	exit;
-	}
-	else {
-		echo "Dieses Plugin Exestiert nicht.";
-		mysql_close();
-		exit;
-	}
-	}
-}
-else {
-$pl=$_GET['pl'];
 db_con();
-	if (preg_match ("/^([0-9]+)$/",$pl)) {
-		$sql = "SELECT PLID, PLName, hdatei, aktiv FROM plugins WHERE PLID= ".mysql_real_escape_string($pl)." LIMIT 1";
-   $ergebnis = mysql_query($sql);
-      $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);
-	  // Überprüfung ob es das Plugin überhaupt gibt	
-   if($pl==$reihe['PLID'])
-   {
-$sql2 = "SELECT PLID, GID, Y_N FROM rechte_plugins WHERE PLID=".mysql_real_escape_string($pl)." LIMIT 1";
-	$ergebnis2 = mysql_query($sql2);
-   $reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
-$plid=$reihe['PLID'];   	
-   }
-   // Wenn es das Plugin nicht gibt wird ein Fehler ausgegeben
-else {
-	echo "Kein Plugin mit der Angegeben ID gefunden.";
-	mysql_close();
-	exit;
-}
+$sql = "SELECT PLID, aktiv FROM plugins WHERE PLID='1' LIMIT 1";
+	$ergebnis = mysql_query($sql);
+   $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);
 
-	}
-	else {
-$sql = "SELECT PLID, PLName, hdatei, aktiv FROM plugins WHERE PLName = '".mysql_real_escape_string($pl)."'";
-   $ergebnis = mysql_query($sql) or die (mysql_error());
-   $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);	
-    // Überprüfung ob es das Plugin überhaupt gibt
-      if($pl==$reihe['PLName'])
-   {
-$sql2 = "SELECT PLID, GID, Y_N FROM rechte_plugins WHERE PLID=".mysql_real_escape_string($reihe['PLID'])."";
+
+$sql2 = "SELECT PLFID, PLID, Funktionsname, hdatei, aktiv FROM plugin_funktion WHERE PLFID='1' LIMIT 1";
 	$ergebnis2 = mysql_query($sql2);
    $reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
-$plid=$reihe['PLID'];
-   }
-      // Wenn es das Plugin nicht gibt wird ein Fehler ausgegeben
    
-	  else {
-	  	echo "Kein Plugin mit dem angebenen Namen gefunden";
-	  	mysql_close();
-	  	exit;
-	  }
-	}
-// Prüfung ob das Plugin aktiv ist
-if ($reihe['aktiv']==1) {
-	// Prüfung ob die Gruppe das Plugin ausführen darf
-if ($group==$reihe2['GID']) {
-	if($reihe2['Y_N']==1) {
-		// Prüft ob eine Pluginfunktion angegeben wurde oder nicht
-		if (isset($_GET['plf'])=="")
+	$sql3 = "SELECT PLFID, GID, Y_N FROM plugin_funktion_rechte WHERE PLFID='1'";
+	$ergebnis3 = mysql_query($sql3);
+   $reihe3 = mysql_fetch_array($ergebnis3, MYSQL_ASSOC);
+   $group=$_SESSION['gruppe'];
+      $sql1 = "SELECT PLID, GID, Y_N FROM rechte_plugins WHERE PLID='1' AND GID=".$group."";
+   		$db_erg2 = mysql_query( $sql1);
+		   $reihe1 = mysql_fetch_array($db_erg2, MYSQL_ASSOC);
+		if ($reihe1['GID']!=$group || ! $db_erg2 )
+		{	
+  	echo "Sie haben keine Berechtigungen darauf bekommen.";
+	echo $_SESSION['gruppe'];
+		}
+		else 
 		{
-			include(''.$srdp.'plugins/'.$reihe['hdatei'].'');
-		}
-		// Wenn eine Plugin Funktion angeben wurde wird else ausgeführt
-		else {
-			// Ruft aus der URL die Pluginfunktion auf
-			$plf=$_GET['plf'];
-			// Das Plugin Funktionssystem wird ausgeführt
-			$this->funktion($srdp);
-		}
-		
-		}
-	// Wenn die Gruppe das Plugin nicht benutzen darf
-		else {
-			echo "Sie duerfen das Plugin nicht benutzen!";
-			mysql_close();
-			exit;
-			}	
+	if($reihe1['Y_N']==1)
+	{
+
+if ($reihe['aktiv']==0 && $reihe2['aktiv']==0)
+{
+if($reihe3['GID']==$group)
+{
+	if($reihe3['Y_N']==1)
+	{
+		echo "Sie sind im Offline Modus online.";
+	$this->plugina($srdp);	
 	}
-// Wenn keine Gruppe angegeben wurde
 	else {
-		echo "Auf ihre Gruppe wurde keine Berechtigung gesetzt.";
-		mysql_close();
-		exit;
-		}
+		echo "Die Seite ist im Offline Modus, Sie sind nicht Berechtigt diese zu benutzen.";
+	}
+}
+else {
+	echo "Ihre Gruppe hat keine Berechtigungen fuer den Offline Modus erhalten.";
+}
+}
+else {
+	$this->plugina($srdp);
+}
+	}
+	else {
+		echo "Sie sind nicht Berechtigt diese Seite zu benutzen.";
+		echo $_SESSION['gruppe'];
+	}
+}
 	
-	}
-// Wenn das Plugin deaktiviert wurde.
-	else {
-		echo "Plugin ist deaktiviert";
-		mysql_close();
-		exit;
-		}
-		}
 ?>

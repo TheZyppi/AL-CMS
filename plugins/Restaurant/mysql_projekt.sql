@@ -2,7 +2,7 @@
 -- Tabellenstruktur für Tabelle `Benutzer`
 --
 
-CREATE TABLE IF NOT EXISTS `Benutzer` (
+CREATE TABLE IF NOT EXISTS `benutzer` (
   `UID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `GID` int(11) UNSIGNED NOT NULL,
   `Username` varchar(25),
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `Benutzer` (
 -- Tabellenstruktur für Tabelle `Reservierungen`
 --
 
-CREATE TABLE IF NOT EXISTS `Reservierungen` (
+CREATE TABLE IF NOT EXISTS `reservierungen` (
   `RID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Session_ID` varchar(50),
   `IP_Adresse` varchar(50),
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `Reservierungen` (
 -- Tabellenstruktur für Tabelle `Reservierungen_User`
 --
 
-CREATE TABLE IF NOT EXISTS `Reservierungen_User` (
+CREATE TABLE IF NOT EXISTS `reservierungen_user` (
   `RID` int(11) UNSIGNED NOT NULL,
   `UID` int(11) UNSIGNED NOT NULL
 );  
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `Reservierungen_User` (
 -- Tabellenstruktur für Tabelle `Reservierungen_Tisch`
 --
 
-CREATE TABLE IF NOT EXISTS `Reservierungen_Tisch` (
+CREATE TABLE IF NOT EXISTS `reservierungen_tisch` (
   `RID` int(11) UNSIGNED NOT NULL,
   `TID` int(11) UNSIGNED NOT NULL
 ); 
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `Reservierungen_Tisch` (
 -- Tabellenstruktur für Tabelle `Reservierungen_Raeume`
 --
 
-CREATE TABLE IF NOT EXISTS `Reservierungen_Raeume` (
+CREATE TABLE IF NOT EXISTS `reservierungen_raeume` (
   `RID` int(11) UNSIGNED NOT NULL,
   `RAID` int(11) UNSIGNED NOT NULL
 ); 
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `Reservierungen_Raeume` (
 -- Tabellenstruktur für Tabelle `Tische`
 --
 
-CREATE TABLE IF NOT EXISTS `Tische` (
+CREATE TABLE IF NOT EXISTS `tische` (
   `TID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `RAID` int(11) UNSIGNED NOT NULL,
   `TBezeichnung` text,
@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `Tische` (
 -- Tabellenstruktur für Tabelle `Raeume`
 --
 
-CREATE TABLE IF NOT EXISTS `Raeume` (
+CREATE TABLE IF NOT EXISTS `raeume` (
   `RAID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `Name` varchar(40),
   `RBeschreibung` text,
@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `Raeume` (
 -- Tabellenstruktur für Tabelle `Gruppen`
 --
 
-CREATE TABLE IF NOT EXISTS `Gruppen` (
+CREATE TABLE IF NOT EXISTS `gruppen` (
   `GID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `GName` varchar(45),
   `GBeschreibung` text,
@@ -125,7 +125,7 @@ CREATE TABLE IF NOT EXISTS `Gruppen` (
 -- Tabellenstruktur für Tabelle `Information_Pages`
 --
 
-CREATE TABLE IF NOT EXISTS `Information_Pages` (
+CREATE TABLE IF NOT EXISTS `information_pages` (
   `IPID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `IPTitel` varchar(45),
   `IPInhalt` text,
@@ -138,7 +138,7 @@ CREATE TABLE IF NOT EXISTS `Information_Pages` (
 -- Tabellenstruktur für Tabelle `Bezahlung_Arten`
 --
 
-CREATE TABLE IF NOT EXISTS `Bezahlung_Arten` (
+CREATE TABLE IF NOT EXISTS `bezahlung_arten` (
   `BAID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `BAName` varchar(45),
   `BADatei` varchar(100),
@@ -153,7 +153,7 @@ CREATE TABLE IF NOT EXISTS `Bezahlung_Arten` (
 -- Tabellenstruktur für Tabelle `Reservierung_Essen`
 --
 
-CREATE TABLE IF NOT EXISTS `Reservierung_Essen` (
+CREATE TABLE IF NOT EXISTS `reservierung_essen` (
   `RID` int(11) UNSIGNED NOT NULL,
   `SPID` int(11) UNSIGNED NOT NULL
 ); 
@@ -166,7 +166,7 @@ CREATE TABLE IF NOT EXISTS `Reservierung_Essen` (
 -- Tabellenstruktur für Tabelle `Reservierung_Bezahlung`
 --
 
-CREATE TABLE IF NOT EXISTS `Reservierung_Bezahlung` (
+CREATE TABLE IF NOT EXISTS `reservierung_bezahlung` (
   `RID` int(11) UNSIGNED NOT NULL,
   `BAID` int(11) UNSIGNED NOT NULL,
   `bz1` varchar(40),
@@ -182,7 +182,7 @@ CREATE TABLE IF NOT EXISTS `Reservierung_Bezahlung` (
 -- Tabellenstruktur für Tabelle `Speisekarte`
 --
 
-CREATE TABLE IF NOT EXISTS `Speisekarte` (
+CREATE TABLE IF NOT EXISTS `speisekarte` (
   `SPID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `SPName` varchar(45),
   `SPBeschreibung` text,
@@ -197,7 +197,7 @@ CREATE TABLE IF NOT EXISTS `Speisekarte` (
 -- Tabellenstruktur für Tabelle `Reservierungen_Non_Reg`
 --
 
-CREATE TABLE IF NOT EXISTS `Reservierungen_Non_Reg` (
+CREATE TABLE IF NOT EXISTS `reservierungen_non_reg` (
   `RID` int(11) UNSIGNED NOT NULL,
   `RName` varchar(25),
   `RVorname` varchar(25),
@@ -247,7 +247,7 @@ CREATE TABLE IF NOT EXISTS `plugin_funktion_rechte` (
 -- Tabellenstruktur für Tabelle `Design`
 --
 
-CREATE TABLE IF NOT EXISTS `Design` (
+CREATE TABLE IF NOT EXISTS `design` (
   `DID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `DName` varchar(45),
   `DDatei` varchar(100),
@@ -351,7 +351,7 @@ CREATE TABLE IF NOT EXISTS `news` (
 -- Tabellenstruktur für Tabelle `Rechte_Plugins`
 --
 
-CREATE TABLE IF NOT EXISTS `Rechte_Plugins` (
+CREATE TABLE IF NOT EXISTS `rechte_plugins` (
 	`PLID` int(11) UNSIGNED NOT NULL,
   `GID` int(11) UNSIGNED NOT NULL,
   `Y_N` int(1)
@@ -369,10 +369,10 @@ CREATE TABLE IF NOT EXISTS `plugins` (
   `PLName` varchar(45),
   `hdatei` varchar(100),
   `PLBeschreibung` text,
+  `sysp` int(1) NOT NULL,
   `aktiv` int(1) NOT NULL,
   PRIMARY KEY (`PLID`)
 ); 
-
 
 -- --------------------------------------------------------
 
@@ -381,62 +381,62 @@ CREATE TABLE IF NOT EXISTS `plugins` (
 -- Fremdschlüssel setzen
 --
 
-ALTER TABLE Benutzer 
-add foreign key (GID) REFERENCES Gruppen (GID) ON DELETE cascade ON UPDATE cascade;
+ALTER TABLE benutzer 
+add foreign key (GID) REFERENCES gruppen (GID) ON DELETE cascade ON UPDATE cascade;
 
-ALTER TABLE Reservierungen_Non_Reg 
-add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE cascade ON UPDATE cascade;
+ALTER TABLE reservierungen_non_reg 
+add foreign key (RID) REFERENCES reservierungen (RID) ON DELETE cascade ON UPDATE cascade;
 
-ALTER TABLE Reservierung_Bezahlung
-add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE cascade ON UPDATE cascade;
+ALTER TABLE reservierung_bezahlung
+add foreign key (RID) REFERENCES reservierungen (RID) ON DELETE cascade ON UPDATE cascade;
 
-ALTER TABLE Reservierung_Bezahlung
-add foreign key (BAID) REFERENCES Bezahlung_Arten (BAID) ON DELETE cascade ON UPDATE cascade;
+ALTER TABLE reservierung_bezahlung
+add foreign key (BAID) REFERENCES bezahlung_arten (BAID) ON DELETE cascade ON UPDATE cascade;
 
-ALTER TABLE Reservierungen_User 
-add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE cascade ON UPDATE cascade;
+ALTER TABLE reservierungen_user 
+add foreign key (RID) REFERENCES reservierungen (RID) ON DELETE cascade ON UPDATE cascade;
 
-ALTER TABLE Reservierungen_User 
-add foreign key (RID) REFERENCES Benutzer (UID) ON DELETE cascade ON UPDATE cascade;
+ALTER TABLE reservierungen_user 
+add foreign key (RID) REFERENCES benutzer (UID) ON DELETE cascade ON UPDATE cascade;
 
-ALTER TABLE Reservierungen_Raeume
-add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE cascade ON UPDATE cascade;
+ALTER TABLE reservierungen_raeume
+add foreign key (RID) REFERENCES reservierungen (RID) ON DELETE cascade ON UPDATE cascade;
 
-ALTER TABLE Reservierungen_Raeume
-add foreign key (RAID) REFERENCES Raeume (RAID) ON DELETE cascade ON UPDATE cascade;
+ALTER TABLE reservierungen_raeume
+add foreign key (RAID) REFERENCES raeume (RAID) ON DELETE cascade ON UPDATE cascade;
 
-ALTER TABLE Reservierungen_Tisch
-add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE cascade ON UPDATE cascade;
+ALTER TABLE reservierungen_tisch
+add foreign key (RID) REFERENCES reservierungen (RID) ON DELETE cascade ON UPDATE cascade;
 
-ALTER TABLE Reservierungen_Tisch
-add foreign key (TID) REFERENCES Tische (TID) ON DELETE cascade ON UPDATE cascade;
-
-ALTER TABLE rechte_plugins
-add foreign key (GID) REFERENCES Gruppen (GID) ON DELETE cascade ON UPDATE cascade;
+ALTER TABLE reservierungen_tisch
+add foreign key (TID) REFERENCES tische (TID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE rechte_plugins
-add foreign key (PLID) REFERENCES Plugins (PLID) ON DELETE cascade ON UPDATE cascade;
+add foreign key (GID) REFERENCES gruppen (GID) ON DELETE cascade ON UPDATE cascade;
 
-ALTER TABLE Plugin_Funktion
-add foreign key (PLID) REFERENCES Plugins (PLID) ON DELETE cascade ON UPDATE cascade;
+ALTER TABLE rechte_plugins
+add foreign key (PLID) REFERENCES plugins (PLID) ON DELETE cascade ON UPDATE cascade;
 
-ALTER TABLE Plugin_Funktion_Rechte
-add foreign key (GID) REFERENCES Gruppen (GID) ON DELETE cascade ON UPDATE cascade;
+ALTER TABLE plugin_funktion
+add foreign key (PLID) REFERENCES plugins (PLID) ON DELETE cascade ON UPDATE cascade;
 
-ALTER TABLE Plugin_Funktion_Rechte
-add foreign key (PLFID) REFERENCES Plugin_Funktion (PLFID) ON DELETE cascade ON UPDATE cascade;
+ALTER TABLE plugin_funktion_rechte
+add foreign key (GID) REFERENCES gruppen (GID) ON DELETE cascade ON UPDATE cascade;
 
-ALTER TABLE Reservierung_Essen
-add foreign key (RID) REFERENCES Reservierungen (RID) ON DELETE cascade ON UPDATE cascade;
+ALTER TABLE plugin_funktion_rechte
+add foreign key (PLFID) REFERENCES plugin_funktion (PLFID) ON DELETE cascade ON UPDATE cascade;
 
-ALTER TABLE Reservierung_Essen
-add foreign key (SPID) REFERENCES Speisekarte (SPID) ON DELETE cascade ON UPDATE cascade;
+ALTER TABLE reservierung_essen
+add foreign key (RID) REFERENCES reservierungen (RID) ON DELETE cascade ON UPDATE cascade;
+
+ALTER TABLE reservierung_essen
+add foreign key (SPID) REFERENCES speisekarte (SPID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE plugin_title
-add foreign key (PLID) REFERENCES Plugins (PLID) ON DELETE cascade ON UPDATE cascade;
+add foreign key (PLID) REFERENCES plugins (PLID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE plugin_meta
-add foreign key (PLID) REFERENCES Plugins (PLID) ON DELETE cascade ON UPDATE cascade;
+add foreign key (PLID) REFERENCES plugins (PLID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE plugin_funktion_title
 add foreign key (PLFID) REFERENCES plugin_funktion (PLFID) ON DELETE cascade ON UPDATE cascade;
@@ -450,7 +450,7 @@ add foreign key (PLFID) REFERENCES plugin_funktion (PLFID) ON DELETE cascade ON 
 -- Standart Gruppen setzen
 --
 
-INSERT INTO `Gruppen` (
+INSERT INTO `gruppen` (
 `GName` ,
 `GBeschreibung`
 )
@@ -458,21 +458,21 @@ VALUES (
 'anonym', 'Anonymer User der noch uneingeloggt ist.'
 );
 
-INSERT INTO `Gruppen` (
+INSERT INTO `gruppen` (
 `GName` ,
 `GBeschreibung`
 )
 VALUES (
 'user', 'Normaler Benutzer.'
 );
-INSERT INTO `Gruppen` (
+INSERT INTO `gruppen` (
 `GName` ,
 `GBeschreibung`
 )
 VALUES (
 'mod', 'Moderrator'
 );
-INSERT INTO `Gruppen` (
+INSERT INTO `gruppen` (
 `GName` ,
 `GBeschreibung`
 )
