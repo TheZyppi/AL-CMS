@@ -27,7 +27,8 @@ List of standart-plugin-IDs:
 
 List of standart functions:
 1	On
-2	Login
-3	Logout
+2	login
+3	logout
+4       register
 
  

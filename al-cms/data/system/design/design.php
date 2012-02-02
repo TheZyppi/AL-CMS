@@ -14,19 +14,24 @@
 // Die dbcon.php wird eingefügt
 db_con();
 // Abfrage welches Design aktiv ist
-$sql = "SELECT DID, DName, DDatei, aktiv FROM design";
-$ergebnis = mysql_query($sql);
-$reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC) or die (mysql_error());	
-
+$sql = mysql_query('SELECT DID, DName, DDatei, aktiv FROM design');
+while($row = mysql_fetch_object($sql))
+{
+	$a=$row->aktiv;
+	$n=$row->DID;
+	$d=$row->DDatei;
+}
 // Die Hauptdatei vom Design wird reingeladen
-	if ($reihe['aktiv']==1)
+	if ( ! $sql || $a==0 || $n=="")
 	{
-$pfad=$reihe['DDatei'];
+		echo "Sie haben kein Standart Design angegeben.";
+		mysql_close();
+		exit;
+	}
+	else {
+$pfad=$d;
 include(''.$srdp.'design/'.$pfad.'index.php');
 // Die Head Funktion wird reingeladen dient dazu den Header darzustellen
 include('head_function.php');
-	}
-	else {
-		echo "Sie haben kein Standart Design angegeben.";
 	}
 ?>

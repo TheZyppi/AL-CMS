@@ -11,6 +11,6 @@
  *   
  */
 
-include(''.$srdp.'system/rechte_gruppen/plugin_classes.php'); // Plugin-System wird reingelanden
+include(''.$srdp.'system/pluginsystem/plugin_classes.php'); // Plugin-System wird reingelanden
 $pluginsys->plugin($srdp);
 ?>

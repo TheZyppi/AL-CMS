@@ -71,8 +71,18 @@ else {
 
 if ($reihe['aktiv']==1) {
 	// Prüfung ob die Gruppe das Plugin ausführen darf
-if ($group==$reihe2['GID']) {
-	if($reihe2['Y_N']==1) {
+	$sqlg = "SELECT PLFID, GID, Y_N FROM plugin_funktion_rechte WHERE PLFID=".mysql_real_escape_string($reihe['PLFID'])." AND GID=".$group."";
+	$ergebnisg = mysql_query($sqlg);
+	$reiheg = mysql_fetch_array($ergebnisg, MYSQL_ASSOC);
+	if(! $ergebnisg || $reiheg['GID']!=$group)
+	{
+	echo "Auf ihre Gruppe wurde keine Berechtigung gesetzt.";
+		mysql_close();
+		exit;
+	}
+else
+{
+	if($reiheg['Y_N']==1) {
 		// Überprüft ob es ein Systemplugin ist oder nicht
 		if (preg_match ("/^([0-9]+)$/",$pl)) {
 		$sqlp = "SELECT PLID, PLName, hdatei, sysp, aktiv FROM plugins WHERE PLID= ".mysql_real_escape_string($pl)." LIMIT 1";
@@ -115,12 +125,7 @@ else {
 			mysql_close();
 			exit;
 			}	
-	}
-// Wenn keine Berechtigung vergeben wurde
-	else {
-		echo "Auf ihre Gruppe wurde keine Berechtigung gesetzt.";
-		mysql_close();
-		exit;
+
 		}
 	
 	}

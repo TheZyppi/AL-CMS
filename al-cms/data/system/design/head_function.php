@@ -30,9 +30,9 @@ echo '
 <head>
 ';
 // Meta Daten werden gelanden
-//$objhead->meta($rsp);
+$objhead->meta($rsp);
 // Title wird angezeigt
-//echo "<title>".$objhead->title($rsp)."</title>";
+$objhead->title($rsp);
 // CSS Scripte für das Design werden gelanden
 $objhead->css_script($rsp);
 echo'

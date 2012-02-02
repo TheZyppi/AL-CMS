@@ -96,10 +96,12 @@ if ($reihe['aktiv']==1) {
 	// Prüfung ob die Gruppe das Plugin ausführen darf
 	$sqlg = "SELECT PLID, GID, Y_N FROM rechte_plugins WHERE PLID=".mysql_real_escape_string($reihe['PLID'])." AND GID=".$group."";
 	$ergebnisg = mysql_query($sqlg);
-   $reiheg = mysql_fetch_array($ergebnisg, MYSQL_ASSOC);
-   if (! $ergebnisg)
+	$reiheg = mysql_fetch_array($ergebnisg, MYSQL_ASSOC);
+   if (! $ergebnisg || $reiheg['GID']!=$group)
    {
    	echo "Auf ihre Gruppe wurde keine Berechtigung gesetzt.";
+   	mysql_close();
+	exit;
    }
    else {
 	if($reiheg['Y_N']==1) {
