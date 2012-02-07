@@ -13,7 +13,7 @@
 
 
 // Wichtige Daten werden aus der URL und Session ausgelesen
-$group=$_SESSION['gruppe'];
+$group=$_SESSION['group'];
 
 // Es wird überprüft ob oben oder in der Funktion eine Plugin FunktionsID angegeben wurde
 if (isset($_GET['plf'])=="" || $_GET['plf']=="") {
@@ -26,24 +26,24 @@ $pl=$_GET['pl'];
 $plf=$_GET['plf'];
 db_con();
 if (preg_match ("/^([0-9]+)$/",$pl)) {
-		$sql = "SELECT PLID, PLName, hdatei, sysp, aktiv FROM plugins WHERE PLID= ".mysql_real_escape_string($pl)." LIMIT 1";
+		$sql = "SELECT PLID, name, data, sysp, aktiv FROM plugins WHERE PLID= ".mysql_real_escape_string($pl)." LIMIT 1";
    $ergebnis = mysql_query($sql);
       $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);
 	  $plid=$reihe['PLID'];
 }
 else {
-	$sql = "SELECT PLID, PLName, hdatei, sysp, aktiv FROM plugins WHERE PLName = '".mysql_real_escape_string($pl)."'";
+	$sql = "SELECT PLID, name, data, sysp, aktiv FROM plugins WHERE name = '".mysql_real_escape_string($pl)."'";
    $ergebnis = mysql_query($sql) or die (mysql_error());
    $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);
    $plid=$reihe['PLID'];	
 }
 	if (preg_match ("/^([0-9]+)$/",$plf)) {
-$sql = "SELECT PLFID, PLID, Funktionsname, hdatei, aktiv FROM plugin_funktion WHERE PLFID = ".mysql_real_escape_string($plf)." AND PLID=".mysql_real_escape_string($plid)." LIMIT 1";
+$sql = "SELECT PLFID, PLID, funktionsname, data, aktiv FROM plugin_funktion WHERE PLFID = ".mysql_real_escape_string($plf)." AND PLID=".mysql_real_escape_string($plid)." LIMIT 1";
    $ergebnis = mysql_query($sql);
    $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);
    if ($plf==$reihe['PLFID'])
    {	
-$sql2 = "SELECT PLFID, GID, Y_N FROM plugin_funktion_rechte WHERE PLFID=".mysql_real_escape_string($plf)." LIMIT 1";
+$sql2 = "SELECT PLFID, GID, Y_N FROM plugin_funktion_rights WHERE PLFID=".mysql_real_escape_string($plf)." LIMIT 1";
 	$ergebnis2 = mysql_query($sql2);
    $reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
    }
@@ -53,12 +53,12 @@ else {
 }
 	}
 	else {
-$sql = "SELECT PLFID, PLID, Funktionsname, hdatei, aktiv FROM plugin_funktion WHERE Funktionsname = '".mysql_real_escape_string($plf)."' AND PLID=".mysql_real_escape_string($plid)." LIMIT 1";
+$sql = "SELECT PLFID, PLID, funktionsname, data, aktiv FROM plugin_funktion WHERE funktionsname = '".mysql_real_escape_string($plf)."' AND PLID=".mysql_real_escape_string($plid)." LIMIT 1";
    $ergebnis = mysql_query($sql);
      $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);
-   if ($plf==$reihe['Funktionsname'])
+   if ($plf==$reihe['funktionsname'])
    {	
-$sql2 = "SELECT PLFID, GID, Y_N FROM plugin_funktion_rechte WHERE PLFID=".mysql_real_escape_string($reihe['PLFID'])." LIMIT 1";
+$sql2 = "SELECT PLFID, GID, Y_N FROM plugin_funktion_rights WHERE PLFID=".mysql_real_escape_string($reihe['PLFID'])." LIMIT 1";
 	$ergebnis2 = mysql_query($sql2);
    $reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
    }
@@ -71,7 +71,7 @@ else {
 
 if ($reihe['aktiv']==1) {
 	// Prüfung ob die Gruppe das Plugin ausführen darf
-	$sqlg = "SELECT PLFID, GID, Y_N FROM plugin_funktion_rechte WHERE PLFID=".mysql_real_escape_string($reihe['PLFID'])." AND GID=".$group."";
+	$sqlg = "SELECT PLFID, GID, Y_N FROM plugin_funktion_rights WHERE PLFID=".mysql_real_escape_string($reihe['PLFID'])." AND GID=".$group."";
 	$ergebnisg = mysql_query($sqlg);
 	$reiheg = mysql_fetch_array($ergebnisg, MYSQL_ASSOC);
 	if(! $ergebnisg || $reiheg['GID']!=$group)
@@ -85,37 +85,37 @@ else
 	if($reiheg['Y_N']==1) {
 		// Überprüft ob es ein Systemplugin ist oder nicht
 		if (preg_match ("/^([0-9]+)$/",$pl)) {
-		$sqlp = "SELECT PLID, PLName, hdatei, sysp, aktiv FROM plugins WHERE PLID= ".mysql_real_escape_string($pl)." LIMIT 1";
+		$sqlp = "SELECT PLID, name, data, sysp, aktiv FROM plugins WHERE PLID= ".mysql_real_escape_string($pl)." LIMIT 1";
    $ergebnisp = mysql_query($sqlp);
       $reihep = mysql_fetch_array($ergebnisp, MYSQL_ASSOC);
 }
 else {
-	$sqlp = "SELECT PLID, PLName, hdatei, sysp, aktiv FROM plugins WHERE PLName = '".mysql_real_escape_string($pl)."'";
+	$sqlp = "SELECT PLID, name, data, sysp, aktiv FROM plugins WHERE name = '".mysql_real_escape_string($pl)."'";
    $ergebnisp = mysql_query($sqlp) or die (mysql_error());
    $reihep = mysql_fetch_array($ergebnisp, MYSQL_ASSOC);
 }
 		if ($reihep['sysp']==1)
 		{
 		// Es wird geguckt ob eine Funktionsdatei vorhanden ist.
-		if ($reihe['hdatei']=="")
+		if ($reihe['data']=="")
 		{
 			echo "Funktionsdatei konnte nicht geladen werden.";
 		}
 		else {
-		include(''.$srdp.'system/'.$reihe['hdatei'].''); // Funktionsdatei wird reingeladen
-		$reihe['Funktionsname']($srdp); // Funktion wird ausgeführt
+		include(''.$srdp.'system/'.$reihe['data'].''); // Funktionsdatei wird reingeladen
+		$reihe['funktionsname']($srdp); // Funktion wird ausgeführt
 		}	
 		}
 		else {
 	
 		// Es wird geguckt ob eine Funktionsdatei vorhanden ist.
-		if ($reihe['hdatei']=="")
+		if ($reihe['data']=="")
 		{
 			echo "Funktionsdatei konnte nicht geladen werden.";
 		}
 		else {
-		include(''.$srdp.'plugins/'.$reihe['hdatei'].''); // Funktionsdatei wird reingeladen
-		$reihe['Funktionsname']($srdp); // Funktion wird ausgeführt
+		include(''.$srdp.'plugins/'.$reihe['data'].''); // Funktionsdatei wird reingeladen
+		$reihe['funktionsname']($srdp); // Funktion wird ausgeführt
 		}
 		}
 		}

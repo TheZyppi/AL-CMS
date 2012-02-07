@@ -12,7 +12,7 @@
  */
 
 // Wichtige Daten werden aus der URL und Session ausgelesen
-$group=$_SESSION['gruppe'];
+$group=$_SESSION['group'];
 // Die Datei zum Datenbank Connecten wird reingeladen
 
 // Es wird nachgeguckt ob eine PluginID angegeben wurde.
@@ -37,9 +37,7 @@ if (isset($_GET['pl'])=="" || $_GET['pl']=="") {
    	$reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
 	if ($reihe['funktion']==$reihe2['PLID'])
 	{
-	include (''.$srdp.'plugins/'.$reihe2['hdatei'].'');
-	mysql_close();
-	exit;
+	include (''.$srdp.'plugins/'.$reihe2['data'].'');
 	}
 	else {
 		echo "Dieses Plugin Exestiert nicht.";
@@ -52,7 +50,7 @@ else {
 $pl=$_GET['pl'];
 db_con();
 	if (preg_match ("/^([0-9]+)$/",$pl)) {
-		$sql = "SELECT PLID, PLName, hdatei, sysp, aktiv FROM plugins WHERE PLID= ".mysql_real_escape_string($pl)." LIMIT 1";
+		$sql = "SELECT PLID, name, data, sysp, aktiv FROM plugins WHERE PLID= ".mysql_real_escape_string($pl)." LIMIT 1";
    $ergebnis = mysql_query($sql);
    
 	  // Überprüfung ob es das Plugin überhaupt gibt	
@@ -65,7 +63,7 @@ db_con();
    // Wenn es das Plugin nicht gibt wird ein Fehler ausgegeben
 else {
 	  	$reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);
-$sql2 = "SELECT PLID, GID, Y_N FROM rechte_plugins WHERE PLID=".mysql_real_escape_string($pl)." LIMIT 1";
+$sql2 = "SELECT PLID, GID, Y_N FROM plugin_rights WHERE PLID=".mysql_real_escape_string($pl)." LIMIT 1";
 	$ergebnis2 = mysql_query($sql2);
    $reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
 $plid=$reihe['PLID']; 
@@ -73,13 +71,13 @@ $plid=$reihe['PLID'];
 
 	}
 	else {
-$sql = "SELECT PLID, PLName, hdatei, sysp, aktiv FROM plugins WHERE PLName = '".mysql_real_escape_string($pl)."'";
+$sql = "SELECT PLID, name, data, sysp, aktiv FROM plugins WHERE name = '".mysql_real_escape_string($pl)."'";
    $ergebnis = mysql_query($sql) or die (mysql_error());
    $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);	
     // Überprüfung ob es das Plugin überhaupt gibt
-      if($pl==$reihe['PLName'])
+      if($pl==$reihe['name'])
    {
-$sql2 = "SELECT PLID, GID, Y_N FROM rechte_plugins WHERE PLID=".mysql_real_escape_string($reihe['PLID'])."";
+$sql2 = "SELECT PLID, GID, Y_N FROM plugin_rights WHERE PLID=".mysql_real_escape_string($reihe['PLID'])."";
 	$ergebnis2 = mysql_query($sql2);
    $reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
 $plid=$reihe['PLID'];
@@ -93,10 +91,11 @@ $plid=$reihe['PLID'];
 	}
 // Prüfung ob das Plugin aktiv ist
 if ($reihe['aktiv']==1) {
-	// Prüfung ob die Gruppe das Plugin ausführen darf
-	$sqlg = "SELECT PLID, GID, Y_N FROM rechte_plugins WHERE PLID=".mysql_real_escape_string($reihe['PLID'])." AND GID=".$group."";
+	// Abfrage ob für die Gruppe Berechtigung vergeben wurde das Plugin auszuführen
+	$sqlg = "SELECT PLID, GID, Y_N FROM plugin_rights WHERE PLID=".mysql_real_escape_string($reihe['PLID'])." AND GID=".$group."";
 	$ergebnisg = mysql_query($sqlg);
 	$reiheg = mysql_fetch_array($ergebnisg, MYSQL_ASSOC);
+	// Überprüfung ob die Gruppe das Plugin ausführen darf
    if (! $ergebnisg || $reiheg['GID']!=$group)
    {
    	echo "Auf ihre Gruppe wurde keine Berechtigung gesetzt.";
@@ -104,6 +103,7 @@ if ($reihe['aktiv']==1) {
 	exit;
    }
    else {
+   	// Prüfung ob die Gruppe das Plugin ausführen darf
 	if($reiheg['Y_N']==1) {
 		// Prüft ob eine Pluginfunktion angegeben wurde oder nicht
 		if (isset($_GET['plf'])=="")
@@ -112,23 +112,23 @@ if ($reihe['aktiv']==1) {
 			if ($reihe['sysp']==1)
 			{
 			// Es wird geguckt ob eine Funktionsdatei vorhanden ist.
-		if ($reihe['hdatei']=="")
+		if ($reihe['data']=="")
 		{
 			echo "Plugindatei konnte nicht geladen werden.";
 		}
 		else {
-		include(''.$srdp.'system/'.$reihe['hdatei'].''); // Funktionsdatei wird reingeladen
+		include(''.$srdp.'system/'.$reihe['data'].''); // Funktionsdatei wird reingeladen
 		}	
 		}
 		else {
 	
 		// Es wird geguckt ob eine Funktionsdatei vorhanden ist.
-		if ($reihe['hdatei']=="")
+		if ($reihe['data']=="")
 		{
 			echo "Plugindatei konnte nicht geladen werden.";
 		}
 		else {
-		include(''.$srdp.'plugins/'.$reihe['hdatei'].''); // Funktionsdatei wird reingeladen
+		include(''.$srdp.'plugins/'.$reihe['data'].''); // Funktionsdatei wird reingeladen
 		}
 		}
 		}

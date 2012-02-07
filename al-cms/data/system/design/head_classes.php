@@ -36,11 +36,11 @@
 	{
 		
 		// Abfrage welches Design aktiv ist
-$sql = "SELECT DID, DName, DDatei, aktiv FROM design WHERE aktiv=1";
+$sql = "SELECT DID, name, data, aktiv FROM design WHERE aktiv=1";
 $ergebnis = mysql_query($sql);
 $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC) or die (mysql_error());	
 // Pfad zum CSS Script
-$pfad=$reihe['DDatei'];
+$pfad=$reihe['data'];
 // Das CSS Script wird eingefügt.
 		include (''.$rsp.'design/'.$pfad.'css/index.php');
 		mysql_close();

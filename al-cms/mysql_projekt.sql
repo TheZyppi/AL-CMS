@@ -1,30 +1,30 @@
 -- --------------------------------------------------------
 --
--- Tabellenstruktur für Tabelle `Benutzer`
+-- Tabellenstruktur für Tabelle `user`
 --
 
-CREATE TABLE IF NOT EXISTS `benutzer` (
+CREATE TABLE IF NOT EXISTS `user` (
   `UID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `GID` int(11) UNSIGNED NOT NULL,
-  `Username` varchar(25),
-  `Passwort` varchar(50),
-  `Passwort_Salt` varchar(50),
-  `Session_ID` varchar(50),
-  `IP_Adresse` varchar(50),
-  `Mail` varchar(45),
+  `username` varchar(25),
+  `passwort` varchar(50),
+  `passwort_salt` varchar(50),
+  `session_id` varchar(50),
+  `ip_adresse` varchar(50),
+  `mail` varchar(45),
   PRIMARY KEY (`UID`)
 );
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `Gruppen`
+-- Tabellenstruktur für Tabelle `groups`
 --
 
-CREATE TABLE IF NOT EXISTS `gruppen` (
+CREATE TABLE IF NOT EXISTS `groups` (
   `GID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `GName` varchar(45),
-  `GBeschreibung` text,
+  `name` varchar(45),
+  `definition` text,
   PRIMARY KEY (`GID`)
 ); 
 
@@ -40,9 +40,9 @@ CREATE TABLE IF NOT EXISTS `gruppen` (
 CREATE TABLE IF NOT EXISTS `plugin_funktion` (
   `PLFID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `PLID` int(11) UNSIGNED NOT NULL,
-  `Funktionsname` varchar(30),
-  `hdatei` varchar(100),
-  `Beschreibung` text,
+  `funktionsname` varchar(30),
+  `data` varchar(100),
+  `definition` text,
   `parent_id` int(1),
   `parent` int(1),
   `aktiv` int(1),
@@ -52,10 +52,10 @@ CREATE TABLE IF NOT EXISTS `plugin_funktion` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `Plugin_Funktion_Rechte`
+-- Tabellenstruktur für Tabelle `plugin_funktion_rights`
 --
 
-CREATE TABLE IF NOT EXISTS `plugin_funktion_rechte` (
+CREATE TABLE IF NOT EXISTS `plugin_funktion_rights` (
   `PLFID` int(11) UNSIGNED NOT NULL,
   `GID` int(11) UNSIGNED NOT NULL,
   `Y_N` int(1)
@@ -71,8 +71,8 @@ CREATE TABLE IF NOT EXISTS `plugin_funktion_rechte` (
 
 CREATE TABLE IF NOT EXISTS `design` (
   `DID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `DName` varchar(45),
-  `DDatei` varchar(100),
+  `name` varchar(45),
+  `data` varchar(100),
   `aktiv` int(1) UNSIGNED NOT NULL,
    PRIMARY KEY (`DID`)
 ); 
@@ -87,8 +87,8 @@ CREATE TABLE IF NOT EXISTS `design` (
 
 CREATE TABLE IF NOT EXISTS `panel_design` (
   `PDID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `pdname` varchar(45),
-  `pdatei` varchar(100),
+  `name` varchar(45),
+  `data` varchar(100),
   `aktiv` int(1) UNSIGNED NOT NULL,
    PRIMARY KEY (`PDID`)
 ); 
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `panel_design` (
 
 CREATE TABLE IF NOT EXISTS `al_config` (
   `CID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `CName` varchar(45),
+  `name` varchar(45),
   `funktion` varchar(100),
   `aktiv` int(1) UNSIGNED NOT NULL,
 	PRIMARY KEY (`CID`)
@@ -167,10 +167,10 @@ CREATE TABLE IF NOT EXISTS `plugin_title` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `Rechte_Plugins`
+-- Tabellenstruktur für Tabelle `plugin_rights`
 --
 
-CREATE TABLE IF NOT EXISTS `rechte_plugins` (
+CREATE TABLE IF NOT EXISTS `plugin_rights` (
 	`PLID` int(11) UNSIGNED NOT NULL,
   `GID` int(11) UNSIGNED NOT NULL,
   `Y_N` int(1)
@@ -185,9 +185,9 @@ CREATE TABLE IF NOT EXISTS `rechte_plugins` (
 
 CREATE TABLE IF NOT EXISTS `plugins` (
   `PLID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `PLName` varchar(45),
-  `hdatei` varchar(100),
-  `PLBeschreibung` text,
+  `name` varchar(45),
+  `data` varchar(100),
+  `definition` text,
   `sysp` int(1) NOT NULL,
   `aktiv` int(1) NOT NULL,
   PRIMARY KEY (`PLID`)
@@ -201,22 +201,22 @@ CREATE TABLE IF NOT EXISTS `plugins` (
 -- Fremdschlüssel setzen
 --
 
-ALTER TABLE benutzer 
-add foreign key (GID) REFERENCES gruppen (GID) ON DELETE cascade ON UPDATE cascade;
+ALTER TABLE user 
+add foreign key (GID) REFERENCES groups (GID) ON DELETE cascade ON UPDATE cascade;
 
-ALTER TABLE rechte_plugins
-add foreign key (GID) REFERENCES gruppen (GID) ON DELETE cascade ON UPDATE cascade;
+ALTER TABLE plugin_rights
+add foreign key (GID) REFERENCES groups (GID) ON DELETE cascade ON UPDATE cascade;
 
-ALTER TABLE rechte_plugins
+ALTER TABLE plugin_rights
 add foreign key (PLID) REFERENCES plugins (PLID)ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE plugin_funktion
 add foreign key (PLID) REFERENCES plugins (PLID) ON DELETE cascade ON UPDATE cascade;
 
-ALTER TABLE plugin_funktion_rechte
-add foreign key (GID) REFERENCES gruppen (GID) ON DELETE cascade ON UPDATE cascade;
+ALTER TABLE plugin_funktion_rights
+add foreign key (GID) REFERENCES groups (GID) ON DELETE cascade ON UPDATE cascade;
 
-ALTER TABLE plugin_funktion_rechte
+ALTER TABLE plugin_funktion_rights
 add foreign key (PLFID) REFERENCES plugin_funktion (PLFID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE plugin_title
@@ -234,37 +234,253 @@ add foreign key (PLFID) REFERENCES plugin_funktion (PLFID) ON DELETE cascade ON 
 
 
 --
--- Standart Gruppen setzen
+-- Standart groups setzen
 --
 
-INSERT INTO `gruppen` (
-`GName` ,
-`GBeschreibung`
+INSERT INTO `groups` (
+`name` ,
+`definition`
 )
 VALUES (
 'anonym', 'Anonymer User der noch uneingeloggt ist.'
 );
 
-INSERT INTO `gruppen` (
-`GName` ,
-`GBeschreibung`
+INSERT INTO `groups` (
+`name` ,
+`definition`
 )
 VALUES (
-'user', 'Normaler Benutzer.'
+'user', 'Normaler user.'
 );
-INSERT INTO `gruppen` (
-`GName` ,
-`GBeschreibung`
+INSERT INTO `groups` (
+`name` ,
+`definition`
 )
 VALUES (
-'mod', 'Moderrator'
+'mod', 'Moderator'
 );
-INSERT INTO `gruppen` (
-`GName` ,
-`GBeschreibung`
+INSERT INTO `groups` (
+`name` ,
+`definition`
 )
 VALUES (
 'admin', 'Administrator'
 );
 
+INSERT INTO `plugins` (
+`name` ,
+`data`,
+`definition`,
+`sysp`,
+`aktiv`
+)
+VALUES (
+'AL-CMS', '', '', '1', '1'
+);
+
+INSERT INTO `plugin_funktion` (
+`PLID` ,
+`funktionsname`,
+`data`,
+`definition`,
+`parent_id`,
+`parent`,
+`aktiv`
+)
+VALUES (
+'1', 'On', '', '', '', '', '1'
+);
+
+INSERT INTO `plugin_funktion` (
+`PLID` ,
+`funktionsname`,
+`data`,
+`definition`,
+`parent_id`,
+`parent`,
+`aktiv`
+)
+VALUES (
+'1', 'login', 'login/login.php', '', '', '', '1'
+);
+
+INSERT INTO `plugin_funktion` (
+`PLID` ,
+`funktionsname`,
+`data`,
+`definition`,
+`parent_id`,
+`parent`,
+`aktiv`
+)
+VALUES (
+'1', 'logout', 'login/logout.php', '', '', '', '1'
+);
+
+INSERT INTO `plugin_funktion` (
+`PLID` ,
+`funktionsname`,
+`data`,
+`definition`,
+`parent_id`,
+`parent`,
+`aktiv`
+)
+VALUES (
+'1', 'register', 'register/index.php', '', '', '', '1'
+);
+
+INSERT INTO `plugin_rights` (
+`PLID` ,
+`GID`,
+`Y_N`
+)
+VALUES (
+'1', '1', '1'
+);
+
+INSERT INTO `plugin_rights` (
+`PLID` ,
+`GID`,
+`Y_N`
+)
+VALUES (
+'1', '2', '1'
+);
+
+INSERT INTO `plugin_rights` (
+`PLID` ,
+`GID`,
+`Y_N`
+)
+VALUES (
+'1', '3', '1'
+);
+
+INSERT INTO `plugin_rights` (
+`PLID` ,
+`GID`,
+`Y_N`
+)
+VALUES (
+'1', '4', '1'
+);
+
+INSERT INTO `plugin_funktion_rights` (
+`PLFID` ,
+`GID`,
+`Y_N`
+)
+VALUES (
+'1', '1', '1'
+);
+
+INSERT INTO `plugin_funktion_rights` (
+`PLFID` ,
+`GID`,
+`Y_N`
+)
+VALUES (
+'1', '2', '1'
+);
+
+INSERT INTO `plugin_funktion_rights` (
+`PLFID` ,
+`GID`,
+`Y_N`
+)
+VALUES (
+'1', '3', '1'
+);
+
+INSERT INTO `plugin_funktion_rights` (
+`PLFID` ,
+`GID`,
+`Y_N`
+)
+VALUES (
+'1', '4', '1'
+);
+
+INSERT INTO `plugin_funktion_rights` (
+`PLFID` ,
+`GID`,
+`Y_N`
+)
+VALUES (
+'2', '1', '1'
+);
+
+INSERT INTO `plugin_funktion_rights` (
+`PLFID` ,
+`GID`,
+`Y_N`
+)
+VALUES (
+'3', '1', '0'
+);
+
+
+INSERT INTO `plugin_funktion_rights` (
+`PLFID` ,
+`GID`,
+`Y_N`
+)
+VALUES (
+'3', '2', '1'
+);
+
+INSERT INTO `plugin_funktion_rights` (
+`PLFID` ,
+`GID`,
+`Y_N`
+)
+VALUES (
+'3', '3', '1'
+);
+
+INSERT INTO `plugin_funktion_rights` (
+`PLFID` ,
+`GID`,
+`Y_N`
+)
+VALUES (
+'3', '4', '1'
+);
+
+INSERT INTO `plugin_funktion_rights` (
+`PLFID` ,
+`GID`,
+`Y_N`
+)
+VALUES (
+'4', '1', '1'
+);
+
+INSERT INTO `plugin_funktion_rights` (
+`PLFID` ,
+`GID`,
+`Y_N`
+)
+VALUES (
+'4', '2', '0'
+);
+
+INSERT INTO `plugin_funktion_rights` (
+`PLFID` ,
+`GID`,
+`Y_N`
+)
+VALUES (
+'4', '3', '0'
+);
+
+INSERT INTO `plugin_funktion_rights` (
+`PLFID` ,
+`GID`,
+`Y_N`
+)
+VALUES (
+'4', '4', '0'
+);
 

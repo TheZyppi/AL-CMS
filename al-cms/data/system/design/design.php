@@ -14,12 +14,12 @@
 // Die dbcon.php wird eingefügt
 db_con();
 // Abfrage welches Design aktiv ist
-$sql = mysql_query('SELECT DID, DName, DDatei, aktiv FROM design');
+$sql = mysql_query('SELECT DID, name, data, aktiv FROM design');
 while($row = mysql_fetch_object($sql))
 {
 	$a=$row->aktiv;
 	$n=$row->DID;
-	$d=$row->DDatei;
+	$d=$row->data;
 }
 // Die Hauptdatei vom Design wird reingeladen
 	if ( ! $sql || $a==0 || $n=="")

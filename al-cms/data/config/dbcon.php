@@ -18,7 +18,7 @@
 function db_con() {
 $user="root"; //Benutzername
 $pass=""; //Passwort
-$db="restaurantcms"; //Datenbank
+$db="alcms2"; //Datenbank
 $adresse="localhost"; //Adresse
 mysql_connect($adresse, $user, $pass); // Verbindung aufbauen
 mysql_select_db($db); // Datenbank wählen	

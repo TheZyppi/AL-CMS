@@ -38,6 +38,14 @@ class pluginsystem {
 	{
 		$this->extplugina($srdp, $plugin);
 	}
+	private function funktionina($srdp, $funktion=no)
+	{
+	include('extfunktion.php');	
+	}
+	public function funktionin($srdp, $funktion=no)
+	{
+	$this->funktionin();
+	}
 }
 
 	$pluginsys = new pluginsystem();

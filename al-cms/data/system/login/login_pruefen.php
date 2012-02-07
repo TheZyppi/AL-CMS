@@ -14,28 +14,28 @@
 
 function login_pruefen() {
 session_start(); // Zum Starten der Session
-if( (isset($_SESSION['benutzer'])) AND (!empty($_SESSION['benutzer'])) )
+if( (isset($_SESSION['user'])) AND (!empty($_SESSION['user'])) )
 {
    // Benutzername vorhanden; $_SESSION['login'] prüfen
-   $be=$_SESSION['benutzer']; // Holt aus der aktuellen Session den Benutzername
+   $be=$_SESSION['user']; // Holt aus der aktuellen Session den Benutzername
 	db_con(); // Führt die Funktion db_con aus
-   $sql = "SELECT GID, Session_ID, IP_Adresse FROM benutzer WHERE Username = \"".$be."\" LIMIT 1"; // Fragt den Datensatz vom Benutzer X ab
+   $sql = "SELECT GID, session_id, ip_adresse FROM user WHERE username = \"".$be."\" LIMIT 1"; // Fragt den Datensatz vom Benutzer X ab
    $ergebnis = mysql_query($sql);
    $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);
     $ipadresse =$_SERVER['REMOTE_ADDR'];// Fragt die aktuelle IP-Adresse des Benutzers ab
-   if( (isset($_SESSION['login'])) AND $_SESSION['login'] == true  AND $reihe['Session_ID']==session_id() AND $reihe['IP_Adresse']==$ipadresse)
+   if( (isset($_SESSION['login'])) AND $_SESSION['login'] == true  AND $reihe['session_id']==session_id() AND $reihe['ip_adresse']==$ipadresse)
    {
 
    }
    else
    {
       // Kein Loginstatus in der Session abgespeichert. Daher ist man nicht eingeloggt.
-$_SESSION['gruppe'] = 1;
+$_SESSION['group'] = 1;
    }
    }
    else {
    // Kein Benutzername in der Session abgespeichert. Daher ist man nicht eingeloggt.
-$_SESSION['gruppe'] = 1;
+$_SESSION['group'] = 1;
 }
 }
 ?>

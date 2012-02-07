@@ -17,21 +17,21 @@ $sql = "SELECT PLID, aktiv FROM plugins WHERE PLID='1' LIMIT 1";
    $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);
 
 
-$sql2 = "SELECT PLFID, PLID, Funktionsname, hdatei, aktiv FROM plugin_funktion WHERE PLFID='1' LIMIT 1";
+$sql2 = "SELECT PLFID, PLID, funktionsname, data, aktiv FROM plugin_funktion WHERE PLFID='1' LIMIT 1";
 	$ergebnis2 = mysql_query($sql2);
    $reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
    
-	$sql3 = "SELECT PLFID, GID, Y_N FROM plugin_funktion_rechte WHERE PLFID='1'";
+	$sql3 = "SELECT PLFID, GID, Y_N FROM plugin_funktion_rights WHERE PLFID='1'";
 	$ergebnis3 = mysql_query($sql3);
    $reihe3 = mysql_fetch_array($ergebnis3, MYSQL_ASSOC);
-   $group=$_SESSION['gruppe'];
-      $sql1 = "SELECT PLID, GID, Y_N FROM rechte_plugins WHERE PLID='1' AND GID=".$group."";
+   $group=$_SESSION['group'];
+      $sql1 = "SELECT PLID, GID, Y_N FROM plugin_rights WHERE PLID='1' AND GID=".$group."";
    		$db_erg2 = mysql_query( $sql1);
 		   $reihe1 = mysql_fetch_array($db_erg2, MYSQL_ASSOC);
 		if ($reihe1['GID']!=$group || ! $db_erg2 )
 		{	
   	echo "Sie haben keine Berechtigungen darauf bekommen.";
-	echo $_SESSION['gruppe'];
+	echo $_SESSION['group'];
 		}
 		else 
 		{
@@ -61,7 +61,7 @@ else {
 	}
 	else {
 		echo "Sie sind nicht Berechtigt diese Seite zu benutzen.";
-		echo $_SESSION['gruppe'];
+		echo $_SESSION['group'];
 	}
 }
 	
