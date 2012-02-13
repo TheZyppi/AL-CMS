@@ -45,7 +45,7 @@ if($reihe3['GID']==$group)
 	if($reihe3['Y_N']==1)
 	{
 		echo "Sie sind im Offline Modus online.";
-	$this->plugina($srdp);	
+	$this->head_plugin($srdp);	
 	}
 	else {
 		echo "Die Seite ist im Offline Modus, Sie sind nicht Berechtigt diese zu benutzen.";
@@ -56,7 +56,7 @@ else {
 }
 }
 else {
-	$this->plugina($srdp);
+	$this->head_plugin($srdp);
 }
 	}
 	else {

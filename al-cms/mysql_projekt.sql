@@ -30,9 +30,6 @@ CREATE TABLE IF NOT EXISTS `groups` (
 
 -- --------------------------------------------------------
 
-
--- --------------------------------------------------------
-
 --
 -- Tabellenstruktur für Tabelle `Plugin_Funktion`
 --
@@ -63,10 +60,8 @@ CREATE TABLE IF NOT EXISTS `plugin_funktion_rights` (
 
 -- --------------------------------------------------------
 
--- --------------------------------------------------------
-
 --
--- Tabellenstruktur für Tabelle `Design`
+-- Tabellenstruktur für Tabelle `design`
 --
 
 CREATE TABLE IF NOT EXISTS `design` (
@@ -79,21 +74,51 @@ CREATE TABLE IF NOT EXISTS `design` (
 
 -- --------------------------------------------------------
 
+--
+-- Tabellenstruktur für Tabelle `design_plugin_order`
+--
+
+CREATE TABLE IF NOT EXISTS `design` (
+  `DID` int(11) UNSIGNED NOT NULL,
+  `HPLID` int(11) UNSIGNED NOT NULL,
+);
+
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `Panel-Design`
+-- Tabellenstruktur für Tabelle `design_plugin_order`
 --
 
-CREATE TABLE IF NOT EXISTS `panel_design` (
-  `PDID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(45),
-  `data` varchar(100),
-  `aktiv` int(1) UNSIGNED NOT NULL,
-   PRIMARY KEY (`PDID`)
+CREATE TABLE IF NOT EXISTS `design` (
+  `DID` int(11) UNSIGNED NOT NULL,
+  `LPLID` int(11) UNSIGNED NOT NULL,
+);
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `design_plugin_funktion_order`
+--
+
+CREATE TABLE IF NOT EXISTS `design` (
+  `DID` int(11) UNSIGNED NOT NULL,
+  `PLFID` int(11) UNSIGNED NOT NULL,
 ); 
 
+ 
 -- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `panel`
+--
+
+CREATE TABLE IF NOT EXISTS `panel` (
+  `PID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(45),
+  `aktiv` int(1) UNSIGNED NOT NULL,
+   PRIMARY KEY (`PID`)
+); 
+
 
 -- --------------------------------------------------------
 
@@ -111,8 +136,6 @@ CREATE TABLE IF NOT EXISTS `al_config` (
 
 -- --------------------------------------------------------
 
--- --------------------------------------------------------
-
 --
 -- Tabellenstruktur für Tabelle `plugin_funktion_meta`
 --
@@ -121,8 +144,6 @@ CREATE TABLE IF NOT EXISTS `plugin_funktion_meta` (
   `PLFID` int(11) UNSIGNED NOT NULL,
   `metad` varchar(100)
   ); 
-
--- --------------------------------------------------------
 
 -- --------------------------------------------------------
 
@@ -137,60 +158,94 @@ CREATE TABLE IF NOT EXISTS `plugin_funktion_title` (
 
 -- --------------------------------------------------------
 
--- --------------------------------------------------------
--- --------------------------------------------------------
-
 --
--- Tabellenstruktur für Tabelle `plugin_meta`
+-- Tabellenstruktur für Tabelle `head_plugin_meta`
 --
 
 CREATE TABLE IF NOT EXISTS `plugin_meta` (
-  `PLID` int(11) UNSIGNED NOT NULL,
+  `HPLID` int(11) UNSIGNED NOT NULL,
   `metad` varchar(100)
   ); 
 
--- --------------------------------------------------------
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `plugin_title`
+-- Tabellenstruktur für Tabelle `head_plugin_title`
 --
 
 CREATE TABLE IF NOT EXISTS `plugin_title` (
-  `PLID` int(11) UNSIGNED NOT NULL,
+  `HPLID` int(11) UNSIGNED NOT NULL,
   `titled` varchar(100)
   ); 
 
--- --------------------------------------------------------
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `plugin_rights`
+-- Tabellenstruktur für Tabelle `head_plugin_rights`
 --
 
-CREATE TABLE IF NOT EXISTS `plugin_rights` (
-	`PLID` int(11) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `head_plugin_rights` (
+	`HPLID` int(11) UNSIGNED NOT NULL,
   `GID` int(11) UNSIGNED NOT NULL,
   `Y_N` int(1)
+); 
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `lower_plugin_rights`
+--
+
+CREATE TABLE IF NOT EXISTS `lower_plugin_rights` (
+	`LPLID` int(11) UNSIGNED NOT NULL,
+  `GID` int(11) UNSIGNED NOT NULL,
+  `Y_N` int(1)
+); 
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `head_plugins`
+--
+
+CREATE TABLE IF NOT EXISTS `head_plugins` (
+  `HPLID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(45),
+  `data` varchar(100),
+  `definition` text,
+  `sysp` int(1) NOT NULL,
+  `aktiv` int(1) NOT NULL,
+  PRIMARY KEY (`HPLID`)
+); 
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `lower_plugins`
+--
+
+CREATE TABLE IF NOT EXISTS `lower_plugins` (
+  `LPLID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(45),
+  `data` varchar(100),
+  `definition` text,
+  `aktiv` int(1) NOT NULL,
+  PRIMARY KEY (`LPLID`)
 ); 
 
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `Plugins`
+-- Tabellenstruktur für Tabelle `al_version`
 --
 
-CREATE TABLE IF NOT EXISTS `plugins` (
-  `PLID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` varchar(45),
-  `data` varchar(100),
+CREATE TABLE IF NOT EXISTS `al_version` (
+  `name` varchar(45) NOT NULL,
   `definition` text,
-  `sysp` int(1) NOT NULL,
-  `aktiv` int(1) NOT NULL,
-  PRIMARY KEY (`PLID`)
+  `version` varchar(40) NOT NULL,
 ); 
 
 
@@ -207,11 +262,11 @@ add foreign key (GID) REFERENCES groups (GID) ON DELETE cascade ON UPDATE cascad
 ALTER TABLE plugin_rights
 add foreign key (GID) REFERENCES groups (GID) ON DELETE cascade ON UPDATE cascade;
 
-ALTER TABLE plugin_rights
-add foreign key (PLID) REFERENCES plugins (PLID)ON DELETE cascade ON UPDATE cascade;
+ALTER TABLE head_plugin_rights
+add foreign key (HPLID) REFERENCES head_plugins (HPLID)ON DELETE cascade ON UPDATE cascade;
 
-ALTER TABLE plugin_funktion
-add foreign key (PLID) REFERENCES plugins (PLID) ON DELETE cascade ON UPDATE cascade;
+ALTER TABLE head_plugin_funktion
+add foreign key (HPLID) REFERENCES head_plugins (HPLID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE plugin_funktion_rights
 add foreign key (GID) REFERENCES groups (GID) ON DELETE cascade ON UPDATE cascade;
@@ -219,11 +274,11 @@ add foreign key (GID) REFERENCES groups (GID) ON DELETE cascade ON UPDATE cascad
 ALTER TABLE plugin_funktion_rights
 add foreign key (PLFID) REFERENCES plugin_funktion (PLFID) ON DELETE cascade ON UPDATE cascade;
 
-ALTER TABLE plugin_title
-add foreign key (PLID) REFERENCES plugins (PLID) ON DELETE cascade ON UPDATE cascade;
+ALTER TABLE head_plugin_title
+add foreign key (HPLID) REFERENCES head_plugins (HPLID) ON DELETE cascade ON UPDATE cascade;
 
-ALTER TABLE plugin_meta
-add foreign key (PLID) REFERENCES plugins (PLID) ON DELETE cascade ON UPDATE cascade;
+ALTER TABLE head_plugin_meta
+add foreign key (HPLID) REFERENCES plugins (HPLID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE plugin_funktion_title
 add foreign key (PLFID) REFERENCES plugin_funktion (PLFID) ON DELETE cascade ON UPDATE cascade;
@@ -267,7 +322,7 @@ VALUES (
 'admin', 'Administrator'
 );
 
-INSERT INTO `plugins` (
+INSERT INTO `head_plugins` (
 `name` ,
 `data`,
 `definition`,
@@ -330,7 +385,7 @@ VALUES (
 '1', 'register', 'register/index.php', '', '', '', '1'
 );
 
-INSERT INTO `plugin_rights` (
+INSERT INTO `head_plugin_rights` (
 `PLID` ,
 `GID`,
 `Y_N`
@@ -339,7 +394,7 @@ VALUES (
 '1', '1', '1'
 );
 
-INSERT INTO `plugin_rights` (
+INSERT INTO `head_plugin_rights` (
 `PLID` ,
 `GID`,
 `Y_N`
@@ -348,7 +403,7 @@ VALUES (
 '1', '2', '1'
 );
 
-INSERT INTO `plugin_rights` (
+INSERT INTO `head_plugin_rights` (
 `PLID` ,
 `GID`,
 `Y_N`
@@ -357,7 +412,7 @@ VALUES (
 '1', '3', '1'
 );
 
-INSERT INTO `plugin_rights` (
+INSERT INTO `head_plugin_rights` (
 `PLID` ,
 `GID`,
 `Y_N`

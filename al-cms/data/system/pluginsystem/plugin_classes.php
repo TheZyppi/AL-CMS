@@ -22,15 +22,19 @@ class pluginsystem {
 	{
 		include('show.php');
 	}
-	private function plugina ($srdp)
+	private function head_plugin ($srdp)
 	{
-		include('pluginm.php');
+		include('head_plugin.php');
+	}
+	private function lower_plugin ($srdp)
+	{
+		include('lower_plugin.php');
 	}
 	public function plugin($srdp)
 	{	
 		include('plugin.php');
 	}
-	private function extplugina ($srdp, $plugin=0)
+	private function extplugina($srdp, $plugin=0)
 	{
 		include('extplugin.php');
 	}
@@ -38,15 +42,11 @@ class pluginsystem {
 	{
 		$this->extplugina($srdp, $plugin);
 	}
-	private function funktionina($srdp, $funktion=no)
+	private function funktionin($srdp, $funktion='no')
 	{
-	include('extfunktion.php');	
+		include('funktionin.php');	
 	}
-	public function funktionin($srdp, $funktion=no)
-	{
-	$this->funktionin();
-	}
-}
 
-	$pluginsys = new pluginsystem();
+}
+$pluginsys = new pluginsystem();
 ?>

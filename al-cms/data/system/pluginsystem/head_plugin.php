@@ -16,7 +16,7 @@ $group=$_SESSION['group'];
 // Die Datei zum Datenbank Connecten wird reingeladen
 
 // Es wird nachgeguckt ob eine PluginID angegeben wurde.
-if (isset($_GET['pl'])=="" || $_GET['pl']=="") {
+if (isset($_GET['hpl'])=="" || $_GET['hpl']=="") {
 // Wenn kein Plugin anegeben wurde
 
 // Verbindung zur Datenbank wird aufgebaut in dem die Funktion db_con aufgerufen wird.
@@ -47,14 +47,14 @@ if (isset($_GET['pl'])=="" || $_GET['pl']=="") {
 	}
 }
 else {
-$pl=$_GET['pl'];
+$hpl=$_GET['hpl'];
 db_con();
-	if (preg_match ("/^([0-9]+)$/",$pl)) {
-		$sql = "SELECT PLID, name, data, sysp, aktiv FROM plugins WHERE PLID= ".mysql_real_escape_string($pl)." LIMIT 1";
+	if (preg_match ("/^([0-9]+)$/",$hpl)) {
+		$sql = "SELECT PLID, name, data, sysp, aktiv FROM plugins WHERE PLID= ".mysql_real_escape_string($hpl)." LIMIT 1";
    $ergebnis = mysql_query($sql);
-   
+	$reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);   
 	  // Überprüfung ob es das Plugin überhaupt gibt	
-   if(! $ergebnis)
+   if(! $ergebnis || $reihe['PLID']!=$hpl)
    {
    	echo "Kein Plugin mit der Angegeben ID gefunden.";
 	mysql_close();
@@ -62,8 +62,7 @@ db_con();
    }
    // Wenn es das Plugin nicht gibt wird ein Fehler ausgegeben
 else {
-	  	$reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);
-$sql2 = "SELECT PLID, GID, Y_N FROM plugin_rights WHERE PLID=".mysql_real_escape_string($pl)." LIMIT 1";
+$sql2 = "SELECT PLID, GID, Y_N FROM plugin_rights WHERE PLID=".mysql_real_escape_string($hpl)." LIMIT 1";
 	$ergebnis2 = mysql_query($sql2);
    $reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
 $plid=$reihe['PLID']; 
@@ -71,11 +70,11 @@ $plid=$reihe['PLID'];
 
 	}
 	else {
-$sql = "SELECT PLID, name, data, sysp, aktiv FROM plugins WHERE name = '".mysql_real_escape_string($pl)."'";
+$sql = "SELECT PLID, name, data, sysp, aktiv FROM plugins WHERE name = '".mysql_real_escape_string($hpl)."'";
    $ergebnis = mysql_query($sql) or die (mysql_error());
    $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);	
     // Überprüfung ob es das Plugin überhaupt gibt
-      if($pl==$reihe['name'])
+      if($hpl==$reihe['name'])
    {
 $sql2 = "SELECT PLID, GID, Y_N FROM plugin_rights WHERE PLID=".mysql_real_escape_string($reihe['PLID'])."";
 	$ergebnis2 = mysql_query($sql2);
@@ -106,7 +105,7 @@ if ($reihe['aktiv']==1) {
    	// Prüfung ob die Gruppe das Plugin ausführen darf
 	if($reiheg['Y_N']==1) {
 		// Prüft ob eine Pluginfunktion angegeben wurde oder nicht
-		if (isset($_GET['plf'])=="")
+		if (isset($_GET['plf'])=="" && isset($_GET['lpl'])=="")
 		{
 			// Überprüft ob es ein Systemplugin ist oder nicht
 			if ($reihe['sysp']==1)
@@ -134,12 +133,21 @@ if ($reihe['aktiv']==1) {
 		}
 		// Wenn eine Plugin Funktion angeben wurde wird else ausgeführt
 		else {
-			// Ruft aus der URL die Pluginfunktion auf
+			
+			if(isset($_GET['plf'])=="")
+			{
+			// Show the number or name from the Head Plugin Funktionsname
+			$lpl=$_GET['lpl'];
+			// The Under Group Plugin start now
+			$this->lower_plugin($srdp);
+			}
+			else {
+			// Show the number or name from the Head Plugin Funktionsname
 			$plf=$_GET['plf'];
-			// Das Plugin Funktionssystem wird ausgeführt
+			// The Funktion from Head Plugin run now
 			$this->funktion($srdp);
+			}		
 		}
-		
 		}
 	// Wenn die Gruppe das Plugin nicht benutzen darf
 		else {
