@@ -31,12 +31,11 @@ CREATE TABLE IF NOT EXISTS `groups` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `Plugin_Funktion`
+-- Tabellenstruktur für Tabelle `plugin_funktion`
 --
 
 CREATE TABLE IF NOT EXISTS `plugin_funktion` (
   `PLFID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `PLID` int(11) UNSIGNED NOT NULL,
   `funktionsname` varchar(30),
   `data` varchar(100),
   `definition` text,
@@ -44,7 +43,30 @@ CREATE TABLE IF NOT EXISTS `plugin_funktion` (
   `parent` int(1),
   `aktiv` int(1),
   PRIMARY KEY (`PLFID`)
-); 
+);
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `head_plugin_funktion`
+--
+
+CREATE TABLE IF NOT EXISTS `head_plugin_funktion` (
+  `PLFID` int(11) UNSIGNED NOT NULL,
+  `HPLID` int(11) UNSIGNED NOT NULL
+);
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `lower_plugin_funktion`
+--
+
+CREATE TABLE IF NOT EXISTS `lower_plugin_funktion` (
+  `PLFID` int(11) UNSIGNED NOT NULL,
+  `LPLID` int(11) UNSIGNED NOT NULL
+);
+
 
 -- --------------------------------------------------------
 
@@ -75,23 +97,23 @@ CREATE TABLE IF NOT EXISTS `design` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `design_plugin_order`
+-- Tabellenstruktur für Tabelle `design_head_plugin_order`
 --
 
-CREATE TABLE IF NOT EXISTS `design` (
+CREATE TABLE IF NOT EXISTS `design_head_plugin_order` (
   `DID` int(11) UNSIGNED NOT NULL,
-  `HPLID` int(11) UNSIGNED NOT NULL,
+  `HPLID` int(11) UNSIGNED NOT NULL
 );
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `design_plugin_order`
+-- Tabellenstruktur für Tabelle `design_lower_plugin_order`
 --
 
-CREATE TABLE IF NOT EXISTS `design` (
+CREATE TABLE IF NOT EXISTS `design_lower_plugin_order` (
   `DID` int(11) UNSIGNED NOT NULL,
-  `LPLID` int(11) UNSIGNED NOT NULL,
+  `LPLID` int(11) UNSIGNED NOT NULL
 );
 
 -- --------------------------------------------------------
@@ -100,9 +122,9 @@ CREATE TABLE IF NOT EXISTS `design` (
 -- Tabellenstruktur für Tabelle `design_plugin_funktion_order`
 --
 
-CREATE TABLE IF NOT EXISTS `design` (
+CREATE TABLE IF NOT EXISTS `design_plugin_funktion_order` (
   `DID` int(11) UNSIGNED NOT NULL,
-  `PLFID` int(11) UNSIGNED NOT NULL,
+  `PLFID` int(11) UNSIGNED NOT NULL
 ); 
 
  
@@ -162,7 +184,7 @@ CREATE TABLE IF NOT EXISTS `plugin_funktion_title` (
 -- Tabellenstruktur für Tabelle `head_plugin_meta`
 --
 
-CREATE TABLE IF NOT EXISTS `plugin_meta` (
+CREATE TABLE IF NOT EXISTS `head_plugin_meta` (
   `HPLID` int(11) UNSIGNED NOT NULL,
   `metad` varchar(100)
   ); 
@@ -174,8 +196,31 @@ CREATE TABLE IF NOT EXISTS `plugin_meta` (
 -- Tabellenstruktur für Tabelle `head_plugin_title`
 --
 
-CREATE TABLE IF NOT EXISTS `plugin_title` (
+CREATE TABLE IF NOT EXISTS `head_plugin_title` (
   `HPLID` int(11) UNSIGNED NOT NULL,
+  `titled` varchar(100)
+  ); 
+
+
+-- --------------------------------------------------------
+--
+-- Tabellenstruktur für Tabelle `lower_plugin_meta`
+--
+
+CREATE TABLE IF NOT EXISTS `lower_plugin_meta` (
+  `LPLID` int(11) UNSIGNED NOT NULL,
+  `metad` varchar(100)
+  ); 
+
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `lower_plugin_title`
+--
+
+CREATE TABLE IF NOT EXISTS `lower_plugin_title` (
+  `LPLID` int(11) UNSIGNED NOT NULL,
   `titled` varchar(100)
   ); 
 
@@ -245,7 +290,7 @@ CREATE TABLE IF NOT EXISTS `lower_plugins` (
 CREATE TABLE IF NOT EXISTS `al_version` (
   `name` varchar(45) NOT NULL,
   `definition` text,
-  `version` varchar(40) NOT NULL,
+  `version` varchar(40) NOT NULL
 ); 
 
 
@@ -259,14 +304,29 @@ CREATE TABLE IF NOT EXISTS `al_version` (
 ALTER TABLE user 
 add foreign key (GID) REFERENCES groups (GID) ON DELETE cascade ON UPDATE cascade;
 
-ALTER TABLE plugin_rights
+ALTER TABLE head_plugin_rights
+add foreign key (GID) REFERENCES groups (GID) ON DELETE cascade ON UPDATE cascade;
+
+ALTER TABLE lower_plugin_rights
 add foreign key (GID) REFERENCES groups (GID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE head_plugin_rights
 add foreign key (HPLID) REFERENCES head_plugins (HPLID)ON DELETE cascade ON UPDATE cascade;
 
+ALTER TABLE lower_plugin_rights
+add foreign key (LPLID) REFERENCES lower_plugins (LPLID)ON DELETE cascade ON UPDATE cascade;
+
 ALTER TABLE head_plugin_funktion
 add foreign key (HPLID) REFERENCES head_plugins (HPLID) ON DELETE cascade ON UPDATE cascade;
+
+ALTER TABLE head_plugin_funktion
+add foreign key (PLFID) REFERENCES plugin_funktion (PLFID) ON DELETE cascade ON UPDATE cascade;
+
+ALTER TABLE lower_plugin_funktion
+add foreign key (LPLID) REFERENCES lower_plugins (LPLID) ON DELETE cascade ON UPDATE cascade;
+
+ALTER TABLE lower_plugin_funktion
+add foreign key (PLFID) REFERENCES plugin_funktion (PLFID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE plugin_funktion_rights
 add foreign key (GID) REFERENCES groups (GID) ON DELETE cascade ON UPDATE cascade;
@@ -278,18 +338,43 @@ ALTER TABLE head_plugin_title
 add foreign key (HPLID) REFERENCES head_plugins (HPLID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE head_plugin_meta
-add foreign key (HPLID) REFERENCES plugins (HPLID) ON DELETE cascade ON UPDATE cascade;
+add foreign key (HPLID) REFERENCES head_plugins (HPLID) ON DELETE cascade ON UPDATE cascade;
+
+ALTER TABLE lower_plugin_title
+add foreign key (LPLID) REFERENCES lower_plugins (LPLID) ON DELETE cascade ON UPDATE cascade;
+
+ALTER TABLE lower_plugin_meta
+add foreign key (LPLID) REFERENCES lower_plugins (LPLID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE plugin_funktion_title
 add foreign key (PLFID) REFERENCES plugin_funktion (PLFID) ON DELETE cascade ON UPDATE cascade;
 
 ALTER TABLE plugin_funktion_meta
 add foreign key (PLFID) REFERENCES plugin_funktion (PLFID) ON DELETE cascade ON UPDATE cascade;
+
+ALTER TABLE design_head_plugin_order
+add foreign key (DID) REFERENCES design (DID) ON DELETE cascade ON UPDATE cascade;
+
+ALTER TABLE design_head_plugin_order
+add foreign key (HPLID) REFERENCES head_plugins (HPLID) ON DELETE cascade ON UPDATE cascade;
+
+ALTER TABLE design_lower_plugin_order
+add foreign key (DID) REFERENCES design (DID) ON DELETE cascade ON UPDATE cascade;
+
+ALTER TABLE design_lower_plugin_order
+add foreign key (LPLID) REFERENCES lower_plugins (LPLID) ON DELETE cascade ON UPDATE cascade;
+
+ALTER TABLE design_plugin_funktion_order
+add foreign key (DID) REFERENCES design (DID) ON DELETE cascade ON UPDATE cascade;
+
+ALTER TABLE design_plugin_funktion_order
+add foreign key (PLFID) REFERENCES plugin_funktion (PLFID) ON DELETE cascade ON UPDATE cascade;
+
 -- --------------------------------------------------------
 
 
 --
--- Standart groups setzen
+-- Standart groups settings
 --
 
 INSERT INTO `groups` (

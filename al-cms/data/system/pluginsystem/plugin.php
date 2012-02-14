@@ -25,7 +25,7 @@ $sql2 = "SELECT PLFID, PLID, funktionsname, data, aktiv FROM plugin_funktion WHE
 	$ergebnis3 = mysql_query($sql3);
    $reihe3 = mysql_fetch_array($ergebnis3, MYSQL_ASSOC);
    $group=$_SESSION['group'];
-      $sql1 = "SELECT PLID, GID, Y_N FROM plugin_rights WHERE PLID='1' AND GID=".$group."";
+      $sql1 = "SELECT PLID, GID, Y_N FROM head_plugin_rights WHERE HPLID='1' AND GID=".$group."";
    		$db_erg2 = mysql_query( $sql1);
 		   $reihe1 = mysql_fetch_array($db_erg2, MYSQL_ASSOC);
 		if ($reihe1['GID']!=$group || ! $db_erg2 )
