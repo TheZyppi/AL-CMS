@@ -13,11 +13,14 @@
 
 class pluginsystem {
 	
-	private function funktion($srdp)
+	private function head_funktion($srdp)
 	{
-		include('funktion.php');
+		include('head_funktion.php');
 	}
-	
+	private function lower_funktion($srdp)
+	{
+		include('lower_funktion.php');
+	}
 	public function show()
 	{
 		include('show.php');

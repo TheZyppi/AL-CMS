@@ -145,7 +145,7 @@ if ($reihe['aktiv']==1) {
 			// Show the number or name from the Head Plugin Funktionsname
 			$plf=$_GET['plf'];
 			// The Funktion from Head Plugin run now
-			$this->funktion($srdp);
+			$this->head_funktion($srdp);
 			}		
 		}
 		}
