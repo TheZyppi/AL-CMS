@@ -18,7 +18,7 @@
 function db_con() {
 $user="root"; //Benutzername
 $pass=""; //Passwort
-$db="alcms2"; //Datenbank
+$db="alcms3"; //Datenbank
 $adresse="localhost"; //Adresse
 mysql_connect($adresse, $user, $pass); // Verbindung aufbauen
 mysql_select_db($db); // Datenbank wählen	

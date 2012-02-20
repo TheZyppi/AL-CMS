@@ -11,27 +11,25 @@
  *   
  */
 
-// Die dbcon.php wird eingefügt
+
 db_con();
-// Abfrage welches Design aktiv ist
-$sql = mysql_query('SELECT DID, name, data, aktiv FROM design');
-while($row = mysql_fetch_object($sql))
+include('design_classes.php');
+$sql2 = "SELECT PLFID, aktiv FROM plugin_funktion WHERE PLFID='5' LIMIT 1";
+	$ergebnis2 = mysql_query($sql2);
+   $reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
+if (! $ergebnis2 || $reihe2['PLFID']!='5')
 {
-	$a=$row->aktiv;
-	$n=$row->DID;
-	$d=$row->data;
+echo "Es wurde keine Mobile Funktion deklariert.";
+mysql_close();
+exit;	
+}   
+else {
+   if($reihe2['aktiv']==1)
+   {
+   	// Mobile System wird geladen
+   }
+   else {
+  $designsys->body_normal($srdp);
+   }
 }
-// Die Hauptdatei vom Design wird reingeladen
-	if ( ! $sql || $a==0 || $n=="")
-	{
-		echo "Sie haben kein Standart Design angegeben.";
-		mysql_close();
-		exit;
-	}
-	else {
-$pfad=$d;
-include(''.$srdp.'design/'.$pfad.'index.php');
-// Die Head Funktion wird reingeladen dient dazu den Header darzustellen
-include('head_function.php');
-	}
 ?>

@@ -48,6 +48,17 @@ CREATE TABLE IF NOT EXISTS `plugin_funktion` (
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `head_plugin_lower_plugin`
+--
+
+CREATE TABLE IF NOT EXISTS `head_plugin_lower_plugin` (
+  `HPLID` int(11) UNSIGNED NOT NULL,
+  `LPLID` int(11) UNSIGNED NOT NULL
+);
+
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `head_plugin_funktion`
 --
 
@@ -90,6 +101,8 @@ CREATE TABLE IF NOT EXISTS `design` (
   `DID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(45),
   `data` varchar(100),
+  `mobile` int(1),
+  `standart` int(1),
   `aktiv` int(1) UNSIGNED NOT NULL,
    PRIMARY KEY (`DID`)
 ); 
@@ -123,6 +136,39 @@ CREATE TABLE IF NOT EXISTS `design_lower_plugin_order` (
 --
 
 CREATE TABLE IF NOT EXISTS `design_plugin_funktion_order` (
+  `DID` int(11) UNSIGNED NOT NULL,
+  `PLFID` int(11) UNSIGNED NOT NULL
+); 
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `design_mobile_head_plugin_order`
+--
+
+CREATE TABLE IF NOT EXISTS `design_mobile_head_plugin_order` (
+  `DID` int(11) UNSIGNED NOT NULL,
+  `HPLID` int(11) UNSIGNED NOT NULL
+);
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `design_mobile_lower_plugin_order`
+--
+
+CREATE TABLE IF NOT EXISTS `design_mobile_lower_plugin_order` (
+  `DID` int(11) UNSIGNED NOT NULL,
+  `LPLID` int(11) UNSIGNED NOT NULL
+);
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `design_mobile_plugin_funktion_order`
+--
+
+CREATE TABLE IF NOT EXISTS `design_mobile_plugin_funktion_order` (
   `DID` int(11) UNSIGNED NOT NULL,
   `PLFID` int(11) UNSIGNED NOT NULL
 ); 
@@ -370,6 +416,30 @@ add foreign key (DID) REFERENCES design (DID) ON DELETE cascade ON UPDATE cascad
 ALTER TABLE design_plugin_funktion_order
 add foreign key (PLFID) REFERENCES plugin_funktion (PLFID) ON DELETE cascade ON UPDATE cascade;
 
+ALTER TABLE design_mobile_head_plugin_order
+add foreign key (DID) REFERENCES design (DID) ON DELETE cascade ON UPDATE cascade;
+
+ALTER TABLE design_mobile_head_plugin_order
+add foreign key (HPLID) REFERENCES head_plugins (HPLID) ON DELETE cascade ON UPDATE cascade;
+
+ALTER TABLE design_mobile_lower_plugin_order
+add foreign key (DID) REFERENCES design (DID) ON DELETE cascade ON UPDATE cascade;
+
+ALTER TABLE design_mobile_lower_plugin_order
+add foreign key (LPLID) REFERENCES lower_plugins (LPLID) ON DELETE cascade ON UPDATE cascade;
+
+ALTER TABLE design_mobile_plugin_funktion_order
+add foreign key (DID) REFERENCES design (DID) ON DELETE cascade ON UPDATE cascade;
+
+ALTER TABLE design_mobile_plugin_funktion_order
+add foreign key (PLFID) REFERENCES plugin_funktion (PLFID) ON DELETE cascade ON UPDATE cascade;
+
+ALTER TABLE head_plugin_lower_plugin
+add foreign key (HPLID) REFERENCES head_plugins (HPLID) ON DELETE cascade ON UPDATE cascade;
+
+ALTER TABLE head_plugin_lower_plugin
+add foreign key (LPLID) REFERENCES lower_plugins (LPLID) ON DELETE cascade ON UPDATE cascade;
+
 -- --------------------------------------------------------
 
 
@@ -419,7 +489,6 @@ VALUES (
 );
 
 INSERT INTO `plugin_funktion` (
-`PLID` ,
 `funktionsname`,
 `data`,
 `definition`,
@@ -428,11 +497,10 @@ INSERT INTO `plugin_funktion` (
 `aktiv`
 )
 VALUES (
-'1', 'On', '', '', '', '', '1'
+'On', '', '', '', '', '1'
 );
 
 INSERT INTO `plugin_funktion` (
-`PLID` ,
 `funktionsname`,
 `data`,
 `definition`,
@@ -441,11 +509,10 @@ INSERT INTO `plugin_funktion` (
 `aktiv`
 )
 VALUES (
-'1', 'login', 'login/login.php', '', '', '', '1'
+'login', 'login/login.php', '', '', '', '1'
 );
 
 INSERT INTO `plugin_funktion` (
-`PLID` ,
 `funktionsname`,
 `data`,
 `definition`,
@@ -454,11 +521,10 @@ INSERT INTO `plugin_funktion` (
 `aktiv`
 )
 VALUES (
-'1', 'logout', 'login/logout.php', '', '', '', '1'
+'logout', 'login/logout.php', '', '', '', '1'
 );
 
 INSERT INTO `plugin_funktion` (
-`PLID` ,
 `funktionsname`,
 `data`,
 `definition`,
@@ -467,11 +533,44 @@ INSERT INTO `plugin_funktion` (
 `aktiv`
 )
 VALUES (
-'1', 'register', 'register/index.php', '', '', '', '1'
+'register', 'register/index.php', '', '', '', '1'
 );
+
+INSERT INTO `head_plugin_funktion` (
+`PLFID` ,
+`HPLID`
+)
+VALUES (
+'1', '1'
+);
+
+INSERT INTO `head_plugin_funktion` (
+`PLFID` ,
+`HPLID`
+)
+VALUES (
+'1', '2'
+);
+
+INSERT INTO `head_plugin_funktion` (
+`PLFID` ,
+`HPLID`
+)
+VALUES (
+'1', '3'
+);
+
+INSERT INTO `head_plugin_funktion` (
+`PLFID` ,
+`HPLID`
+)
+VALUES (
+'1', '4'
+);
+
 
 INSERT INTO `head_plugin_rights` (
-`PLID` ,
+`HPLID` ,
 `GID`,
 `Y_N`
 )
@@ -480,7 +579,7 @@ VALUES (
 );
 
 INSERT INTO `head_plugin_rights` (
-`PLID` ,
+`HPLID` ,
 `GID`,
 `Y_N`
 )
@@ -489,7 +588,7 @@ VALUES (
 );
 
 INSERT INTO `head_plugin_rights` (
-`PLID` ,
+`HPLID` ,
 `GID`,
 `Y_N`
 )
@@ -498,7 +597,7 @@ VALUES (
 );
 
 INSERT INTO `head_plugin_rights` (
-`PLID` ,
+`HPLID` ,
 `GID`,
 `Y_N`
 )

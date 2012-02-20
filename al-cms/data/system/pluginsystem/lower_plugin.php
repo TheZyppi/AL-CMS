@@ -23,7 +23,7 @@ else {
 $lpl=$_GET['lpl'];
 db_con();
 	if (preg_match ("/^([0-9]+)$/",$lpl)) {
-		$sql = "SELECT PLID, name, data, aktiv FROM lower_plugins WHERE LPLID= ".mysql_real_escape_string($lpl)." LIMIT 1";
+		$sql = "SELECT LPLID, name, data, aktiv FROM lower_plugins WHERE LPLID= ".mysql_real_escape_string($lpl)." LIMIT 1";
    $ergebnis = mysql_query($sql);
 	$reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);   
 	  // Überprüfung ob es das Plugin überhaupt gibt	
@@ -61,10 +61,19 @@ $lpl=$reihe['LPLID'];
 	  	exit;
 	  }
 	}
+	$hpl=$_GET['hpl'];
+	$sqlhl = "SELECT HPLID, LPLID FROM head_plugin_lower_plugin WHERE LPLID=".mysql_real_escape_string($lpl)." AND HPLID=".mysql_real_escape_string($hpl)."";
+	$ergebnishl = mysql_query($sqlhl);
+	$reihehl = mysql_fetch_array($ergebnishl, MYSQL_ASSOC);
+	if(! $ergebnishl || $reihehl['HPLID']!=$hpl || $reihehl['LPLID']!=$lpl)
+	{
+		echo "Die Head Plugin und Lower Plugin ID passen nicht zusammen.";
+	}
+	else {
 // Prüfung ob das Plugin aktiv ist
 if ($reihe['aktiv']==1) {
 	// Abfrage ob für die Gruppe Berechtigung vergeben wurde das Plugin auszuführen
-	$sqlg = "SELECT PLID, GID, Y_N FROM lower_plugin_rights WHERE LPLID=".mysql_real_escape_string($reihe['LPLID'])." AND GID=".$group."";
+	$sqlg = "SELECT LPLID, GID, Y_N FROM lower_plugin_rights WHERE LPLID=".mysql_real_escape_string($reihe['LPLID'])." AND GID=".$group."";
 	$ergebnisg = mysql_query($sqlg);
 	$reiheg = mysql_fetch_array($ergebnisg, MYSQL_ASSOC);
 	// Überprüfung ob die Gruppe das Plugin ausführen darf
@@ -138,5 +147,5 @@ else {
 		exit;
 		}
 		}
-		
+		}	
 ?>

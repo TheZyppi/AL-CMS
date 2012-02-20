@@ -21,6 +21,8 @@ List of standart config settings:
 
 
 
+
+
 List of standart-plugin-IDs:
 1	AL-CMS standart plugin ID
 
@@ -30,5 +32,5 @@ List of standart functions:
 2	login
 3	logout
 4       register
-
+5	mobile_deisgn
  
