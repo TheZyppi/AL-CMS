@@ -23,11 +23,7 @@
 // Datenbank Verbindung wird aufgebaut
 db_con();
 		// Abfrage welches Design aktiv ist
-$sql = "SELECT DID, name, data, aktiv FROM design WHERE aktiv=1";
-$ergebnis = mysql_query($sql);
-$reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC) or die (mysql_error());	
-// Die Hauptdatei vom Design wird reingeladen
-$pfad=$reihe['data'];
+$pfad=$reihe2['data'];
  
  // Abfrage zum Design Pfad
 $dp="SELECT * FROM al_config WHERE CID='4'";

@@ -32,18 +32,131 @@
 		include('meta.php');
 	}
 // Public Funktion für das Laden der CSS Scripte
+private function css($rsp) {
+				// Abfrage welches Design aktiv ist
+$sql = mysql_query('SELECT DID, name, data, mobile, standart, aktiv FROM design WHERE mobile="0" AND standart="1" AND aktiv="1"');
+while($row = mysql_fetch_object($sql))
+{
+	$a=$row->aktiv;
+	$n=$row->DID;
+	$d=$row->data;
+}
+// Die Hauptdatei vom Design wird reingeladen
+	if ( ! $sql || $n=="")
+	{
+		mysql_close();
+		echo "Sie haben kein Standart Design angegeben.";
+		exit;
+	}
+	else {
+$pfad=$d;
+include(''.$rsp.'design/'.$pfad.'css/index.php');
+	} 
+} 	
+	private function css_head_plugin_normal($rsp)
+{
+	$hpl=$_GET['hpl'];
+		 	$sql = mysql_query('SELECT DID, HPLID FROM design_head_plugin_order WHERE HPLID='.$hpl.'');
+			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
+			   	$sql2 = mysql_query('SELECT DID, data, aktiv FROM design WHERE DID='.$reihe['DID'].'');
+			   	$reihe2 = mysql_fetch_array($sql2, MYSQL_ASSOC);
+include(''.$rsp.'design/'.$reihe2['data'].'css/index.php');
+}
+
+	private function css_head_lower_plugin_normal($rsp)
+{
+	$lpl=$_GET['lpl'];
+				$sql = mysql_query('SELECT DID, LPLID FROM design_lower_plugin_order WHERE LPLID='.$lpl.'') or die(mysql_error());
+			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
+			   	$sql2 = mysql_query('SELECT DID, data, aktiv FROM design WHERE DID='.$reihe['DID'].'') or die(mysql_error());
+			   	$reihe2 = mysql_fetch_array($sql2, MYSQL_ASSOC);
+			   
+include(''.$rsp.'design/'.$reihe2['data'].'css/index.php');
+}
+
+	private function css_plugin_funktion_normal($rsp)
+	{
+			$plf=$_GET['plf'];
+				$sql = mysql_query('SELECT DID, PLFID FROM design_plugin_funktion_order WHERE PLFID='.$plf.'');
+			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
+			   	$sql2 = mysql_query('SELECT DID, data, aktiv FROM design WHERE DID='.$reihe['DID'].'');
+			   	$reihe2 = mysql_fetch_array($sql2, MYSQL_ASSOC);
+			   
+include(''.$rsp.'design/'.$reihe2['data'].'css/index.php');
+	}
+
 	public function css_script($rsp)
 	{
 		
-		// Abfrage welches Design aktiv ist
-$sql = "SELECT DID, name, data, aktiv FROM design WHERE aktiv=1";
-$ergebnis = mysql_query($sql);
-$reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC) or die (mysql_error());	
-// Pfad zum CSS Script
-$pfad=$reihe['data'];
-// Das CSS Script wird eingefügt.
-		include (''.$rsp.'design/'.$pfad.'css/index.php');
-		mysql_close();
+	if (isset($_GET['hpl'])=="" || $_GET['hpl']=="") {
+$this->css($rsp);
+}
+else {
+
+		if (isset($_GET['plf'])=="" && isset($_GET['lpl'])=="")
+		{
+			$hpl=$_GET['hpl'];
+			$sql = mysql_query('SELECT DID, HPLID FROM design_head_plugin_order WHERE HPLID='.$hpl.'');
+			if(! $sql)
+			{
+				$this->css($rsp);
+			}
+			else {
+	   	$reihe2 = mysql_fetch_array($sql, MYSQL_ASSOC);
+		if($reihe2['HPLID']!=$hpl)
+		{
+			$this->css($rsp);
+		}
+		else {
+		$this->css_head_plugin_normal($rsp);	
+		}
+		}
+		}
+		// Wenn eine Plugin Funktion angeben wurde wird else ausgeführt
+		else {
+			
+			if(isset($_GET['plf'])=="" && isset($_GET['lpl'])!="" && isset($_GET['hpl'])!="")
+			{
+				$lpl=$_GET['lpl'];
+			$sql = mysql_query('SELECT DID, LPLID FROM design_lower_plugin_order WHERE LPLID='.$lpl.'');
+	   	$reihe2 = mysql_fetch_array($sql, MYSQL_ASSOC);
+		if(! $sql || $reihe2['LPLID']!=$lpl)
+		{
+			$this->css($rsp);
+		}
+		else {
+			$this->css_head_lower_plugin_normal($rsp);
+		}
+			}
+			else if(isset($_GET['lpl'])=="" && isset($_GET['plf'])!="" && isset($_GET['hpl'])!=""){
+				$plf=$_GET['plf'];
+			$sql = mysql_query('SELECT DID, PLFID FROM design_plugin_funktion_order WHERE PLFID='.$plf.'');
+	   	$reihe2 = mysql_fetch_array($sql, MYSQL_ASSOC);
+		if(! $sql || $reihe2['PLFID']!=$plf)
+		{
+			$this->css($rsp);
+		}
+		else {
+		$this->css_plugin_funktion_normal($rsp);	
+		}
+			}		
+			else if($_GET['plf']!="" && $_GET['lpl']!="" && isset($_GET['hpl'])!="")
+			{
+$plf=$_GET['plf'];
+			$sql = mysql_query('SELECT DID, PLFID FROM design_plugin_funktion_order WHERE PLFID='.$plf.'');
+	   	$reihe2 = mysql_fetch_array($sql, MYSQL_ASSOC);
+		if(! $sql || $reihe2['PLFID']!=$plf)
+		{
+			$this->css($rsp);
+		}
+		else {
+		$this->css_plugin_funktion_normal($rsp);	
+		}
+				
+			}
+		}
+		
+	}
 	}
 	
 	}	

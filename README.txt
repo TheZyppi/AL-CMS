@@ -32,5 +32,5 @@ List of standart functions:
 2	login
 3	logout
 4       register
-5	mobile_deisgn
+5	mobile
  

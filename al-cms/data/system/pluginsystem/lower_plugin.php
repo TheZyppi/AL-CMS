@@ -38,31 +38,42 @@ else {
 $sql2 = "SELECT LPLID, GID, Y_N FROM lower_plugin_rights WHERE LPLID=".mysql_real_escape_string($lpl)." LIMIT 1";
 	$ergebnis2 = mysql_query($sql2);
    $reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
-$lpl=$reihe['LPLID']; 
+$lpla=$reihe['LPLID']; 
 }
-
 	}
 	else {
-$sql = "SELECT LPLID, name, data, sysp, aktiv FROM lower_plugins WHERE name = '".mysql_real_escape_string($lpl)."'";
+$sql = "SELECT LPLID, name, data, aktiv FROM lower_plugins WHERE name = '".mysql_real_escape_string($lpl)."'";
    $ergebnis = mysql_query($sql) or die (mysql_error());
    $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);	
     // Überprüfung ob es das Plugin überhaupt gibt
-      if($hpl==$reihe['name'])
+      if($lpl==$reihe['name'])
    {
-$sql2 = "SELECT PLID, GID, Y_N FROM lower_plugin_rights WHERE LPLID=".mysql_real_escape_string($reihe['LPLID'])."";
+$sql2 = "SELECT LPLID, GID, Y_N FROM lower_plugin_rights WHERE LPLID=".mysql_real_escape_string($reihe['LPLID'])."";
 	$ergebnis2 = mysql_query($sql2);
    $reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
-$lpl=$reihe['LPLID'];
+$lpla=$reihe['LPLID'];
    }
       // Wenn es das Plugin nicht gibt wird ein Fehler ausgegeben
 	  else {
-	  	echo "Kein Plugin mit dem angebenen Namen gefunden";
+	  	echo "Kein Lower-Plugin mit dem angebenen Namen gefunden";
 	  	mysql_close();
 	  	exit;
 	  }
 	}
 	$hpl=$_GET['hpl'];
-	$sqlhl = "SELECT HPLID, LPLID FROM head_plugin_lower_plugin WHERE LPLID=".mysql_real_escape_string($lpl)." AND HPLID=".mysql_real_escape_string($hpl)."";
+if (preg_match ("/^([0-9]+)$/",$hpl)) {
+	$sqlh = "SELECT HPLID, name, data, sysp, aktiv FROM head_plugins WHERE HPLID= ".mysql_real_escape_string($hpl)." LIMIT 1";
+   $ergebnish = mysql_query($sqlh);
+	$reiheh = mysql_fetch_array($ergebnish, MYSQL_ASSOC);   
+	$hpla=$reiheh['HPLID'];
+	}
+else {
+$sqlh = "SELECT HPLID, name, data, sysp, aktiv FROM head_plugins WHERE name = '".mysql_real_escape_string($hpl)."'";
+   $ergebnish = mysql_query($sqlh) or die (mysql_error());
+   $reiheh = mysql_fetch_array($ergebnish, MYSQL_ASSOC);	
+    $hpla=$reiheh['HPLID'];	
+}
+	$sqlhl = "SELECT LPLID, HPLID FROM head_plugin_lower_plugin WHERE LPLID=".mysql_real_escape_string($lpl)." AND HPLID=".mysql_real_escape_string($hpla)."";
 	$ergebnishl = mysql_query($sqlhl);
 	$reihehl = mysql_fetch_array($ergebnishl, MYSQL_ASSOC);
 	if(! $ergebnishl || $reihehl['HPLID']!=$hpl || $reihehl['LPLID']!=$lpl)
@@ -73,7 +84,7 @@ $lpl=$reihe['LPLID'];
 // Prüfung ob das Plugin aktiv ist
 if ($reihe['aktiv']==1) {
 	// Abfrage ob für die Gruppe Berechtigung vergeben wurde das Plugin auszuführen
-	$sqlg = "SELECT LPLID, GID, Y_N FROM lower_plugin_rights WHERE LPLID=".mysql_real_escape_string($reihe['LPLID'])." AND GID=".$group."";
+	$sqlg = "SELECT LPLID, GID, Y_N FROM lower_plugin_rights WHERE LPLID=".mysql_real_escape_string($lpla)." AND GID=".$group."";
 	$ergebnisg = mysql_query($sqlg);
 	$reiheg = mysql_fetch_array($ergebnisg, MYSQL_ASSOC);
 	// Überprüfung ob die Gruppe das Plugin ausführen darf
@@ -89,13 +100,14 @@ if ($reihe['aktiv']==1) {
 		// Prüft ob eine Pluginfunktion angegeben wurde oder nicht
 		if (isset($_GET['plf'])=="")
 		{
-if (preg_match ("/^([0-9]+)$/",$pl)) {
-		$sqlp = "SELECT PLID, name, data, sysp, aktiv FROM head_plugins WHERE PLID= ".mysql_real_escape_string($pl)." LIMIT 1";
+			$hpl=$_GET['hpl'];
+if (preg_match ("/^([0-9]+)$/",$hpl)) {
+		$sqlp = "SELECT HPLID, name, data, sysp, aktiv FROM head_plugins WHERE HPLID= ".mysql_real_escape_string($hpl)." LIMIT 1";
    $ergebnisp = mysql_query($sqlp);
       $reihep = mysql_fetch_array($ergebnisp, MYSQL_ASSOC);
 }
 else {
-	$sqlp = "SELECT PLID, name, data, sysp, aktiv FROM head_plugins WHERE name = '".mysql_real_escape_string($pl)."'";
+	$sqlp = "SELECT HPLID, name, data, sysp, aktiv FROM head_plugins WHERE name = '".mysql_real_escape_string($hpl)."'";
    $ergebnisp = mysql_query($sqlp) or die (mysql_error());
    $reihep = mysql_fetch_array($ergebnisp, MYSQL_ASSOC);
 }

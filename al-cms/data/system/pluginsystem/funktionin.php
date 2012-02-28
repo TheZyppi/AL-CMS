@@ -102,7 +102,6 @@ else
 			}	
 
 		}
-	
 	}
 	else {
 	// Wenn es nicht aktiv ist

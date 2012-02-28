@@ -6,7 +6,7 @@
 CREATE TABLE IF NOT EXISTS `user` (
   `UID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `GID` int(11) UNSIGNED NOT NULL,
-  `username` varchar(25),
+  `username` varchar(30),
   `passwort` varchar(50),
   `passwort_salt` varchar(50),
   `session_id` varchar(50),
@@ -63,8 +63,8 @@ CREATE TABLE IF NOT EXISTS `head_plugin_lower_plugin` (
 --
 
 CREATE TABLE IF NOT EXISTS `head_plugin_funktion` (
-  `PLFID` int(11) UNSIGNED NOT NULL,
-  `HPLID` int(11) UNSIGNED NOT NULL
+  `HPLID` int(11) UNSIGNED NOT NULL,
+  `PLFID` int(11) UNSIGNED NOT NULL
 );
 
 -- --------------------------------------------------------
@@ -74,8 +74,8 @@ CREATE TABLE IF NOT EXISTS `head_plugin_funktion` (
 --
 
 CREATE TABLE IF NOT EXISTS `lower_plugin_funktion` (
-  `PLFID` int(11) UNSIGNED NOT NULL,
-  `LPLID` int(11) UNSIGNED NOT NULL
+  `LPLID` int(11) UNSIGNED NOT NULL,
+  `PLFID` int(11) UNSIGNED NOT NULL
 );
 
 
@@ -536,36 +536,57 @@ VALUES (
 'register', 'register/index.php', '', '', '', '1'
 );
 
+INSERT INTO `plugin_funktion` (
+`funktionsname`,
+`data`,
+`definition`,
+`parent_id`,
+`parent`,
+`aktiv`
+)
+VALUES (
+'mobile', '', '', '', '', '0'
+);
+
+
 INSERT INTO `head_plugin_funktion` (
-`PLFID` ,
-`HPLID`
+`HPLID`,
+`PLFID`
 )
 VALUES (
 '1', '1'
 );
 
 INSERT INTO `head_plugin_funktion` (
-`PLFID` ,
-`HPLID`
+`HPLID`,
+`PLFID`
 )
 VALUES (
 '1', '2'
 );
 
 INSERT INTO `head_plugin_funktion` (
-`PLFID` ,
-`HPLID`
+`HPLID`,
+`PLFID`
 )
 VALUES (
 '1', '3'
 );
 
 INSERT INTO `head_plugin_funktion` (
-`PLFID` ,
-`HPLID`
+`HPLID`,
+`PLFID`
 )
 VALUES (
 '1', '4'
+);
+
+INSERT INTO `head_plugin_funktion` (
+`HPLID`,
+`PLFID`
+)
+VALUES (
+'1', '5'
 );
 
 
@@ -723,3 +744,10 @@ VALUES (
 '4', '4', '0'
 );
 
+INSERT INTO `alcms3`.`al_version` (
+`name`, 
+`definition`, 
+`version`) 
+VALUES (
+'AL-CMS Alpha v0.3', 'This is a Alpha Version.', '0.3'
+);

@@ -12,7 +12,7 @@
  */
 
 db_con();
-$sql = "SELECT PLID, aktiv FROM plugins WHERE PLID='1' LIMIT 1";
+$sql = "SELECT HPLID, aktiv FROM head_plugins WHERE HPLID='1' LIMIT 1";
 	$ergebnis = mysql_query($sql);
    $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);
 
@@ -25,7 +25,7 @@ $sql2 = "SELECT PLFID, funktionsname, data, aktiv FROM plugin_funktion WHERE PLF
    $reihe3 = mysql_fetch_array($ergebnis3, MYSQL_ASSOC);
    
    $group=$_SESSION['group'];
-      $sql1 = "SELECT PLID, GID, Y_N FROM head_plugin_rights WHERE HPLID='1' AND GID=".$group."";
+      $sql1 = "SELECT HPLID, GID, Y_N FROM head_plugin_rights WHERE HPLID='1' AND GID=".$group."";
    		$db_erg2 = mysql_query( $sql1);
 		   $reihe1 = mysql_fetch_array($db_erg2, MYSQL_ASSOC);
 		if ($reihe1['GID']!=$group || ! $db_erg2 )

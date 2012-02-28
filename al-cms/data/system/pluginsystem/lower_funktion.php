@@ -22,10 +22,11 @@ mysql_close();
 exit;	
 }
 else {
+$hpl=$_GET['hpl'];
 $lpl=$_GET['lpl'];
 $plf=$_GET['plf'];
 db_con();
-if (preg_match ("/^([0-9]+)$/",$hpl)) {
+if (preg_match ("/^([0-9]+)$/",$lpl)) {
 		$sql = "SELECT LPLID, name, data, aktiv FROM lower_plugins WHERE LPLID= ".mysql_real_escape_string($lpl)." LIMIT 1";
    $ergebnis = mysql_query($sql);
       $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);
@@ -48,7 +49,7 @@ $sql = "SELECT PLFID, funktionsname, data, aktiv FROM plugin_funktion WHERE PLFI
    $reihe3 = mysql_fetch_array($ergebnis3, MYSQL_ASSOC);
    if ($reihe3['PLFID']!=$plf && $reihe3['LPLID']!=$lpl || ! $ergebnis3)
    {
-   	echo "Die Funktion wurde keinem Head Plugin zugeweisen.";	
+   	echo "Die Funktion wurde keinem Lower Plugin zugeweisen.";	
  }
 else {
 $sql2 = "SELECT PLFID, GID, Y_N FROM plugin_funktion_rights WHERE PLFID=".mysql_real_escape_string($plf)." LIMIT 1";
@@ -73,7 +74,7 @@ $sql = "SELECT PLFID, funktionsname, data, aktiv FROM plugin_funktion WHERE funk
    $reihe3 = mysql_fetch_array($ergebnis3, MYSQL_ASSOC);
    if ($reihe3['PLFID']!=$plf && $reihe3['LPLID']!=$lpl || ! $ergebnis3)
    {
-   	echo "Die Funktion wurde keinem Head Plugin zugeweisen.";	
+   	echo "Die Funktion wurde keinem Lower Plugin zugeweisen.";	
  }
 else {	
 $sql2 = "SELECT PLFID, GID, Y_N FROM plugin_funktion_rights WHERE PLFID=".mysql_real_escape_string($reihe['PLFID'])." LIMIT 1";
@@ -104,12 +105,12 @@ else
 	if($reiheg['Y_N']==1) {
 		// Überprüft ob es ein Systemplugin ist oder nicht
 		if (preg_match ("/^([0-9]+)$/",$hpl)) {
-		$sqlp = "SELECT PLID, name, data, sysp, aktiv FROM head_plugins WHERE PLID= ".mysql_real_escape_string($hpl)." LIMIT 1";
+		$sqlp = "SELECT HPLID, name, data, sysp, aktiv FROM head_plugins WHERE HPLID= ".mysql_real_escape_string($hpl)." LIMIT 1";
    $ergebnisp = mysql_query($sqlp);
       $reihep = mysql_fetch_array($ergebnisp, MYSQL_ASSOC);
 }
 else {
-	$sqlp = "SELECT PLID, name, data, sysp, aktiv FROM head_plugins WHERE name = '".mysql_real_escape_string($hpl)."'";
+	$sqlp = "SELECT HPLID, name, data, sysp, aktiv FROM head_plugins WHERE name = '".mysql_real_escape_string($hpl)."'";
    $ergebnisp = mysql_query($sqlp) or die (mysql_error());
    $reihep = mysql_fetch_array($ergebnisp, MYSQL_ASSOC);
 }

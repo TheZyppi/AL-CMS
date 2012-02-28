@@ -25,8 +25,8 @@ while($row = mysql_fetch_object($sql))
 // Die Hauptdatei vom Design wird reingeladen
 	if ( ! $sql || $n=="")
 	{
-		echo "Sie haben kein Standart Design angegeben.";
 		mysql_close();
+		echo "Sie haben kein Standart Design angegeben.";
 		exit;
 	}
 	else {
@@ -36,86 +36,116 @@ include(''.$srdp.'design/'.$pfad.'index.php');
 include('head_function.php');
 	} 
 } 	
-	private function normal_body ($srdp)
+	private function body_head_plugin_normal($srdp)
+{
+	$hpl=$_GET['hpl'];
+		 	$sql = mysql_query('SELECT DID, HPLID FROM design_head_plugin_order WHERE HPLID='.$hpl.'');
+			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
+			   	$sql2 = mysql_query('SELECT DID, data, aktiv FROM design WHERE DID='.$reihe['DID'].'');
+			   	$reihe2 = mysql_fetch_array($sql2, MYSQL_ASSOC);
+include(''.$srdp.'design/'.$reihe2['data'].'index.php');
+// Die Head Funktion wird reingeladen dient dazu den Header darzustellen
+include('head_function.php');	
+}
+
+	private function body_head_lower_plugin_normal($srdp)
+{
+	$lpl=$_GET['lpl'];
+				$sql = mysql_query('SELECT DID, LPLID FROM design_lower_plugin_order WHERE LPLID='.$lpl.'') or die(mysql_error());
+			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
+			   	$sql2 = mysql_query('SELECT DID, data, aktiv FROM design WHERE DID='.$reihe['DID'].'') or die(mysql_error());
+			   	$reihe2 = mysql_fetch_array($sql2, MYSQL_ASSOC);
+			   
+include(''.$srdp.'design/'.$reihe2['data'].'index.php');
+// Die Head Funktion wird reingeladen dient dazu den Header darzustellen
+include('head_function.php');
+}
+
+	private function body_plugin_funktion_normal($srdp)
 	{
-		if (isset($_GET['hpl'])=="" || $_GET['hpl']=="") {
-			$this->body($srdp);
-		}
-		else {
-			$hpl=$_GET['hpl'];
-			$sql = mysql_query('SELECT DID, HPLID FROM design_head_plugin_order WHERE HPLID='.$hpl.'');
-			   $reihe2 = mysql_fetch_array($sql, MYSQL_ASSOC);
-			if(! $sql || $reihe2['HPLID']!=$hpl)
-			{
-				$this->body($srdp);
-			}
-			else {
-			if (isset($_GET['plf'])=="" && $_GET['lpl']=="")
-		{
-			 	$sql = mysql_query('SELECT DID, HPLID FROM design_head_plugin_order WHERE HPLID='.$hpl.'');
-			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
-			   	$sql2 = mysql_query('SELECT DID, data, aktiv FROM design WHERE DID='.$reihe['DID'].'');
-			   	$reihe2 = mysql_fetch_array($sql2, MYSQL_ASSOC);
-			   
-			   if($reihe2['aktiv']==1)
-			   {
-include(''.$srdp.'design/'.$reihe2['data'].'index.php');
-// Die Head Funktion wird reingeladen dient dazu den Header darzustellen
-include('head_function.php');
-			   	
-			   }
-			   else {
-				   echo "Das Design ist deaktiviert.";
-			   }
-			   
-		}
-			else
-				{
-					if (isset($_GET['plf'])=="") {
-						$lpl=$_GET['lpl'];
-				$sql = mysql_query('SELECT DID, LPLID FROM design_lower_plugin_order WHERE LPLID='.$lpl.'');
-			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
-			   	$sql2 = mysql_query('SELECT DID, data, aktiv FROM design WHERE DID='.$reihe['DID'].'');
-			   	$reihe2 = mysql_fetch_array($sql2, MYSQL_ASSOC);
-			   
-			   if($reihe2['aktiv']==1)
-			   {
-include(''.$srdp.'design/'.$reihe2['data'].'index.php');
-// Die Head Funktion wird reingeladen dient dazu den Header darzustellen
-include('head_function.php');
-			   	
-			   }
-			   else {
-				   echo "Das Design ist deaktiviert.";
-			   }
-			
-					}
-					else if(isset($_GET['lpl'])=="")
-					{
-		$plf=$_GET['plf'];
+			$plf=$_GET['plf'];
 				$sql = mysql_query('SELECT DID, PLFID FROM design_plugin_funktion_order WHERE PLFID='.$plf.'');
 			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
 			   	$sql2 = mysql_query('SELECT DID, data, aktiv FROM design WHERE DID='.$reihe['DID'].'');
 			   	$reihe2 = mysql_fetch_array($sql2, MYSQL_ASSOC);
 			   
-			   if($reihe2['aktiv']==1)
-			   {
 include(''.$srdp.'design/'.$reihe2['data'].'index.php');
 // Die Head Funktion wird reingeladen dient dazu den Header darzustellen
 include('head_function.php');
-			   	
-			   }
-			   else {
-				   echo "Das Design ist deaktiviert.";
-			   }
-						
-					}
-else {
-	$this->body($srdp);
+	}
+
+	private function normal_body($srdp)
+	{
+		if (isset($_GET['hpl'])=="" || $_GET['hpl']=="") {
+$this->body($srdp);
 }
-				}
+else {
+
+		if (isset($_GET['plf'])=="" && isset($_GET['lpl'])=="")
+		{
+			$hpl=$_GET['hpl'];
+			$sql = mysql_query('SELECT DID, HPLID FROM design_head_plugin_order WHERE HPLID='.$hpl.'');
+			if(! $sql)
+			{
+				$this->body($srdp);
+			}
+			else {
+	   	$reihe2 = mysql_fetch_array($sql, MYSQL_ASSOC);
+		if($reihe2['HPLID']!=$hpl)
+		{
+			$this->body($srdp);
+		}
+		else {
+		$this->body_head_plugin_normal($srdp);	
 		}
 		}
+		}
+		// Wenn eine Plugin Funktion angeben wurde wird else ausgeführt
+		else {
+			
+			if(isset($_GET['plf'])=="" && isset($_GET['lpl'])!="" && isset($_GET['hpl'])!="")
+			{
+				$lpl=$_GET['lpl'];
+			$sql = mysql_query('SELECT DID, LPLID FROM design_lower_plugin_order WHERE LPLID='.$lpl.'');
+	   	$reihe2 = mysql_fetch_array($sql, MYSQL_ASSOC);
+		if(! $sql || $reihe2['LPLID']!=$lpl)
+		{
+			$this->body($srdp);
+		}
+		else {
+			$this->body_head_lower_plugin_normal($srdp);
+		}
+			}
+			else if(isset($_GET['lpl'])=="" && isset($_GET['plf'])!="" && isset($_GET['hpl'])!=""){
+				$plf=$_GET['plf'];
+			$sql = mysql_query('SELECT DID, PLFID FROM design_plugin_funktion_order WHERE PLFID='.$plf.'');
+	   	$reihe2 = mysql_fetch_array($sql, MYSQL_ASSOC);
+		if(! $sql || $reihe2['PLFID']!=$plf)
+		{
+			$this->body($srdp);
+		}
+		else {
+		$this->body_plugin_funktion_normal($srdp);	
+		}
+			}		
+			else if($_GET['plf']!="" && $_GET['lpl']!="" && isset($_GET['hpl'])!="")
+			{
+$plf=$_GET['plf'];
+			$sql = mysql_query('SELECT DID, PLFID FROM design_plugin_funktion_order WHERE PLFID='.$plf.'');
+	   	$reihe2 = mysql_fetch_array($sql, MYSQL_ASSOC);
+		if(! $sql || $reihe2['PLFID']!=$plf)
+		{
+			$this->body($srdp);
+		}
+		else {
+		$this->body_plugin_funktion_normal($srdp);	
+		}
+				
+			}
+		}
+		
+	}
+
 	}
 	public function body_normal($srdp)
 	{
