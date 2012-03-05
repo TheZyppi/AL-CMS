@@ -1,8 +1,19 @@
--- --------------------------------------------------------
---
--- Tabellenstruktur für Tabelle `user`
---
+<?php
+/*
+ * AL-CMS -- Gernal Information --
+ * 
+ * Copyright (C) Dennis Falkenberg (http://www.sunrising-network.de) Email: DFalkenberg@gmx.de
+ * 
+ * AL-CMS is a free software, you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ *(at your option) any later version.  
+ *   
+ */
 
+ 	include('../data/config/dbcon.php');
+ 	db_con();
+	$install2=mysql_query("
 CREATE TABLE IF NOT EXISTS `user` (
   `UID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `GID` int(11) UNSIGNED NOT NULL,
@@ -14,26 +25,18 @@ CREATE TABLE IF NOT EXISTS `user` (
   `mail` varchar(45),
   PRIMARY KEY (`UID`)
 );
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `groups`
---
-
+");
+echo "<br><font color=green>User Table ready!</font>";
+	$install3=mysql_query("
 CREATE TABLE IF NOT EXISTS `groups` (
   `GID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(45),
   `definition` text,
   PRIMARY KEY (`GID`)
 ); 
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `plugin_funktion`
---
-
+");
+echo "<br><font color=green>Group Table ready!</font>";
+	$install4=mysql_query("
 CREATE TABLE IF NOT EXISTS `plugin_funktion` (
   `PLFID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `funktionsname` varchar(30),
@@ -44,59 +47,38 @@ CREATE TABLE IF NOT EXISTS `plugin_funktion` (
   `aktiv` int(1),
   PRIMARY KEY (`PLFID`)
 );
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `head_plugin_lower_plugin`
---
-
+");
+echo "<br><font color=green>Plugin_Funktion Table ready!</font>";
+	$install5=mysql_query("
 CREATE TABLE IF NOT EXISTS `head_plugin_lower_plugin` (
   `HPLID` int(11) UNSIGNED NOT NULL,
   `LPLID` int(11) UNSIGNED NOT NULL
 );
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `head_plugin_funktion`
---
-
+");
+echo "<br><font color=green>Head_Plugin_Lower_Plugin Table ready!</font>";
+	$install6=mysql_query("
 CREATE TABLE IF NOT EXISTS `head_plugin_funktion` (
   `HPLID` int(11) UNSIGNED NOT NULL,
   `PLFID` int(11) UNSIGNED NOT NULL
 );
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `lower_plugin_funktion`
---
-
+");
+echo "<br><font color=green>Head_Plugin_Funktion Table ready!</font>";
+	$install7=mysql_query("
 CREATE TABLE IF NOT EXISTS `lower_plugin_funktion` (
   `LPLID` int(11) UNSIGNED NOT NULL,
   `PLFID` int(11) UNSIGNED NOT NULL
 );
-
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `plugin_funktion_rights`
---
-
+");
+echo "<br><font color=green>Lower_Plugin_Funktion Table ready!</font>";
+	$install8=mysql_query("
 CREATE TABLE IF NOT EXISTS `plugin_funktion_rights` (
   `PLFID` int(11) UNSIGNED NOT NULL,
   `GID` int(11) UNSIGNED NOT NULL,
   `Y_N` int(1)
-); 
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `design`
---
-
+);
+"); 
+echo "<br><font color=green>Plugin_Funktion_Rights Table ready!</font>";
+	$install9=mysql_query("
 CREATE TABLE IF NOT EXISTS `design` (
   `DID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(45),
@@ -106,201 +88,128 @@ CREATE TABLE IF NOT EXISTS `design` (
   `aktiv` int(1) UNSIGNED NOT NULL,
    PRIMARY KEY (`DID`)
 ); 
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `design_head_plugin_order`
---
-
+");
+echo "<br><font color=green>Design Table ready!</font>";
+	$install10=mysql_query("
 CREATE TABLE IF NOT EXISTS `design_head_plugin_order` (
   `DID` int(11) UNSIGNED NOT NULL,
   `HPLID` int(11) UNSIGNED NOT NULL
 );
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `design_lower_plugin_order`
---
-
+");
+echo "<br><font color=green>Design_Head_Plugin Table ready!</font>";
+	$install11=mysql_query("
 CREATE TABLE IF NOT EXISTS `design_lower_plugin_order` (
   `DID` int(11) UNSIGNED NOT NULL,
   `LPLID` int(11) UNSIGNED NOT NULL
 );
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `design_plugin_funktion_order`
---
-
+");
+echo "<br><font color=green>Design_Lower_Plugin_Order Table ready!</font>";
+	$install12=mysql_query("
 CREATE TABLE IF NOT EXISTS `design_plugin_funktion_order` (
   `DID` int(11) UNSIGNED NOT NULL,
   `PLFID` int(11) UNSIGNED NOT NULL
 ); 
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `design_mobile_head_plugin_order`
---
-
+");
+echo "<br><font color=green>Design_Plugin_Funktion_Order Table ready!</font>";
+	$install13=mysql_query("
 CREATE TABLE IF NOT EXISTS `design_mobile_head_plugin_order` (
   `DID` int(11) UNSIGNED NOT NULL,
   `HPLID` int(11) UNSIGNED NOT NULL
 );
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `design_mobile_lower_plugin_order`
---
-
+");
+echo "<br><font color=green>Design_Mobile_Head_Plugin_Order Table ready!</font>";
+	$install4=mysql_query("
 CREATE TABLE IF NOT EXISTS `design_mobile_lower_plugin_order` (
   `DID` int(11) UNSIGNED NOT NULL,
   `LPLID` int(11) UNSIGNED NOT NULL
 );
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `design_mobile_plugin_funktion_order`
---
-
+");
+echo "<br><font color=green>Design_Mobile_Lower_Plugin_Order Table ready!</font>";
+	$install5=mysql_query("
 CREATE TABLE IF NOT EXISTS `design_mobile_plugin_funktion_order` (
   `DID` int(11) UNSIGNED NOT NULL,
   `PLFID` int(11) UNSIGNED NOT NULL
 ); 
-
- 
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `panel`
---
-
+");
+ echo "<br><font color=green>Design_Mobile_Plugin_Funktion_Order Table ready!</font>";
+	$install6=mysql_query("
 CREATE TABLE IF NOT EXISTS `panel` (
   `PID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(45),
   `aktiv` int(1) UNSIGNED NOT NULL,
    PRIMARY KEY (`PID`)
 ); 
-
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `al_config`
---
-
+");
+echo "<br><font color=green>Panel Table ready!</font>";
+	$install7=mysql_query("
 CREATE TABLE IF NOT EXISTS `al_config` (
   `CID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(45),
   `funktion` varchar(100),
   `aktiv` int(1) UNSIGNED NOT NULL,
 	PRIMARY KEY (`CID`)
-); 
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `plugin_funktion_meta`
---
-
+);
+"); 
+echo "<br><font color=green>AL_Config Table ready!</font>";
+	$install8=mysql_query("
 CREATE TABLE IF NOT EXISTS `plugin_funktion_meta` (
   `PLFID` int(11) UNSIGNED NOT NULL,
   `metad` varchar(100)
   ); 
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `plugin_funktion_title`
---
-
+");
+echo "<br><font color=green>Plugin_Funktion_Meta Table ready!</font>";
+	$install9=mysql_query("
 CREATE TABLE IF NOT EXISTS `plugin_funktion_title` (
   `PLFID` int(11) UNSIGNED NOT NULL,
   `titled` varchar(100)
   ); 
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `head_plugin_meta`
---
-
+  ");
+echo "<br><font color=green>Plugin_Funktion_Title Table ready!</font>";
+	$install20=mysql_query("
 CREATE TABLE IF NOT EXISTS `head_plugin_meta` (
   `HPLID` int(11) UNSIGNED NOT NULL,
   `metad` varchar(100)
   ); 
-
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `head_plugin_title`
---
-
+");
+echo "<br><font color=green>Head_Plugin_Meta Table ready!</font>";
+	$instal21=mysql_query("
 CREATE TABLE IF NOT EXISTS `head_plugin_title` (
   `HPLID` int(11) UNSIGNED NOT NULL,
   `titled` varchar(100)
   ); 
-
-
--- --------------------------------------------------------
---
--- Tabellenstruktur für Tabelle `lower_plugin_meta`
---
-
+  ");
+echo "<br><font color=green>Head_Plugin_Title Table ready!</font>";
+	$instal22=mysql_query("
 CREATE TABLE IF NOT EXISTS `lower_plugin_meta` (
   `LPLID` int(11) UNSIGNED NOT NULL,
   `metad` varchar(100)
   ); 
-
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `lower_plugin_title`
---
-
-CREATE TABLE IF NOT EXISTS `lower_plugin_title` (
+");
+echo "<br><font color=green>Lower_Plugin_Meta Table ready!</font>";
+	$install23=mysql_query("
+  CREATE TABLE IF NOT EXISTS `lower_plugin_title` (
   `LPLID` int(11) UNSIGNED NOT NULL,
   `titled` varchar(100)
   ); 
-
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `head_plugin_rights`
---
-
+");
+echo "<br><font color=green>Lower_plugin_Title Table ready!</font>";
+	$install24=mysql_query("
 CREATE TABLE IF NOT EXISTS `head_plugin_rights` (
 	`HPLID` int(11) UNSIGNED NOT NULL,
   `GID` int(11) UNSIGNED NOT NULL,
   `Y_N` int(1)
 ); 
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `lower_plugin_rights`
---
-
+");
+echo "<br><font color=green>Head_Plugin_Rights Table ready!</font>";
+	$install25=mysql_query("
 CREATE TABLE IF NOT EXISTS `lower_plugin_rights` (
 	`LPLID` int(11) UNSIGNED NOT NULL,
   `GID` int(11) UNSIGNED NOT NULL,
   `Y_N` int(1)
 ); 
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `head_plugins`
---
-
+");
+echo "<br><font color=green>Lower_Plugin_Rights Table ready!</font>";
+	$install26=mysql_query("
 CREATE TABLE IF NOT EXISTS `head_plugins` (
   `HPLID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(45),
@@ -310,13 +219,9 @@ CREATE TABLE IF NOT EXISTS `head_plugins` (
   `aktiv` int(1) NOT NULL,
   PRIMARY KEY (`HPLID`)
 ); 
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `lower_plugins`
---
-
+");
+echo "<br><font color=green>Head_Plugins Table ready!</font>";
+	$install27=mysql_query("
 CREATE TABLE IF NOT EXISTS `lower_plugins` (
   `LPLID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(45),
@@ -325,128 +230,169 @@ CREATE TABLE IF NOT EXISTS `lower_plugins` (
   `aktiv` int(1) NOT NULL,
   PRIMARY KEY (`LPLID`)
 ); 
-
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `al_version`
---
-
+");
+echo "<br><font color=green>User Table ready!</font>";
+	$install28=mysql_query("
 CREATE TABLE IF NOT EXISTS `al_version` (
   `name` varchar(45) NOT NULL,
   `definition` text,
   `version` varchar(40) NOT NULL
 ); 
-
-
--- --------------------------------------------------------
-
-
---
--- Fremdschlüssel setzen
---
-
+");
+echo "<br><font color=green>AL_Version Table ready!</font>";
+echo "<br><font color=green>Tables are all ready!<br>------------------------------<p></font>";
+	$install29=mysql_query("
 ALTER TABLE user 
 add foreign key (GID) REFERENCES groups (GID) ON DELETE cascade ON UPDATE cascade;
-
+");
+	$install30=mysql_query("
 ALTER TABLE head_plugin_rights
 add foreign key (GID) REFERENCES groups (GID) ON DELETE cascade ON UPDATE cascade;
+");
+	$install31=mysql_query("
 
 ALTER TABLE lower_plugin_rights
 add foreign key (GID) REFERENCES groups (GID) ON DELETE cascade ON UPDATE cascade;
+");
+	$install32=mysql_query("
 
 ALTER TABLE head_plugin_rights
 add foreign key (HPLID) REFERENCES head_plugins (HPLID)ON DELETE cascade ON UPDATE cascade;
+");
+	$install33=mysql_query("
 
 ALTER TABLE lower_plugin_rights
 add foreign key (LPLID) REFERENCES lower_plugins (LPLID)ON DELETE cascade ON UPDATE cascade;
+");
+	$install34=mysql_query("
 
 ALTER TABLE head_plugin_funktion
 add foreign key (HPLID) REFERENCES head_plugins (HPLID) ON DELETE cascade ON UPDATE cascade;
+");
+	$install35=mysql_query("
 
 ALTER TABLE head_plugin_funktion
 add foreign key (PLFID) REFERENCES plugin_funktion (PLFID) ON DELETE cascade ON UPDATE cascade;
+");
+	$install36=mysql_query("
 
 ALTER TABLE lower_plugin_funktion
 add foreign key (LPLID) REFERENCES lower_plugins (LPLID) ON DELETE cascade ON UPDATE cascade;
+");
+	$install37=mysql_query("
 
 ALTER TABLE lower_plugin_funktion
 add foreign key (PLFID) REFERENCES plugin_funktion (PLFID) ON DELETE cascade ON UPDATE cascade;
+");
+	$install38=mysql_query("
 
 ALTER TABLE plugin_funktion_rights
 add foreign key (GID) REFERENCES groups (GID) ON DELETE cascade ON UPDATE cascade;
+");
+	$install39=mysql_query("
 
 ALTER TABLE plugin_funktion_rights
 add foreign key (PLFID) REFERENCES plugin_funktion (PLFID) ON DELETE cascade ON UPDATE cascade;
+");
+	$install40=mysql_query("
 
 ALTER TABLE head_plugin_title
 add foreign key (HPLID) REFERENCES head_plugins (HPLID) ON DELETE cascade ON UPDATE cascade;
+");
+	$install50=mysql_query("
 
 ALTER TABLE head_plugin_meta
 add foreign key (HPLID) REFERENCES head_plugins (HPLID) ON DELETE cascade ON UPDATE cascade;
-
+");
+	$install51=mysql_query("
 ALTER TABLE lower_plugin_title
 add foreign key (LPLID) REFERENCES lower_plugins (LPLID) ON DELETE cascade ON UPDATE cascade;
+");
+	$install52=mysql_query("
 
 ALTER TABLE lower_plugin_meta
 add foreign key (LPLID) REFERENCES lower_plugins (LPLID) ON DELETE cascade ON UPDATE cascade;
+");
+	$install53=mysql_query("
 
 ALTER TABLE plugin_funktion_title
 add foreign key (PLFID) REFERENCES plugin_funktion (PLFID) ON DELETE cascade ON UPDATE cascade;
+");
+	$install54=mysql_query("
 
 ALTER TABLE plugin_funktion_meta
 add foreign key (PLFID) REFERENCES plugin_funktion (PLFID) ON DELETE cascade ON UPDATE cascade;
+");
+	$install55=mysql_query("
 
 ALTER TABLE design_head_plugin_order
 add foreign key (DID) REFERENCES design (DID) ON DELETE cascade ON UPDATE cascade;
+");
+	$install56=mysql_query("
 
 ALTER TABLE design_head_plugin_order
 add foreign key (HPLID) REFERENCES head_plugins (HPLID) ON DELETE cascade ON UPDATE cascade;
+");
+	$install57=mysql_query("
 
 ALTER TABLE design_lower_plugin_order
 add foreign key (DID) REFERENCES design (DID) ON DELETE cascade ON UPDATE cascade;
+");
+	$install58=mysql_query("
 
 ALTER TABLE design_lower_plugin_order
 add foreign key (LPLID) REFERENCES lower_plugins (LPLID) ON DELETE cascade ON UPDATE cascade;
+");
+	$install59=mysql_query("
 
 ALTER TABLE design_plugin_funktion_order
 add foreign key (DID) REFERENCES design (DID) ON DELETE cascade ON UPDATE cascade;
+");
+	$install60=mysql_query("
 
 ALTER TABLE design_plugin_funktion_order
 add foreign key (PLFID) REFERENCES plugin_funktion (PLFID) ON DELETE cascade ON UPDATE cascade;
+");
+	$install61=mysql_query("
 
 ALTER TABLE design_mobile_head_plugin_order
 add foreign key (DID) REFERENCES design (DID) ON DELETE cascade ON UPDATE cascade;
-
+");
+	$install62=mysql_query("
 ALTER TABLE design_mobile_head_plugin_order
 add foreign key (HPLID) REFERENCES head_plugins (HPLID) ON DELETE cascade ON UPDATE cascade;
+");
+	$install63=mysql_query("
 
 ALTER TABLE design_mobile_lower_plugin_order
 add foreign key (DID) REFERENCES design (DID) ON DELETE cascade ON UPDATE cascade;
+");
+	$install64=mysql_query("
 
 ALTER TABLE design_mobile_lower_plugin_order
 add foreign key (LPLID) REFERENCES lower_plugins (LPLID) ON DELETE cascade ON UPDATE cascade;
+");
+	$install65=mysql_query("
 
 ALTER TABLE design_mobile_plugin_funktion_order
 add foreign key (DID) REFERENCES design (DID) ON DELETE cascade ON UPDATE cascade;
+");
+	$install66=mysql_query("
 
 ALTER TABLE design_mobile_plugin_funktion_order
 add foreign key (PLFID) REFERENCES plugin_funktion (PLFID) ON DELETE cascade ON UPDATE cascade;
+");
+	$install67=mysql_query("
 
 ALTER TABLE head_plugin_lower_plugin
 add foreign key (HPLID) REFERENCES head_plugins (HPLID) ON DELETE cascade ON UPDATE cascade;
+");
+	$install68=mysql_query("
 
 ALTER TABLE head_plugin_lower_plugin
 add foreign key (LPLID) REFERENCES lower_plugins (LPLID) ON DELETE cascade ON UPDATE cascade;
-
--- --------------------------------------------------------
-
-
---
--- Standart groups settings
---
-
+");
+	$install69=mysql_query("
 INSERT INTO `groups` (
 `name` ,
 `definition`
@@ -454,6 +400,8 @@ INSERT INTO `groups` (
 VALUES (
 'anonym', 'Anonymer User der noch uneingeloggt ist.'
 );
+");
+	$install70=mysql_query("
 
 INSERT INTO `groups` (
 `name` ,
@@ -462,6 +410,9 @@ INSERT INTO `groups` (
 VALUES (
 'user', 'Normaler user.'
 );
+");
+	$install71=mysql_query("
+
 INSERT INTO `groups` (
 `name` ,
 `definition`
@@ -469,6 +420,9 @@ INSERT INTO `groups` (
 VALUES (
 'mod', 'Moderator'
 );
+");
+	$install72=mysql_query("
+
 INSERT INTO `groups` (
 `name` ,
 `definition`
@@ -476,6 +430,8 @@ INSERT INTO `groups` (
 VALUES (
 'admin', 'Administrator'
 );
+");
+	$install73=mysql_query("
 
 INSERT INTO `head_plugins` (
 `name` ,
@@ -487,6 +443,8 @@ INSERT INTO `head_plugins` (
 VALUES (
 'AL-CMS', '', '', '1', '1'
 );
+");
+	$install74=mysql_query("
 
 INSERT INTO `plugin_funktion` (
 `funktionsname`,
@@ -499,6 +457,8 @@ INSERT INTO `plugin_funktion` (
 VALUES (
 'On', '', '', '', '', '1'
 );
+");
+	$install75=mysql_query("
 
 INSERT INTO `plugin_funktion` (
 `funktionsname`,
@@ -511,6 +471,8 @@ INSERT INTO `plugin_funktion` (
 VALUES (
 'login', 'login/login.php', '', '', '', '1'
 );
+");
+	$install76=mysql_query("
 
 INSERT INTO `plugin_funktion` (
 `funktionsname`,
@@ -523,6 +485,8 @@ INSERT INTO `plugin_funktion` (
 VALUES (
 'logout', 'login/logout.php', '', '', '', '1'
 );
+");
+	$install77=mysql_query("
 
 INSERT INTO `plugin_funktion` (
 `funktionsname`,
@@ -535,6 +499,8 @@ INSERT INTO `plugin_funktion` (
 VALUES (
 'register', 'register/index.php', '', '', '', '1'
 );
+");
+	$install78=mysql_query("
 
 INSERT INTO `plugin_funktion` (
 `funktionsname`,
@@ -547,7 +513,8 @@ INSERT INTO `plugin_funktion` (
 VALUES (
 'mobile', '', '', '', '', '0'
 );
-
+");
+	$install79=mysql_query("
 
 INSERT INTO `head_plugin_funktion` (
 `HPLID`,
@@ -556,6 +523,8 @@ INSERT INTO `head_plugin_funktion` (
 VALUES (
 '1', '1'
 );
+");
+	$install80=mysql_query("
 
 INSERT INTO `head_plugin_funktion` (
 `HPLID`,
@@ -564,6 +533,8 @@ INSERT INTO `head_plugin_funktion` (
 VALUES (
 '1', '2'
 );
+");
+	$install81=mysql_query("
 
 INSERT INTO `head_plugin_funktion` (
 `HPLID`,
@@ -572,6 +543,8 @@ INSERT INTO `head_plugin_funktion` (
 VALUES (
 '1', '3'
 );
+");
+	$install82=mysql_query("
 
 INSERT INTO `head_plugin_funktion` (
 `HPLID`,
@@ -580,6 +553,8 @@ INSERT INTO `head_plugin_funktion` (
 VALUES (
 '1', '4'
 );
+");
+	$install83=mysql_query("
 
 INSERT INTO `head_plugin_funktion` (
 `HPLID`,
@@ -588,6 +563,8 @@ INSERT INTO `head_plugin_funktion` (
 VALUES (
 '1', '5'
 );
+");
+	$install84=mysql_query("
 
 
 INSERT INTO `head_plugin_rights` (
@@ -598,6 +575,8 @@ INSERT INTO `head_plugin_rights` (
 VALUES (
 '1', '1', '1'
 );
+");
+	$install85=mysql_query("
 
 INSERT INTO `head_plugin_rights` (
 `HPLID` ,
@@ -607,6 +586,8 @@ INSERT INTO `head_plugin_rights` (
 VALUES (
 '1', '2', '1'
 );
+");
+	$install86=mysql_query("
 
 INSERT INTO `head_plugin_rights` (
 `HPLID` ,
@@ -616,6 +597,8 @@ INSERT INTO `head_plugin_rights` (
 VALUES (
 '1', '3', '1'
 );
+");
+	$install87=mysql_query("
 
 INSERT INTO `head_plugin_rights` (
 `HPLID` ,
@@ -625,6 +608,8 @@ INSERT INTO `head_plugin_rights` (
 VALUES (
 '1', '4', '1'
 );
+");
+	$install88=mysql_query("
 
 INSERT INTO `plugin_funktion_rights` (
 `PLFID` ,
@@ -634,6 +619,8 @@ INSERT INTO `plugin_funktion_rights` (
 VALUES (
 '1', '1', '1'
 );
+");
+	$install89=mysql_query("
 
 INSERT INTO `plugin_funktion_rights` (
 `PLFID` ,
@@ -643,7 +630,8 @@ INSERT INTO `plugin_funktion_rights` (
 VALUES (
 '1', '2', '1'
 );
-
+");
+$install90=mysql_query("
 INSERT INTO `plugin_funktion_rights` (
 `PLFID` ,
 `GID`,
@@ -652,7 +640,8 @@ INSERT INTO `plugin_funktion_rights` (
 VALUES (
 '1', '3', '1'
 );
-
+");
+$install91=mysql_query("
 INSERT INTO `plugin_funktion_rights` (
 `PLFID` ,
 `GID`,
@@ -661,7 +650,8 @@ INSERT INTO `plugin_funktion_rights` (
 VALUES (
 '1', '4', '1'
 );
-
+");
+$install92=mysql_query("
 INSERT INTO `plugin_funktion_rights` (
 `PLFID` ,
 `GID`,
@@ -670,7 +660,8 @@ INSERT INTO `plugin_funktion_rights` (
 VALUES (
 '2', '1', '1'
 );
-
+");
+$install93=mysql_query("
 INSERT INTO `plugin_funktion_rights` (
 `PLFID` ,
 `GID`,
@@ -679,8 +670,8 @@ INSERT INTO `plugin_funktion_rights` (
 VALUES (
 '3', '1', '0'
 );
-
-
+");
+$install94=mysql_query("
 INSERT INTO `plugin_funktion_rights` (
 `PLFID` ,
 `GID`,
@@ -689,7 +680,8 @@ INSERT INTO `plugin_funktion_rights` (
 VALUES (
 '3', '2', '1'
 );
-
+");
+$install95=mysql_query("
 INSERT INTO `plugin_funktion_rights` (
 `PLFID` ,
 `GID`,
@@ -698,7 +690,8 @@ INSERT INTO `plugin_funktion_rights` (
 VALUES (
 '3', '3', '1'
 );
-
+");
+$install96=mysql_query("
 INSERT INTO `plugin_funktion_rights` (
 `PLFID` ,
 `GID`,
@@ -707,7 +700,8 @@ INSERT INTO `plugin_funktion_rights` (
 VALUES (
 '3', '4', '1'
 );
-
+");
+$install97=mysql_query("
 INSERT INTO `plugin_funktion_rights` (
 `PLFID` ,
 `GID`,
@@ -716,7 +710,8 @@ INSERT INTO `plugin_funktion_rights` (
 VALUES (
 '4', '1', '1'
 );
-
+");
+$install98=mysql_query("
 INSERT INTO `plugin_funktion_rights` (
 `PLFID` ,
 `GID`,
@@ -725,7 +720,8 @@ INSERT INTO `plugin_funktion_rights` (
 VALUES (
 '4', '2', '0'
 );
-
+");
+$install99=mysql_query("
 INSERT INTO `plugin_funktion_rights` (
 `PLFID` ,
 `GID`,
@@ -734,7 +730,8 @@ INSERT INTO `plugin_funktion_rights` (
 VALUES (
 '4', '3', '0'
 );
-
+");
+$install100=mysql_query("
 INSERT INTO `plugin_funktion_rights` (
 `PLFID` ,
 `GID`,
@@ -743,11 +740,20 @@ INSERT INTO `plugin_funktion_rights` (
 VALUES (
 '4', '4', '0'
 );
-
-INSERT INTO `alcms3`.`al_version` (
+");
+$install101=mysql_query("
+INSERT INTO `al_version` (
 `name`, 
 `definition`, 
 `version`) 
 VALUES (
 'AL-CMS Alpha v0.0.3', 'This is a Alpha Version.', '0.0.3'
 );
+");
+ echo "<font color=green>Database ready!</font>";
+echo '<form method="post" action="'; print $_SERVER['PHP_SELF']; echo'">';
+	echo '
+		<input type="submit" value="Go" name="senttings">
+		</form>
+'; 
+ ?>

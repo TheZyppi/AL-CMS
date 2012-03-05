@@ -7,7 +7,7 @@ it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.  
 
-The AL-CMS is now in the Alpha v.0.2, the Finaly Version comes XXXX.XX.XX.
+The AL-CMS is now in the Alpha v.0.0.3, the Finaly Version comes XXXX.XX.XX.
 
 When you will use it the AL-CMS you must have a webserver and a mysql server with PHP and MySQL Support (5.x).
 
@@ -31,6 +31,6 @@ List of standart functions:
 1	On
 2	login
 3	logout
-4       register
+4   register
 5	mobile
  

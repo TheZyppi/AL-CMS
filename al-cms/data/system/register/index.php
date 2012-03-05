@@ -70,8 +70,8 @@ if( !$absenden )
 </head>
 <body>
 <h1>Regestrieren</h1>
-Bitte gib deinen Benutzernamen und dein Passwort ein. (Groß- und Kleinschreibung beachten!)<br />
-<form action="index.php?pl=1&plf=register" method="post">
+Bitte gib deinen Benutzernamen und dein Passwort ein.<br />
+<form action="index.php?hpl=1&plf=register" method="post">
 <strong>Benutzername:</strong> <input type="text" name="benutzer" /><br />
 <strong>Passwort:</strong> <input type="password" name="passwort" /><br />
 <strong>Passwort Wiederholen:</strong> <input type="password" name="passwort2" /><br />

@@ -15,8 +15,8 @@
  	
 private function body($srdp) {
 				// Abfrage welches Design aktiv ist
-$sql = mysql_query('SELECT DID, name, data, mobile, standart, aktiv FROM design WHERE mobile="0" AND standart="1" AND aktiv="1"');
-while($row = mysql_fetch_object($sql))
+$sql = @mysql_query('SELECT DID, name, data, mobile, standart, aktiv FROM design WHERE mobile="0" AND standart="1" AND aktiv="1"');
+while($row = @mysql_fetch_object($sql))
 {
 	$a=$row->aktiv;
 	$n=$row->DID;
