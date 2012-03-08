@@ -39,7 +39,7 @@ else {
    $lplid=$reihe['LPLID'];	
 }
 	if (preg_match ("/^([0-9]+)$/",$plf)) {
-$sql = "SELECT PLFID, funktionsname, data, aktiv FROM plugin_funktion WHERE PLFID = ".mysql_real_escape_string($plf)." LIMIT 1";
+$sql = "SELECT PLFID, funktionsname, data, nf, aktiv FROM plugin_funktion WHERE PLFID = ".mysql_real_escape_string($plf)." LIMIT 1";
    $ergebnis = mysql_query($sql);
    $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);
    if ($plf==$reihe['PLFID'])
@@ -64,7 +64,7 @@ else {
 }
 	}
 	else {
-$sql = "SELECT PLFID, funktionsname, data, aktiv FROM plugin_funktion WHERE funktionsname = '".mysql_real_escape_string($plf)."' LIMIT 1";
+$sql = "SELECT PLFID, funktionsname, data, nf, aktiv FROM plugin_funktion WHERE funktionsname = '".mysql_real_escape_string($plf)."' LIMIT 1";
    $ergebnis = mysql_query($sql);
      $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);
    if ($plf==$reihe['funktionsname'])
@@ -122,8 +122,14 @@ else {
 			echo "Funktionsdatei konnte nicht geladen werden.";
 		}
 		else {
+		if($reihe['nf']==1)
+			{
 		include(''.$srdp.'system/'.$reihe['data'].''); // Funktionsdatei wird reingeladen
+		}
+			else {
+		include(''.$srdp.'system/'.$reihe['data'].'');
 		$reihe['funktionsname']($srdp); // Funktion wird ausgeführt
+			}
 		}	
 		}
 		else {

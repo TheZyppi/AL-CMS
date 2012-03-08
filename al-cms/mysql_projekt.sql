@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS `plugin_funktion` (
   `PLFID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `funktionsname` varchar(30),
   `data` varchar(100),
+  `nf` int(1),
   `definition` text,
   `parent_id` int(1),
   `parent` int(1),
@@ -182,7 +183,10 @@ CREATE TABLE IF NOT EXISTS `design_mobile_plugin_funktion_order` (
 
 CREATE TABLE IF NOT EXISTS `panel` (
   `PID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `LPLID` int(11) UNSIGNED NOT NULL,
   `name` varchar(45),
+  `data` varchar(80),
+  `sp` int(1),
   `aktiv` int(1) UNSIGNED NOT NULL,
    PRIMARY KEY (`PID`)
 ); 
@@ -342,6 +346,78 @@ CREATE TABLE IF NOT EXISTS `al_version` (
 
 -- --------------------------------------------------------
 
+--
+-- Tabellenstruktur für Tabelle `panel_menu_head`
+--
+
+CREATE TABLE IF NOT EXISTS `panel_menu_head` (
+  `PMHID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(45),
+   PRIMARY KEY (`PMHID`)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `panel_menu_head_hp`
+--
+
+CREATE TABLE IF NOT EXISTS `panel_menu_head_hp` (
+  `PMHID` int(11) UNSIGNED NOT NULL,
+  `name` varchar(45),
+  `url` varchar(50) NOT NULL,
+  `class` varchar(20)
+);
+ 
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `panel_menu_head_plugin`
+--
+
+CREATE TABLE IF NOT EXISTS `panel_menu_head_plugin` (
+  `PMHID` int(11) UNSIGNED NOT NULL,
+  `LPLID` int(11) UNSIGNED NOT NULL
+); 
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `panel_group`
+--
+
+CREATE TABLE IF NOT EXISTS `panel_group` (
+  `PID` int(11) UNSIGNED NOT NULL,
+  `GID` int(11) UNSIGNED NOT NULL
+); 
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `panel_plf`
+--
+
+CREATE TABLE IF NOT EXISTS `panel_plf` (
+  `PPLFID` int(11) UNSIGNED NOT NULL,
+  `name` varchar(45),
+  `data` varchar(50) NOT NULL,
+  `funktion` varchar(50) NOT NULL
+);
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `panel_plf_order`
+--
+
+CREATE TABLE IF NOT EXISTS `panel_plf_order` (
+`PLFID` int(11) UNSIGNED NOT NULL,
+`PPLFID` int(11) UNSIGNED NOT NULL
+);
+
+-- --------------------------------------------------------
+
 
 --
 -- Fremdschlüssel setzen
@@ -491,61 +567,66 @@ VALUES (
 INSERT INTO `plugin_funktion` (
 `funktionsname`,
 `data`,
+`nf`,
 `definition`,
 `parent_id`,
 `parent`,
 `aktiv`
 )
 VALUES (
-'On', '', '', '', '', '1'
+'On', '', '', '', '', '', '1'
 );
 
 INSERT INTO `plugin_funktion` (
 `funktionsname`,
 `data`,
+`nf`,
 `definition`,
 `parent_id`,
 `parent`,
 `aktiv`
 )
 VALUES (
-'login', 'login/login.php', '', '', '', '1'
+'login', 'login/login.php', '',  '', '', '', '1'
 );
 
 INSERT INTO `plugin_funktion` (
 `funktionsname`,
 `data`,
+`nf`,
 `definition`,
 `parent_id`,
 `parent`,
 `aktiv`
 )
 VALUES (
-'logout', 'login/logout.php', '', '', '', '1'
+'logout', 'login/logout.php', '', '', '', '', '1'
 );
 
 INSERT INTO `plugin_funktion` (
 `funktionsname`,
 `data`,
+`nf`,
 `definition`,
 `parent_id`,
 `parent`,
 `aktiv`
 )
 VALUES (
-'register', 'register/index.php', '', '', '', '1'
+'register', 'register/index.php', '', '', '', '', '1'
 );
 
 INSERT INTO `plugin_funktion` (
 `funktionsname`,
 `data`,
+`nf`,
 `definition`,
 `parent_id`,
 `parent`,
 `aktiv`
 )
 VALUES (
-'mobile', '', '', '', '', '0'
+'mobile', '', '', '', '', '', '0'
 );
 
 
@@ -744,7 +825,7 @@ VALUES (
 '4', '4', '0'
 );
 
-INSERT INTO `alcms3`.`al_version` (
+INSERT INTO `al_version` (
 `name`, 
 `definition`, 
 `version`) 

@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS `plugin_funktion` (
   `PLFID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `funktionsname` varchar(30),
   `data` varchar(100),
+  `nf` int(1),
   `definition` text,
   `parent_id` int(1),
   `parent` int(1),
@@ -134,8 +135,11 @@ CREATE TABLE IF NOT EXISTS `design_mobile_plugin_funktion_order` (
  echo "<br><font color=green>Design_Mobile_Plugin_Funktion_Order Table ready!</font>";
 	$install6=mysql_query("
 CREATE TABLE IF NOT EXISTS `panel` (
-  `PID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+   `PID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `LPLID` int(11) UNSIGNED NOT NULL,
   `name` varchar(45),
+  `data` varchar(80),
+  `sp` int(1),
   `aktiv` int(1) UNSIGNED NOT NULL,
    PRIMARY KEY (`PID`)
 ); 
@@ -237,7 +241,47 @@ CREATE TABLE IF NOT EXISTS `al_version` (
   `name` varchar(45) NOT NULL,
   `definition` text,
   `version` varchar(40) NOT NULL
+); ");
+$instalpmh=mysql_query("
+CREATE TABLE IF NOT EXISTS `panel_menu_head` (
+  `PMHID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(45),
+   PRIMARY KEY (`PMHID`)
+);
+");
+$installpmhh=mysql_query("
+CREATE TABLE IF NOT EXISTS `panel_menu_head_hp` (
+  `PMHID` int(11) UNSIGNED NOT NULL,
+  `name` varchar(45),
+  `url` varchar(50) NOT NULL,
+  `class` varchar(20)
+);
+"); 
+$installpmhp=mysql_query("
+CREATE TABLE IF NOT EXISTS `panel_menu_head_plugin` (
+  `PMHID` int(11) UNSIGNED NOT NULL,
+  `LPLID` int(11) UNSIGNED NOT NULL
 ); 
+");
+$installpg=mysql_query("
+CREATE TABLE IF NOT EXISTS `panel_group` (
+  `PID` int(11) UNSIGNED NOT NULL,
+  `GID` int(11) UNSIGNED NOT NULL
+);
+");
+$installpp=mysql_query("
+CREATE TABLE IF NOT EXISTS `panel_plf` (
+  `PPLFID` int(11) UNSIGNED NOT NULL,
+  `name` varchar(45),
+  `data` varchar(50) NOT NULL,
+  `funktion` varchar(50) NOT NULL
+);
+");
+$installppo=mysql_query("
+CREATE TABLE IF NOT EXISTS `panel_plf_order` (
+`PLFID` int(11) UNSIGNED NOT NULL,
+`PPLFID` int(11) UNSIGNED NOT NULL
+);
 ");
 echo "<br><font color=green>AL_Version Table ready!</font>";
 echo "<br><font color=green>Tables are all ready!<br>------------------------------<p></font>";
