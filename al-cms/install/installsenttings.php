@@ -30,10 +30,9 @@ $install4=mysql_query("INSERT INTO `al_config` (
 `funktion`, 
 `aktiv`) 
 VALUES (
-'Title from the Page', '".$_POST['sdpath']."', '1'
+'Design Path', '".$_POST['sdpath']."', '1'
 );
 ");
-echo "Senttings ready!";
 echo "<font color=green>Config ready!</font>";
 echo '<form method="post" action="'; print $_SERVER['PHP_SELF']; echo'">';
 	echo '

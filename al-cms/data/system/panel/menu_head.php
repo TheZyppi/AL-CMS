@@ -10,6 +10,13 @@
  *(at your option) any later version.  
  *   
  */
+// Data-Right-Security-Open-Check
+if (!defined('ON_ALCMS') || isset($_SESSION['group'])=="")
+{
+	echo "Error: You are not use ALCMS!";
+	exit;
+}
+else {
 $lpl=$_GET['lpl'];
 $panel_head_a1="SELECT PMHID, LPLID FROM panel_menu_head_plugin WHERE LPLID=".$lpl."";
 $panel_head_q1=@mysql_query($panel_head_a1);
@@ -27,7 +34,7 @@ else {
 	}
 	else {
 	$reihe2=mysql_fetch_array($panel_head_q2);
-	$panel_head_a3="SELECT PMHID, name, url, class FROM panel_menu_head_hp FROM PMHID PMHID=".$reihe2['PMHID']."";
+	$panel_head_a3="SELECT PMHID, name, url, class FROM panel_menu_head_hp WHERE PMHID=".$reihe2['PMHID']."";
 	$panel_head_q3=mysql_query($panel_head_a3);
 	if(!$panel_head_q3)
 	{
@@ -38,7 +45,7 @@ else {
 		{
 			if($row->class!="")
 			{
-				echo '<td><a href="'.$row->url.'" class="'.$row->class.'">'.$row->name.'</a></td>';
+				echo '<a href="'.$row->url.'" class="'.$row->class.'">'.$row->name.'</a>';
 			}
 			else {
 			echo '<td><a href="'.$row->url.'">'.$row->name.'</a></td>';
@@ -46,5 +53,6 @@ else {
 		}
 	}
 	}
+}
 }
 ?>

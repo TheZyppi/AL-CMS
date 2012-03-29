@@ -25,14 +25,14 @@ db_con();
 
 include('passgen.php');
   $passsalt=generatePW(18); // Normal Salt
-  $passsaltc=sha1($passsalt); // Salt Gecryptet
+  $passsaltc=sha1(strtoupper($passsalt)); // Salt Gecryptet
   $passn=$_POST['passwort']; // Passwort Normal
-  $passnc=sha1($passn); //Passwort Gecryptet
+  $passnc=sha1(strtoupper($passn)); //Passwort Gecryptet
   $passall="$passnc $passsaltc"; // Passwort in SHA1 und SALT in SHA1 werden zusammengefügt
   $pass=sha1($passall); //Hier werden die beiden SHA1 gecrypteten Passwörter nochmals zusammen SHA1 gecryptet
-// Hier wird nun der Benutzer Eingetragen und der entstandene SHA1 Wert der aus dem Gecrypteten Passwort + Salt besteht wird nun hier eingetragen + der ungecryptete Salt Wert  
-  $eintragen = "INSERT INTO user (GID, username, passwort, passwort_salt) 
-    VALUES ('4', '". $_POST['benutzer']."', '". $pass."', '".$passsalt."')"; 
+  $timenow=time(); // Time Nowesteht wird nun hier eingetragen + der ungecryptete Salt Wert  
+ $eintragen = "INSERT INTO user (GID, username, passwort, passwort_salt, time_reg) 
+    VALUES ('4', '". $_POST['benutzer']."', '". $pass."', '".$passsalt."', '".$timenow."')"; 
 
 $ausgabe="<center>Your AL-CMS is now ready to use!</center>";
 

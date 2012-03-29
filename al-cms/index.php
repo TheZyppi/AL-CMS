@@ -27,6 +27,7 @@ Standartindex-Datei
  */
 
  // Standart Root Data Pfad
+define('ON_ALCMS', true);
 $srdp="data/";
 
 // Include Datein

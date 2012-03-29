@@ -10,17 +10,23 @@
  *(at your option) any later version.  
  *   
  */
-
- class design {
+// Data-Right-Security-Open-Check
+if (!defined('ON_ALCMS') || isset($_SESSION['group'])=="")
+{
+	echo "Error: You are not use ALCMS!";
+	exit;
+}
+else {
+class design {
  	
 private function body($srdp) {
 				// Abfrage welches Design aktiv ist
 $sql = @mysql_query('SELECT DID, name, data, mobile, standart, aktiv FROM design WHERE mobile="0" AND standart="1" AND aktiv="1"');
-while($row = @mysql_fetch_object($sql))
+while($row = @mysql_fetch_array($sql))
 {
-	$a=$row->aktiv;
-	$n=$row->DID;
-	$d=$row->data;
+	$a=$row['aktiv'];
+	$n=$row['DID'];
+	$d=$row['data'];
 }
 // Die Hauptdatei vom Design wird reingeladen
 	if ( ! $sql || $n=="")
@@ -39,8 +45,16 @@ include('head_function.php');
 	private function body_head_plugin_normal($srdp)
 {
 	$hpl=$_GET['hpl'];
+	if (preg_match ("/^([0-9]+)$/",$hpl)) {
 		 	$sql = mysql_query('SELECT DID, HPLID FROM design_head_plugin_order WHERE HPLID='.$hpl.'');
 			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
+	}
+	else {
+		$sql3=mysql_query("SELECT HPLID, name FROM head_plugins WHERE name=".$hpl."");
+		$row=mysql_fetch_array($sql3);
+			$sql = mysql_query('SELECT DID, HPLID FROM design_head_plugin_order WHERE HPLID='.$row['HPLID'].'');
+			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
+	}
 			   	$sql2 = mysql_query('SELECT DID, data, aktiv FROM design WHERE DID='.$reihe['DID'].'');
 			   	$reihe2 = mysql_fetch_array($sql2, MYSQL_ASSOC);
 include(''.$srdp.'design/'.$reihe2['data'].'index.php');
@@ -51,8 +65,16 @@ include('head_function.php');
 	private function body_head_lower_plugin_normal($srdp)
 {
 	$lpl=$_GET['lpl'];
+	if (preg_match ("/^([0-9]+)$/",$lpl)) {
 				$sql = mysql_query('SELECT DID, LPLID FROM design_lower_plugin_order WHERE LPLID='.$lpl.'') or die(mysql_error());
 			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
+			   	}
+else {
+		$sql3=mysql_query("SELECT LPLID, name FROM lower_plugins WHERE name=".$lpl."");
+		$row=mysql_fetch_array($sql3);
+	$sql = mysql_query('SELECT DID, LPLID FROM design_lower_plugin_order WHERE LPLID='.$row['LPLID'].'') or die(mysql_error());
+			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
+}
 			   	$sql2 = mysql_query('SELECT DID, data, aktiv FROM design WHERE DID='.$reihe['DID'].'') or die(mysql_error());
 			   	$reihe2 = mysql_fetch_array($sql2, MYSQL_ASSOC);
 			   
@@ -64,8 +86,16 @@ include('head_function.php');
 	private function body_plugin_funktion_normal($srdp)
 	{
 			$plf=$_GET['plf'];
+				if (preg_match ("/^([0-9]+)$/",$plf)) {
 				$sql = mysql_query('SELECT DID, PLFID FROM design_plugin_funktion_order WHERE PLFID='.$plf.'');
 			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
+				}
+				else {
+					$sql3=mysql_query("SELECT PLFID, name FROM plugin_funktion WHERE funktionsname=".$plf."");
+					$row=mysql_fetch_array($sql3);
+					$sql = mysql_query('SELECT DID, PLFID FROM design_plugin_funktion_order WHERE PLFID='.$row['PLFID'].'');
+			   		$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
+				}
 			   	$sql2 = mysql_query('SELECT DID, data, aktiv FROM design WHERE DID='.$reihe['DID'].'');
 			   	$reihe2 = mysql_fetch_array($sql2, MYSQL_ASSOC);
 			   
@@ -84,7 +114,17 @@ else {
 		if (isset($_GET['plf'])=="" && isset($_GET['lpl'])=="")
 		{
 			$hpl=$_GET['hpl'];
-			$sql = mysql_query('SELECT DID, HPLID FROM design_head_plugin_order WHERE HPLID='.$hpl.'');
+			if (preg_match ("/^([0-9]+)$/",$hpl)) {
+		 	$sql = mysql_query('SELECT DID, HPLID FROM design_head_plugin_order WHERE HPLID='.$hpl.'');
+			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
+	}
+	else {
+		$sql3=mysql_query("SELECT HPLID, name FROM head_plugins WHERE name='".$hpl."'");
+		$row=mysql_fetch_array($sql3);
+			$sql = mysql_query('SELECT DID, HPLID FROM design_head_plugin_order WHERE HPLID='.$row['HPLID'].'');
+			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
+	}
+			$sql = mysql_query('SELECT DID, HPLID FROM design_head_plugin_order WHERE HPLID='.$reihe['HPLID'].'');
 			if(! $sql)
 			{
 				$this->body($srdp);
@@ -106,9 +146,17 @@ else {
 			if(isset($_GET['plf'])=="" && isset($_GET['lpl'])!="" && isset($_GET['hpl'])!="")
 			{
 				$lpl=$_GET['lpl'];
-			$sql = mysql_query('SELECT DID, LPLID FROM design_lower_plugin_order WHERE LPLID='.$lpl.'');
-	   	$reihe2 = mysql_fetch_array($sql, MYSQL_ASSOC);
-		if(! $sql || $reihe2['LPLID']!=$lpl)
+				if (preg_match ("/^([0-9]+)$/",$lpl)) {
+				$sql = mysql_query('SELECT DID, LPLID FROM design_lower_plugin_order WHERE LPLID='.$lpl.'') or die(mysql_error());
+			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
+			   	}
+else {
+		$sql3=mysql_query("SELECT LPLID, name FROM lower_plugins WHERE name='".$lpl."'");
+		$row=mysql_fetch_array($sql3);
+	$sql = mysql_query('SELECT DID, LPLID FROM design_lower_plugin_order WHERE LPLID='.$row['LPLID'].'') or die(mysql_error());
+			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
+}
+		if(! $sql || $reihe['LPLID']!=$lpl)
 		{
 			$this->body($srdp);
 		}
@@ -118,9 +166,17 @@ else {
 			}
 			else if(isset($_GET['lpl'])=="" && isset($_GET['plf'])!="" && isset($_GET['hpl'])!=""){
 				$plf=$_GET['plf'];
-			$sql = mysql_query('SELECT DID, PLFID FROM design_plugin_funktion_order WHERE PLFID='.$plf.'');
-	   	$reihe2 = mysql_fetch_array($sql, MYSQL_ASSOC);
-		if(! $sql || $reihe2['PLFID']!=$plf)
+				if (preg_match ("/^([0-9]+)$/",$plf)) {
+				$sql = mysql_query('SELECT DID, PLFID FROM design_plugin_funktion_order WHERE PLFID='.$plf.'');
+			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
+				}
+				else {
+					$sql3=mysql_query("SELECT PLFID, funktionsname FROM plugin_funktion WHERE funktionsname='".$plf."'") or die (mysql_error());
+					$row=mysql_fetch_array($sql3);
+					$sql = mysql_query('SELECT DID, PLFID FROM design_plugin_funktion_order WHERE PLFID='.$row['PLFID'].'');
+			   		$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
+				}
+		if(! $sql || $reihe['PLFID']!=$plf)
 		{
 			$this->body($srdp);
 		}
@@ -131,9 +187,17 @@ else {
 			else if($_GET['plf']!="" && $_GET['lpl']!="" && isset($_GET['hpl'])!="")
 			{
 $plf=$_GET['plf'];
-			$sql = mysql_query('SELECT DID, PLFID FROM design_plugin_funktion_order WHERE PLFID='.$plf.'');
-	   	$reihe2 = mysql_fetch_array($sql, MYSQL_ASSOC);
-		if(! $sql || $reihe2['PLFID']!=$plf)
+			if (preg_match ("/^([0-9]+)$/",$plf)) {
+				$sql = mysql_query('SELECT DID, PLFID FROM design_plugin_funktion_order WHERE PLFID='.$plf.'');
+			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
+				}
+				else {
+					$sql3=mysql_query("SELECT PLFID, name FROM plugin_funktion WHERE funktionsname=".$plf."");
+					$row=mysql_fetch_array($sql3);
+					$sql = mysql_query('SELECT DID, PLFID FROM design_plugin_funktion_order WHERE PLFID='.$row['PLFID'].'');
+			   		$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
+				}
+		if(! $sql || $reihe['PLFID']!=$plf)
 		{
 			$this->body($srdp);
 		}
@@ -154,4 +218,5 @@ $plf=$_GET['plf'];
 	
  }
  $designsys = new design();
+ }
 ?>

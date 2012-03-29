@@ -10,7 +10,13 @@
  *(at your option) any later version.  
  *   
  */
-
+// Data-Right-Security-Open-Check
+if (!defined('ON_ALCMS') || isset($_SESSION['group'])=="")
+{
+	echo "Error: You are not use ALCMS!";
+	exit;
+}
+else {
 db_con();
 $sql = "SELECT HPLID, aktiv FROM head_plugins WHERE HPLID='1' LIMIT 1";
 	$ergebnis = mysql_query($sql);
@@ -64,5 +70,5 @@ else {
 		echo $_SESSION['group'];
 	}
 }
-	
+}	
 ?>

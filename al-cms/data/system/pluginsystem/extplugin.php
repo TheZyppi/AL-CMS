@@ -10,8 +10,13 @@
  *(at your option) any later version.  
  *   
  */
-
- 
+// Data-Right-Security-Open-Check
+if (!defined('ON_ALCMS') || isset($_SESSION['group'])=="")
+{
+	echo "Error: You are not use ALCMS!";
+	exit;
+}
+else {
  $group=$_SESSION['gruppe'];
 // Die Datei zum Datenbank Connecten wird reingeladen
 
@@ -102,5 +107,5 @@ if ($group==$reihe2['GID']) {
 		}
 		return $plugin;
 		}
-
+		}
 ?>

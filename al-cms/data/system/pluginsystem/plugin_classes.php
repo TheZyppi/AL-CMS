@@ -13,6 +13,14 @@
 
 class pluginsystem {
 	
+	private function data_security($srdp)
+	{
+		include('data_security.php');
+	}
+	public function data_sec_check($srdp)
+	{
+		$this->data_security($srdp);
+	}
 	private function head_funktion($srdp)
 	{
 		include('head_funktion.php');

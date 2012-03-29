@@ -1,4 +1,11 @@
 <?php
+// Data-Right-Security-Open-Check
+if (!defined('ON_ALCMS') || isset($_SESSION['group'])=="")
+{
+	echo "Error: You are not use ALCMS!";
+	exit;
+}
+else {
 $plf=$_GET['plf'];
 if (preg_match ("/^([0-9]+)$/",$plf)) {
 $sql1="SELECT PLFID, PPLFID FROM panel_plf_order WHERE PLFID=".mysql_real_escape_string($plf)."";
@@ -17,7 +24,7 @@ if(!$q1)
 }
 else {
 	$row1=mysql_fetch_array($q1);
-	$sql2="SELECT PPLFID, name, data funktion FROM panel_plf WHERE PPLFID=".$row1['PPLFID']."";
+	$sql2="SELECT PPLFID, name, data, funktion FROM panel_plf WHERE PPLFID=".$row1['PPLFID']."";
 	$q2=@mysql_query($sql2);
 	if(!$sql2)
 	{
@@ -28,5 +35,6 @@ else {
 		include(''.$srdp.'system/panel/'.$row2['data'].'');
 		$row2['funktion']($srdp);
 	}
+}
 }
 ?>

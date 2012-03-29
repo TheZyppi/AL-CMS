@@ -11,7 +11,13 @@
  *   
  */
 
-
+// Data-Right-Security-Open-Check
+if (!defined('ON_ALCMS') || isset($_SESSION['group'])=="")
+{
+	echo "Error: You are not use ALCMS!";
+	exit;
+}
+else {
 function login_pruefen() {
 session_start(); // Zum Starten der Session
 if( (isset($_SESSION['user'])) AND (!empty($_SESSION['user'])) )
@@ -36,6 +42,7 @@ $_SESSION['group'] = 1;
    else {
    // Kein Benutzername in der Session abgespeichert. Daher ist man nicht eingeloggt.
 $_SESSION['group'] = 1;
+}
 }
 }
 ?>

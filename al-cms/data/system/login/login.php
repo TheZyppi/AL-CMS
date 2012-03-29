@@ -10,7 +10,13 @@
  *(at your option) any later version.  
  *   
  */
-
+// Data-Right-Security-Open-Check
+if (!defined('ON_ALCMS') || isset($_SESSION['group'])=="")
+{
+	echo "Error: You are not use ALCMS!";
+	exit;
+}
+else {
 function login()
 {
 
@@ -26,9 +32,9 @@ if( $absenden )
    $ergebnis = mysql_query($sql);
    $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC) or die (mysql_error());
    $passsalt=$reihe['passwort_salt']; // Passwort wird aus der Datenbank geholt
-  $passsaltc=sha1($passsalt); // Salt Gecryptet
+  $passsaltc=sha1(strtoupper($passsalt)); // Salt Gecryptet
   $passn=$_POST['passwort']; // Passwort Normal
-  $passnc=sha1($passn); //Passwort Gecryptet
+  $passnc=sha1(strtoupper($passn)); //Passwort Gecryptet
   $passall="$passnc $passsaltc"; // Passwort in SHA1 und SALT in SHA1 werden zusammengefügt
    $passwort = ( isset($_POST['passwort']) ) ? sha1($passall) : ''; //Hier werden die beiden SHA1 gecrypteten Passwörter nochmals zusammen SHA1 gecryptet
    if( $reihe['passwort'] == $passwort ) // Schaut nach ob das Passwort auch mit dem Eingegebenden überinstimmt
@@ -74,7 +80,7 @@ echo $_SESSION['group'];
 echo "<p>";
 ?>
 Bitte gib deinen Benutzernamen und dein Passwort ein. (Groß- und Kleinschreibung beachten!)<br />
-<form action="index.php?pl=1&plf=login" method="post">
+<form action="index.php?hpl=1&plf=login" method="post">
 <strong>Benutzername:</strong> <input type="text" name="benutzer" /><br />
 <strong>Passwort:</strong> <input type="password" name="passwort" /><br />
 <input type="submit" name="absenden" value="Login" />
@@ -83,6 +89,7 @@ Bitte gib deinen Benutzernamen und dein Passwort ein. (Groß- und Kleinschreibun
 </html>
 <?php
 
+}
 }
 }
 ?>

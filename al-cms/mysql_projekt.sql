@@ -12,6 +12,11 @@ CREATE TABLE IF NOT EXISTS `user` (
   `session_id` varchar(50),
   `ip_adresse` varchar(50),
   `mail` varchar(45),
+  `time_reg` varchar(45),
+  `time_login` varchar(45),
+  `aktive` int(1),
+  `activated` int(1),
+  `aktive_key` varchar(100),
   PRIMARY KEY (`UID`)
 );
 
@@ -365,7 +370,7 @@ CREATE TABLE IF NOT EXISTS `panel_menu_head` (
 CREATE TABLE IF NOT EXISTS `panel_menu_head_hp` (
   `PMHID` int(11) UNSIGNED NOT NULL,
   `name` varchar(45),
-  `url` varchar(50) NOT NULL,
+  `url` varchar(100) NOT NULL,
   `class` varchar(20)
 );
  
@@ -399,10 +404,11 @@ CREATE TABLE IF NOT EXISTS `panel_group` (
 --
 
 CREATE TABLE IF NOT EXISTS `panel_plf` (
-  `PPLFID` int(11) UNSIGNED NOT NULL,
+  `PPLFID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(45),
   `data` varchar(50) NOT NULL,
-  `funktion` varchar(50) NOT NULL
+  `funktion` varchar(50) NOT NULL,
+  PRIMARY KEY(`PPLFID`)
 );
 
 -- --------------------------------------------------------

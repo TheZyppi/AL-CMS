@@ -11,7 +11,13 @@
  *   
  */
 
-
+// Data-Right-Security-Open-Check
+if (!defined('ON_ALCMS') || isset($_SESSION['group'])=="")
+{
+	echo "Error: You are not use ALCMS!";
+	exit;
+}
+else {
 db_con();
 include('design_classes.php');
 $sql2 = "SELECT PLFID, aktiv FROM plugin_funktion WHERE PLFID='5' LIMIT 1";
@@ -31,5 +37,6 @@ else {
    else {
   $designsys->body_normal($srdp);
    }
+}
 }
 ?>

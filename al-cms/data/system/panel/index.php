@@ -1,5 +1,12 @@
 <?php
-if(isset($_GET['hpl'])=="" || $_GET['hpl'] && isset($_GET['lpl'])=="" || $_GET['lpl'])
+// Data-Right-Security-Open-Check
+if (!defined('ON_ALCMS') || isset($_SESSION['group'])=="")
+{
+	echo "Error: You are not use ALCMS!";
+	exit;
+}
+else {
+if(isset($_GET['hpl'])=="" || $_GET['hpl'] && isset($_GET['lpl'])=="" || $_GET['lpl']=="")
 {
 	echo "No Plugin!";
 }
@@ -30,12 +37,12 @@ else {
 	}
 	else {
 		$reihe=mysql_fetch_array($sql1);
-		if(!$reihe['aktiv']!=1)
+		if($reihe['aktiv']!=1)
 		{
 			echo "This panel is not akivated.";
 		}
 		else {
-			$sql2="SELECT PID, GID FROM panel_group WHERE PID=".$reihe['PID']."";
+			$sql2=mysql_query("SELECT PID, GID FROM panel_group WHERE PID=".$reihe['PID']."");
 			$reihe2=mysql_fetch_array($sql2);
 			$group=$_SESSION['group'];
 			if($reihe2['GID']!=$group)
@@ -43,10 +50,11 @@ else {
 				echo "Your Group ist not allowed to use it.";
 			}
 			else {
-		include("panel_classes.php");
-				$panelsys->panel_index($srdp);
+		    include('panel_classes.php');
+			$panelsys->panel_index($srdp);
 			}	
 		}
 	}
+}
 }
 ?>

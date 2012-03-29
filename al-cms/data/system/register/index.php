@@ -10,6 +10,12 @@
  *(at your option) any later version.  
  *   
  */
+if (!defined('ON_ALCMS') || isset($_SESSION['group'])=="")
+{
+	echo "Error: You are not use ALCMS!";
+	exit;
+}
+else {
 function register()
 {
 $absenden = ( isset($_POST['absenden']) ) ? true : false;
@@ -40,14 +46,15 @@ if( $absenden )
 include('passgen.php');
   db_con();
   $passsalt=generatePW(18); // Normal Salt
-  $passsaltc=sha1($passsalt); // Salt Gecryptet
+  $passsaltc=sha1(strtoupper($passsalt)); // Salt Gecryptet
   $passn=$_POST['passwort']; // Passwort Normal
-  $passnc=sha1($passn); //Passwort Gecryptet
+  $passnc=sha1(strtoupper($passn)); //Passwort Gecryptet
   $passall="$passnc $passsaltc"; // Passwort in SHA1 und SALT in SHA1 werden zusammengefügt
   $pass=sha1($passall); //Hier werden die beiden SHA1 gecrypteten Passwörter nochmals zusammen SHA1 gecryptet
+  $timenow=time(); // Time Now
 // Hier wird nun der Benutzer Eingetragen und der entstandene SHA1 Wert der aus dem Gecrypteten Passwort + Salt besteht wird nun hier eingetragen + der ungecryptete Salt Wert  
-  $eintragen = "INSERT INTO user (GID, username, passwort, passwort_salt) 
-    VALUES ('2', '". $_POST['benutzer']."', '". $pass."', '".$passsalt."')"; 
+  $eintragen = "INSERT INTO user (GID, username, passwort, passwort_salt, time_reg) 
+    VALUES ('2', '". $_POST['benutzer']."', '". $pass."', '".$passsalt."', '".$timenow."')"; 
 
 $ausgabe="<center>Erfolg!</center>";
 
@@ -83,5 +90,5 @@ Bitte gib deinen Benutzernamen und dein Passwort ein.<br />
 
 }
 }
-
+}
 ?>

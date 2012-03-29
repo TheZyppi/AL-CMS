@@ -10,7 +10,13 @@
  *(at your option) any later version.  
  *   
  */
-
+// Data-Right-Security-Open-Check
+if (!defined('ON_ALCMS') || isset($_SESSION['group'])=="")
+{
+	echo "Error: You are not use ALCMS!";
+	exit;
+}
+else {
 if (isset($_GET['pl'])=="") {
 // Wenn kein Plugin anegeben wurde
 
@@ -98,5 +104,6 @@ $sql2 = "SELECT * FROM plugin_funktion_title WHERE PLFID=".mysql_real_escape_str
 		include(''.$rsp.'plugins/'.$reihe['titled'].''); // Funktionsdatei wird reingeladen
 		}
 		}
+}
 }
 ?>

@@ -1,4 +1,4 @@
-    <?php
+<?php
 /*
  * AL-CMS -- Gernal Information --
  * 
@@ -10,27 +10,23 @@
  *(at your option) any later version.  
  *   
  */
+// Data-Right-Security-Open-Check
 if (!defined('ON_ALCMS') || isset($_SESSION['group'])=="")
 {
 	echo "Error: You are not use ALCMS!";
 	exit;
 }
-else {  
-    function generatePW($laenge=8)
-    {
-    $zeichen = array_merge(range('0', '9'), range('a', 'z'), range('A', 'Z'), array('#','&','@','$','_','%','?','+'));
-     
-     
-    mt_srand((double)microtime()*1000000);
-    for ($i = 1; $i <= (count($zeichen)*2); $i++)
-    {
-    $swap = mt_rand(0,count($zeichen)-1);
-    $tmp = $zeichen[$swap];
-    $zeichen[$swap] = $zeichen[0];
-    $zeichen[0] = $tmp;
-    }
-    return substr(implode('',$zeichen),0,$laenge);
-     
-    }
+else {
+ $lpl=$_GET['lpl'];
+ $pinfo=mysql_query("SELECT PID, LPLID, name, data, sp, aktiv FROM panel WHERE LPLID='".$lpl."'");
+ $row=mysql_fetch_array($pinfo);
+ echo 'Welcome in the '.$row['name'].'.<p> ID: '.$row['PID'].'<br> Path: '.$row['data'].'<br>';
+ if($row['sp']==1)
+ {
+ 	echo "Spezial Panel: Yes";
+ }
+ else {
+     echo "Sepzial Panel: No";
 }
-    ?> 
+}
+?>
