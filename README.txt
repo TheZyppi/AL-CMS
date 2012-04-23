@@ -33,4 +33,5 @@ List of standart functions:
 3	logout
 4   register
 5	mobile
+6	dev
  

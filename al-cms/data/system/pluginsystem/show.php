@@ -11,8 +11,13 @@
  *   
  */
 
-
-
+// Data-Right-Security-Open-Check
+if (!defined('ON_ALCMS') || isset($_SESSION['group'])=="")
+{
+	echo "Error: You are not use ALCMS!";
+	exit;
+}
+else {
 $group=$user->data['group_id'];
 
 include ('../../../config/dbcon.php');
@@ -33,5 +38,5 @@ $sql2 = "SELECT PLFID, GID, Y_N FROM plugin_funktion_rechte WHERE PLID=".mysql_r
 	$ergebnis2 = mysql_query($sql2);
    $reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
 }
-
+}
 ?>

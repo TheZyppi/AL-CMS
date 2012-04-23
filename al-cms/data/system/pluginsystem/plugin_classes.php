@@ -10,17 +10,9 @@
  *(at your option) any later version.  
  *   
  */
-
+ 
 class pluginsystem {
 	
-	private function data_security($srdp)
-	{
-		include('data_security.php');
-	}
-	public function data_sec_check($srdp)
-	{
-		$this->data_security($srdp);
-	}
 	private function head_funktion($srdp)
 	{
 		include('head_funktion.php');
@@ -53,10 +45,11 @@ class pluginsystem {
 	{
 		$this->extplugina($srdp, $plugin);
 	}
-	private function funktionin($srdp, $funktion='no')
+	public static function funktionin($srdp, $funktion='no', $h_or_l='', $head_plugin='no', $lower_plugin='no', $s='')
 	{
 		include('funktionin.php');	
 	}
+
 
 }
 $pluginsys = new pluginsystem();

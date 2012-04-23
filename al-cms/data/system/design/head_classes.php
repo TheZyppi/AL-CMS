@@ -18,13 +18,6 @@
  */
 
  // Title + Meta System werden reingeladen
-// Data-Right-Security-Open-Check
-if (!defined('ON_ALCMS') || isset($_SESSION['group'])=="")
-{
-	echo "Error: You are not use ALCMS!";
-	exit;
-}
-else {
 	class headp {
 
 // Title System vom Head und dem Rechte Gruppe System
@@ -192,5 +185,4 @@ $plf=$_GET['plf'];
 	}	
 
 $objhead = new headp();
-}
 ?>

@@ -10,13 +10,7 @@
  *(at your option) any later version.  
  *   
  */
-// Data-Right-Security-Open-Check
-if (!defined('ON_ALCMS') || isset($_SESSION['group'])=="")
-{
-	echo "Error: You are not use ALCMS!";
-	exit;
-}
-else {
+
 class design {
  	
 private function body($srdp) {
@@ -218,5 +212,4 @@ $plf=$_GET['plf'];
 	
  }
  $designsys = new design();
- }
 ?>

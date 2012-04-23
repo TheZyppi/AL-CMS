@@ -25,7 +25,7 @@ else {
 	 $group=$_SESSION['group'];
 	db_con();
 if (preg_match ("/^([0-9]+)$/",$funktion)) {
-$sql = "SELECT PLFID, PLID, funktionsname, data, aktiv FROM plugin_funktion WHERE PLFID = ".mysql_real_escape_string($funktion)." LIMIT 1";
+$sql = "SELECT PLFID, funktionsname, data, aktiv FROM plugin_funktion WHERE PLFID = ".mysql_real_escape_string($funktion)." LIMIT 1";
    $ergebnis = mysql_query($sql);
    $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);
    if ($funktion==$reihe['PLFID'])
@@ -40,7 +40,7 @@ else {
 }
 	}
 	else {
-$sql = "SELECT PLFID, PLID, funktionsname, data, aktiv FROM plugin_funktion WHERE funktionsname = '".mysql_real_escape_string($funktion)."' LIMIT 1";
+$sql = "SELECT PLFID, funktionsname, data, aktiv FROM plugin_funktion WHERE funktionsname = '".mysql_real_escape_string($funktion)."' LIMIT 1";
    $ergebnis = mysql_query($sql);
      $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);
    if ($funktion==$reihe['funktionsname'])
@@ -50,7 +50,7 @@ $sql2 = "SELECT PLFID, GID, Y_N FROM plugin_funktion_rights WHERE PLFID=".mysql_
    $reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
    }
 else {
-	echo "Keine Funktion mit diesem Namen gefunden.";
+	echo "Error: No function found with this name!";
 	exit;
 }
 	}
@@ -69,12 +69,115 @@ if ($reihe['aktiv']==1) {
 	}
 else
 {
+	if($h_or_l='h')
+	{
+	if (preg_match ("/^([0-9]+)$/",$head_plugin))
+		{
+	$sqlp = "SELECT HPLID, PLFID FROM head_plugin_funktion WHERE HPLID= ".mysql_real_escape_string($head_plugin)." LIMIT 1";
+   	$ergebnisp = mysql_query($sqlp);
+   	$headrow = mysql_fetch_array($ergebnisp, MYSQL_ASSOC);
+	if($headrow['HPLID']!=$head_plugin)
+	{
+		echo "Error: No HPLID found!";
+		exit;
+	}
+		else {
+	if (preg_match ("/^([0-9]+)$/",$funktion))
+	{
+		$plha=mysql_query("SELECT HPLID, PLFID FROM head_plugin_funktion WHERE HPLID='".mysql_real_escape_string($headrow['HPLID'])."' AND PLFID='".mysql_real_escape_string($funktion)."'");
+		$plhaa=mysql_fetch_array($plha);
+		if($plhaa['PLID']!=$funktion)
+		{
+			echo "Error: The Plugin Funktion is not the Funktion for the Head Plugin.";
+			exit;
+		}
+	}
+	else {
+		$plhan=mysql_query("SELECT PLFID, funktionsname FROM plugin_funktion WHERE funktionsname='".mysql_real_escape_string($funktion)."'") or die(mysql_error());
+	$plhaan=mysql_fetch_array($plhan);
+	$plha=mysql_query("SELECT HPLID, PLFID FROM head_plugin_funktion WHERE HPLID='".mysql_real_escape_string($headrow['HPLID'])."' AND PLFID='".mysql_real_escape_string($plhaan['PLFID'])."'");
+		$plhaa=mysql_fetch_array($plha);
+			if($plhaan['PLFID']!=$plhaa['PLFID'])
+		{
+			echo "Error: The Plugin Funktion is not the Funktion for the Head Plugin.";
+			exit;
+		}
+	}
+
+	}
+		}
+else {
+	$headq=mysql_query("SELECT HPLID, name, sysp FROM head_plugins WHERE name='".mysql_real_escape_string($head_plugin)."'");
+	$reihep=mysql_fetch_array($headq);
+		$sqlp = "SELECT HPLID, PLFID FROM head_plugin_funktion WHERE HPLID= ".mysql_real_escape_string($reihep['HPLID'])." LIMIT 1";
+   $ergebnisp = mysql_query($sqlp);
+      $headrow = mysql_fetch_array($ergebnisp, MYSQL_ASSOC);
+	   	if($reihep['name']!=$head_plugin)
+	{
+		echo "Error no Head Plugin Name found!";
+		exit;
+	}
+		else {
+	if (preg_match ("/^([0-9]+)$/",$funktion))
+	{
+		$plha=mysql_query("SELECT HPLID, PLFID FROM head_plugin_funktion WHERE HPLID='".mysql_real_escape_string($headrow['HPLID'])."' AND 'PLFID=".mysql_real_escape_string($funktion)."'");
+		$plhaa=mysql_fetch_array($plha);
+		if($plhaa['PLID']!=$funktion)
+		{
+			echo "Error: The Plugin Funktion is not the Funktion for the Head Plugin.";
+			exit;
+		}
+	}
+	else {
+		$plhan=mysql_query("SELECT PLFID, funktionsname FROM plugin_funktion WHERE funktionsname='".mysql_real_escape_string($funktion)."'");
+	$plhaan=mysql_fetch_array($plhan);
+	$plha=mysql_query("SELECT HPLID, PLFID FROM head_plugin_funktion WHERE HPLID='".mysql_real_escape_string($headrow['HPLID'])."' AND PLFID='".mysql_real_escape_string($plhaan['PLFID'])."'");
+		$plhaa=mysql_fetch_array($plha);
+			if($plhaan['PLFID']!=$plhaa['PLFID'])
+		{
+			echo "Error: The Plugin Funktion is not the Funktion for the Head Plugin.";
+			exit;
+		}
+	}
+
+	}
+}		
+	}
+	else {
+	
+	if (preg_match ("/^([0-9]+)$/",$lower_plugin))
+		{
+	$lowerlp = "SELECT LPLID, PLFID FROM lower_plugin_funktion WHERE LPLID= ".mysql_real_escape_string($lower_plugin)." LIMIT 1";
+   	$ergebnislower = mysql_query($lowerlp);
+   	$reihelower = mysql_fetch_array($ergebnislower, MYSQL_ASSOC);
+		if($reihelower['LPLID']!=$lower_plugin)
+		{
+			echo "Error: No Lower Plugin with this ID found!";
+		}
+		}
+else {
+	$lowerq=mysql_query("SELECT LPLID FROM lower_plugin WHERE name='".mysql_real_escape_string($lower_plugin)."'");
+	$lowerrow=mysql_fetch_array($lowerq);
+		$lowerlp = "SELECT LPLID, PLFID FROM lower_plugin_funktion WHERE LPLID= ".mysql_real_escape_string($lowerrow['LPLID'])." LIMIT 1";
+   $ergebnislower = mysql_query($lowerlp);
+      $reihelower = mysql_fetch_array($ergebnislower, MYSQL_ASSOC);
+      if($lowerrow['name']!=$lower_plugin)
+	  {
+	  	echo "No Lower Plugin with this name found!";
+	  }
+}
+$l_ha=mysql_query("SELECT HPLID, LPLID FROM head_plugin_lower_plugin WHERE LPLID='".mysql_real_escape_string($reihelower['LPLID'])."'");
+$l_har=mysql_fetch_array($l_ha);
+	$headq=mysql_query("SELECT HPLID, sysp FROM head_plugins WHERE name='".mysql_real_escape_string($l_har['HPLID'])."'") or die (mysql_error());
+	$reihep=mysql_fetch_array($headq);
+		$sqlp = "SELECT HPLID, PLFID FROM head_plugin_funktion WHERE HPLID= ".mysql_real_escape_string($reihep['HPLID'])." LIMIT 1";
+   $ergebnisp = mysql_query($sqlp);
+      $headrow = mysql_fetch_array($ergebnisp, MYSQL_ASSOC);
+		
+	}
 	if($reiheg['Y_N']==1) {
 		// Überprüft ob es ein Systemplugin ist oder nicht
-		$sqlp = "SELECT PLID, name, data, sysp, aktiv FROM plugins WHERE PLID= ".mysql_real_escape_string($reihe['PLID'])." LIMIT 1";
-   $ergebnisp = mysql_query($sqlp);
-      $reihep = mysql_fetch_array($ergebnisp, MYSQL_ASSOC);
-
+		
 		if ($reihep['sysp']==1)
 		{
 		// Es wird geguckt ob eine Funktionsdatei vorhanden ist.
@@ -84,7 +187,7 @@ else
 		}
 		else {
 		include(''.$srdp.'system/'.$reihe['data'].''); // Funktionsdatei wird reingeladen
-		$reihe['funktionsname']($srdp); // Funktion wird ausgeführt
+		return $reihe['funktionsname']($srdp, $s); // Funktion wird ausgeführt
 		}	
 		}
 		else {
@@ -96,7 +199,7 @@ else
 		}
 		else {
 		include(''.$srdp.'plugins/'.$reihe['data'].''); // Funktionsdatei wird reingeladen
-		$reihe['funktionsname']($srdp); // Funktion wird ausgeführt
+		return $reihe['funktionsname']($srdp, $s); // Funktion wird ausgeführt
 		}
 		}
 		}

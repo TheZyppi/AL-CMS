@@ -2,7 +2,7 @@
 /*
  * AL-CMS -- Gernal Information --
  * 
- * Copyright (C) 2011-2012 Dennis Falkenberg (http://www.sunrising-network.de) Email: DFalkenberg@gmx.de
+ * Copyright (C) Dennis Falkenberg (http://www.sunrising-network.de) Email: DFalkenberg@gmx.de
  * 
  * AL-CMS is a free software, you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -10,37 +10,33 @@
  *(at your option) any later version.  
  *   
  */
-
-if (isset($_POST['sumbit5']))
-{
-	
-}
-else {
-	echo '<form method="post" action="';print $_SERVER['PHP_SELF']; echo'>';
+$hpl=$_GET['hpl'];
+echo '<form method="post" action=index.php?hpl='.$hpl.'>';
 echo '<table border=0 width="650">
 <tr>
 		<td width="20%">
-		Kontonummer:<p>
+		Datum:<p>
 		</td>
 		<td width="20%">
-		<input type="text" name="kontonummer" size="40">
+		<input type="text" name="datum" size="40">
 		</td>
 		</tr>
 		<tr>
 		<td width="20%">
-		Bankleitzahl:<p>
+		Uhrzeit:<p>
 		</td>
 		<td width="20%">
-		<input type="text" name="bankleitzahl" size="40">
+		<input type="text" name="uhrzeit" size="40">
 		</td>
 		</tr>
 		<tr>
 		<td>
-		<input type="submit" value="Weiter" name="submit5">
+		<input type="submit" value="Weiter" name="submite">
+		</form>
 		</td>
 		</tr>
-		</form>
-</table>';
-}
-
+</table>
+';
+ 
+ 
 ?>

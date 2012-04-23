@@ -836,5 +836,5 @@ INSERT INTO `al_version` (
 `definition`, 
 `version`) 
 VALUES (
-'AL-CMS Alpha v0.0.3', 'This is a Alpha Version.', '0.0.3'
+'AL-CMS Alpha v0.0.4', 'This is a Alpha Version.', '0.0.4'
 );

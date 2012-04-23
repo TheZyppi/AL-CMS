@@ -2,7 +2,7 @@
 /*
  * AL-CMS -- Gernal Information --
  * 
- * Copyright (C) 2011-2012 Dennis Falkenberg (http://www.sunrising-network.de) Email: DFalkenberg@gmx.de
+ * Copyright (C) Dennis Falkenberg (http://www.sunrising-network.de) Email: DFalkenberg@gmx.de
  * 
  * AL-CMS is a free software, you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -103,7 +103,8 @@ mysql_query($eintrag2) or die (mysql_error());
 }
  }
  
- 		echo '<form method="post" action="';print $_SERVER['PHP_SELF']; echo'>';
+$hpl=$_GET['hpl'];
+echo '<form method="post" action=index.php?hpl='.$hpl.'>';
 		echo '<table border=0 width="650">
 		<tr>
 		<td width="20%">
@@ -127,8 +128,9 @@ mysql_query($eintrag2) or die (mysql_error());
 		</td>
 		</tr>
 		<tr>
+		<INPUT name="rida" TYPE="HIDDEN" value='.$rida.'>
 		<td>
-		<input type="submit" value="Weiter" name="submit3">
+		<input type="submit" value="Weiter" name="sumbitd">
 		</td>
 		</tr>
 		</form>

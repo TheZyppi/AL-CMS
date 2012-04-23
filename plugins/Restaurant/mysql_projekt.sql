@@ -180,10 +180,41 @@ CREATE TABLE IF NOT EXISTS `reservierungen_non_reg` (
 
 CREATE TABLE IF NOT EXISTS `news` (
   `nid` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `UID` int(11) UNSIGNED NOT NULL,
   `title` varchar(50),
   `text` text,
-  `newsdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `newsdate` varchar(40),
   PRIMARY KEY (`nid`)
+);
+
+-- --------------------------------------------------------
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `site`
+--
+
+CREATE TABLE IF NOT EXISTS `site` (
+  `STID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `title` varchar(50),
+  `text` text,
+  `date` varchar(40),
+  PRIMARY KEY (`STID`)
+);
+
+
+--
+-- Tabellenstruktur für Tabelle `comments`
+--
+
+CREATE TABLE IF NOT EXISTS `comments` (
+  `PCOID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `NID` int(11) UNSIGNED NOT NULL,
+  `UID` int(11) UNSIGNED NOT NULL,
+  `comment` text,
+  `ctime` varchar(40),
+  PRIMARY KEY (`PCOID`)
 );
 
 -- --------------------------------------------------------

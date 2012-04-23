@@ -28,7 +28,7 @@ $absenden = ( isset($_POST['absenden']) ) ? true : false;
 if( $absenden )
 {
   db_con(); // Führt die Funktion db_con aus
-   $sql = "SELECT UID, username, GID, passwort, passwort_salt FROM user WHERE username = \"".$benutzer."\" LIMIT 1"; // Fragt den Datensatz vom Benutzer X ab
+   $sql = "SELECT UID, username, GID, passwort, passwort_salt FROM user WHERE username = \"".mysql_real_escape_string($benutzer)."\" LIMIT 1"; // Fragt den Datensatz vom Benutzer X ab
    $ergebnis = mysql_query($sql);
    $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC) or die (mysql_error());
    $passsalt=$reihe['passwort_salt']; // Passwort wird aus der Datenbank geholt

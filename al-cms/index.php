@@ -33,7 +33,6 @@ $srdp="data/";
 // Include Datein
 include(''.$srdp.'config/dbcon.php'); // Der Datenbank-Connctor wird eingefügt
 include(''.$srdp.'system/design/design.php'); //Designsystem wird reingeladen
-
 // Der Headbereich wird ausgeführt.
 head($srdp);
 // Body-Bereich

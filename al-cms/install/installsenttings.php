@@ -33,6 +33,14 @@ VALUES (
 'Design Path', '".$_POST['sdpath']."', '1'
 );
 ");
+$install5=mysql_query("INSERT INTO `al_config` (
+`name`, 
+`funktion`, 
+`aktiv`) 
+VALUES (
+'Development', '0', '1'
+);
+");
 echo "<font color=green>Config ready!</font>";
 echo '<form method="post" action="'; print $_SERVER['PHP_SELF']; echo'">';
 	echo '
