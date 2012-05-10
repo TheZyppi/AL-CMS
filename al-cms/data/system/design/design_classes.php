@@ -100,7 +100,7 @@ include('head_function.php');
 
 	private function normal_body($srdp)
 	{
-		if (isset($_GET['hpl'])=="" || $_GET['hpl']=="") {
+		if (isset($_GET['hpl'])=="" || $_GET['hpl']=="" || $_GET['hpl']==false) {
 $this->body($srdp);
 }
 else {
@@ -109,17 +109,38 @@ else {
 		{
 			$hpl=$_GET['hpl'];
 			if (preg_match ("/^([0-9]+)$/",$hpl)) {
-		 	$sql = mysql_query('SELECT DID, HPLID FROM design_head_plugin_order WHERE HPLID='.$hpl.'');
+		 	$sql = mysql_query('SELECT DID, HPLID FROM design_head_plugin_order WHERE HPLID='.mysql_real_escape_string($hpl).'');
+				if(!$sql || $sql==false)
+				{
+					echo "ERROR: Head Plugin not found!";
+		     		exit;
+				}
+else {
 			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
+}
 	}
 	else {
-		$sql3=mysql_query("SELECT HPLID, name FROM head_plugins WHERE name='".$hpl."'");
+		$sql3=mysql_query("SELECT HPLID, name FROM head_plugins WHERE name='".mysql_real_escape_string($hpl)."'");
+		if(!$sql3 || $sql3==false)
+		{
+		echo "ERROR: Head Plugin Name not found!";
+		exit;	
+		}
+		else {
 		$row=mysql_fetch_array($sql3);
-			$sql = mysql_query('SELECT DID, HPLID FROM design_head_plugin_order WHERE HPLID='.$row['HPLID'].'');
+			if($row['name']!=$hpl || $row['name']==false)
+			{
+		echo "ERROR: Head Plugin Name not found!";
+		exit;
+			}
+else {
+	$sql = mysql_query('SELECT DID, HPLID FROM design_head_plugin_order WHERE HPLID='.mysql_real_escape_string($row['HPLID']).'');
 			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
+}
+		}
 	}
-			$sql = mysql_query('SELECT DID, HPLID FROM design_head_plugin_order WHERE HPLID='.$reihe['HPLID'].'');
-			if(! $sql)
+			$sql = mysql_query('SELECT DID, HPLID FROM design_head_plugin_order WHERE HPLID='.mysql_real_escape_string($reihe['HPLID']).'');
+			if(!$sql)
 			{
 				$this->body($srdp);
 			}
@@ -141,15 +162,36 @@ else {
 			{
 				$lpl=$_GET['lpl'];
 				if (preg_match ("/^([0-9]+)$/",$lpl)) {
-				$sql = mysql_query('SELECT DID, LPLID FROM design_lower_plugin_order WHERE LPLID='.$lpl.'') or die(mysql_error());
+				$sql = mysql_query('SELECT DID, LPLID FROM design_lower_plugin_order WHERE LPLID='.mysql_real_escape_string($lpl).'');
+				if(!$sql)
+					{
+						echo "ERROR: Lower Plugin not found!";
+						exit;
+					}
+				else {
 			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
+				}
 			   	}
 else {
-		$sql3=mysql_query("SELECT LPLID, name FROM lower_plugins WHERE name='".$lpl."'");
+		$sql3=mysql_query("SELECT LPLID, name FROM lower_plugins WHERE name='".mysql_real_escape_string($lpl)."'");
+			if(!$sql3)
+					{
+						echo "ERROR: Lower Plugin Name not found!";
+						exit;
+					}
+					else {
 		$row=mysql_fetch_array($sql3);
-	$sql = mysql_query('SELECT DID, LPLID FROM design_lower_plugin_order WHERE LPLID='.$row['LPLID'].'') or die(mysql_error());
+						if($row['name']!=$lpl)
+			{
+		echo "ERROR: Lower Plugin Name not found!";
+		exit;
+			}
+else {
+					}
+	$sql = mysql_query('SELECT DID, LPLID FROM design_lower_plugin_order WHERE LPLID='.mysql_real_escape_string($row['LPLID']).'');
 			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
-}
+					}
+					}
 		if(! $sql || $reihe['LPLID']!=$lpl)
 		{
 			$this->body($srdp);
@@ -161,13 +203,32 @@ else {
 			else if(isset($_GET['lpl'])=="" && isset($_GET['plf'])!="" && isset($_GET['hpl'])!=""){
 				$plf=$_GET['plf'];
 				if (preg_match ("/^([0-9]+)$/",$plf)) {
-				$sql = mysql_query('SELECT DID, PLFID FROM design_plugin_funktion_order WHERE PLFID='.$plf.'');
+				$sql = mysql_query('SELECT DID, PLFID FROM design_plugin_funktion_order WHERE PLFID='.mysql_real_escape_string($plf).'');
+			   	if(!$sql)
+					{
+						echo "ERROR: Plugin Function not found!";
+						exit;
+					}
+					else {
 			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
+					}
 				}
 				else {
-					$sql3=mysql_query("SELECT PLFID, funktionsname FROM plugin_funktion WHERE funktionsname='".$plf."'") or die (mysql_error());
+					$sql3=mysql_query("SELECT PLFID, funktionsname FROM plugin_funktion WHERE funktionsname='".mysql_real_escape_string($plf)."'");
+					if(!$sql3)
+					{
+						echo "ERROR: Plugin Function not found!";
+						exit;
+					}
+					else {
 					$row=mysql_fetch_array($sql3);
-					$sql = mysql_query('SELECT DID, PLFID FROM design_plugin_funktion_order WHERE PLFID='.$row['PLFID'].'');
+							if($row['funktionsname']!=$plf)
+					{
+						echo "ERROR: Plugin Function Name not found!";
+						exit;
+					}
+					}
+					$sql = mysql_query('SELECT DID, PLFID FROM design_plugin_funktion_order WHERE PLFID='.mysql_real_escape_string($row['PLFID']).'');
 			   		$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
 				}
 		if(! $sql || $reihe['PLFID']!=$plf)

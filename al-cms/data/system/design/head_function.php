@@ -23,22 +23,12 @@ include(''.$rsp.'system/login/login_pruefen.php');
 // Fügt die Head_classes.php ein.
 include('head_classes.php');
 // Der Head Bereich beginnt
-echo '
-<!DOCTYPE xhtml PUBLIC "-//W3C//DTDB XHTML 1.0 Strict// EN" "http://www.w3.org/TR/xhtml/
-  DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-';
-// Meta Daten werden gelanden
-//$objhead->meta($rsp);
-// Title wird angezeigt
-//$objhead->title($rsp);
-// CSS Scripte für das Design werden gelanden
-$objhead->css_script($rsp);
-echo'
-</head>
-';
-
-	
+//$teesst=$objhead->path_order_design($path);
+$objhead->load("head_main.tpl", $rsp);
+// Platzhalter ersetzen
+$objhead->assign( "title", "MyHomepage");
+$objhead->assign( "css" , include_once(''.$rsp.'design/'.$objhead->css_script($rsp).'css/index.php'));
+// Und die Seite anzeigen
+$objhead->display();
 	}
 ?>

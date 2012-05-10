@@ -49,46 +49,109 @@ while($row = mysql_fetch_array($sql))
 	}
 	else {
 $pfad=$d;
-include(''.$rsp.'design/'.$pfad.'css/index.php');
+$path=$pfad;
+$this->path_order_design($path);
+return $path;
 	} 
 } 	
 	private function css_head_plugin_normal($rsp)
 {
 	$hpl=$_GET['hpl'];
-		 	$sql = mysql_query('SELECT DID, HPLID FROM design_head_plugin_order WHERE HPLID='.$hpl.'');
+		 	$sql = mysql_query('SELECT DID, HPLID FROM design_head_plugin_order WHERE HPLID='.mysql_real_escape_string($hpl).'');
 			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
-			   	$sql2 = mysql_query('SELECT DID, data, aktiv FROM design WHERE DID='.$reihe['DID'].'');
+			   	$sql2 = mysql_query('SELECT DID, data, aktiv FROM design WHERE DID='.mysql_real_escape_string($reihe['DID']).'');
 			   	$reihe2 = mysql_fetch_array($sql2, MYSQL_ASSOC);
-include(''.$rsp.'design/'.$reihe2['data'].'css/index.php');
+$path=$reihe2['data'];
+$this->path_order_design($path);
+return $path;
 }
 
 	private function css_head_lower_plugin_normal($rsp)
 {
 	$lpl=$_GET['lpl'];
-				$sql = mysql_query('SELECT DID, LPLID FROM design_lower_plugin_order WHERE LPLID='.$lpl.'') or die(mysql_error());
+				$sql = mysql_query('SELECT DID, LPLID FROM design_lower_plugin_order WHERE LPLID='.mysql_real_escape_string($lpl).'') or die(mysql_error());
 			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
-			   	$sql2 = mysql_query('SELECT DID, data, aktiv FROM design WHERE DID='.$reihe['DID'].'') or die(mysql_error());
+			   	$sql2 = mysql_query('SELECT DID, data, aktiv FROM design WHERE DID='.mysql_real_escape_string($reihe['DID']).'');
 			   	$reihe2 = mysql_fetch_array($sql2, MYSQL_ASSOC);
-			   
-include(''.$rsp.'design/'.$reihe2['data'].'css/index.php');
+$path=$reihe2['data'];
+$this->path_order_design($path);
+return $path;
 }
 
 	private function css_plugin_funktion_normal($rsp)
 	{
 			$plf=$_GET['plf'];
-				$sql = mysql_query('SELECT DID, PLFID FROM design_plugin_funktion_order WHERE PLFID='.$plf.'');
+				$sql = mysql_query('SELECT DID, PLFID FROM design_plugin_funktion_order WHERE PLFID='.mysql_real_escape_string($plf).'');
 			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
-			   	$sql2 = mysql_query('SELECT DID, data, aktiv FROM design WHERE DID='.$reihe['DID'].'');
+			   	$sql2 = mysql_query('SELECT DID, data, aktiv FROM design WHERE DID='.mysql_real_escape_string($reihe['DID']).'');
 			   	$reihe2 = mysql_fetch_array($sql2, MYSQL_ASSOC);
-			   
-include(''.$rsp.'design/'.$reihe2['data'].'css/index.php');
+$path=$reihe2['data'];
+$this->path_order_design($path);
+return $path;
 	}
 
-	public function css_script($rsp)
+	// Search for Plugins (Head, Lower and Functions)
+private function plugin_search()
+{
+		if (isset($_GET['hpl'])=="" || $_GET['hpl']=="") {
+			return false;
+		}
+		else if(isset($_GET['hpl'])!="" && isset($_GET['lpl'])=="" && isset($_GET['plf'])=="")
 	{
-		
+		$hpl=$_GET['hpl'];
+	if (preg_match ("/^([0-9]+)$/",$hpl)) {
+				$name_check=mysql_query("SELECT HPLID, name FROM head_plugins WHERE HPLID='".mysql_real_escape_string($hpl)."'");
+				$name_array=mysql_fetch_array($name_check);
+				$plugin=$name_array['name'];
+				return $plugin;
+	}
+	else {
+		$sql3=mysql_query("SELECT HPLID, name FROM head_plugins WHERE name='".mysql_real_escape_string($hpl)."'");
+		$row=mysql_fetch_array($sql3);
+				$plugin=$hpl;
+				return $plugin;
+	}
+	}
+else if(isset($_GET['plf'])=="" && isset($_GET['lpl'])!="" && isset($_GET['hpl'])!="")
+			{
+					$lpl=$_GET['lpl'];
+	if (preg_match ("/^([0-9]+)$/",$lpl)) {
+				$name_check=mysql_query("SELECT LPLID, name FROM lower_plugins WHERE LPLID='".mysql_real_escape_string($lpl)."'");
+				$name_array=mysql_fetch_array($name_check);
+				$plugin=$name_array['name'];
+				return $plugin;
+	}
+	else {
+		$sql3=mysql_query("SELECT LPLID, name FROM lower_plugins WHERE name='".mysql_real_escape_string($lpl)."'");
+		$row=mysql_fetch_array($sql3);
+				$plugin=$hpl;
+				return $plugin;
+	}
+			}
+			else if(isset($_GET['lpl'])=="" && isset($_GET['plf'])!="" && isset($_GET['hpl'])!="" || isset($_GET['lpl'])!="" && isset($_GET['plf'])!="" && isset($_GET['hpl'])!=""){
+				$plf=$_GET['plf'];
+	if (preg_match ("/^([0-9]+)$/",$plf)) {
+				$name_check=mysql_query("SELECT PLFID, funktionsname FROM plugin_funktion WHERE PLFID='".mysql_real_escape_string($plf)."'");
+				$name_array=mysql_fetch_array($name_check);
+				$plugin=$name_array['funktionsname'];
+				return $plugin;
+	}
+	else {
+		$sql3=mysql_query("SELECT PLFID, name FROM plugin_funktion WHERE funktionsname='".mysql_real_escape_string($plf)."'");
+		$row=mysql_fetch_array($sql3);
+				$plugin=$hpl;
+				return $plugin;
+	}
+				}
+else {
+	return false;
+}
+			
+}
+public function css_script($rsp)
+	{	
 	if (isset($_GET['hpl'])=="" || $_GET['hpl']=="") {
-$this->css($rsp);
+return $this->css($rsp);
 }
 else {
 
@@ -96,21 +159,21 @@ else {
 		{
 			$hpl=$_GET['hpl'];
 		if (preg_match ("/^([0-9]+)$/",$hpl)) {
-		 	$sql = mysql_query('SELECT DID, HPLID FROM design_head_plugin_order WHERE HPLID='.$hpl.'');
+		 	$sql = mysql_query('SELECT DID, HPLID FROM design_head_plugin_order WHERE HPLID='.mysql_real_escape_string($hpl).'');
 			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
 	}
 	else {
-		$sql3=mysql_query("SELECT HPLID, name FROM head_plugins WHERE name='".$hpl."'");
+		$sql3=mysql_query("SELECT HPLID, name FROM head_plugins WHERE name='".mysql_real_escape_string($hpl)."'");
 		$row=mysql_fetch_array($sql3);
-			$sql = mysql_query('SELECT DID, HPLID FROM design_head_plugin_order WHERE HPLID='.$row['HPLID'].'');
+			$sql = mysql_query('SELECT DID, HPLID FROM design_head_plugin_order WHERE HPLID='.mysql_real_escape_string($row['HPLID']).'');
 			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
 	}
-		if($reihe['HPLID']!=$hpl)
+		if($reihe['HPLID']!=$hpl || $reihe['HPLID']==false || !$sql || $sql==false || !$sql3 || $sql3==false)
 		{
-			$this->css($rsp);
+		return	$this->css($rsp);
 		}
 		else {
-		$this->css_head_plugin_normal($rsp);	
+		return $this->css_head_plugin_normal($rsp);	
 		}
 		}
 		// Wenn eine Plugin Funktion angeben wurde wird else ausgeführt
@@ -120,41 +183,42 @@ else {
 			{
 				$lpl=$_GET['lpl'];
 			if (preg_match ("/^([0-9]+)$/",$lpl)) {
-				$sql = mysql_query('SELECT DID, LPLID FROM design_lower_plugin_order WHERE LPLID='.$lpl.'') or die(mysql_error());
+				$sql = mysql_query('SELECT DID, LPLID FROM design_lower_plugin_order WHERE LPLID='.mysql_real_escape_string($lpl).'');
 			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
-			   	}
+				}
 else {
-		$sql3=mysql_query("SELECT LPLID, name FROM lower_plugins WHERE name='".$lpl."'");
+		$sql3=mysql_query("SELECT LPLID, name FROM lower_plugins WHERE name='".mysql_real_escape_string($lpl)."'");
+		
 		$row=mysql_fetch_array($sql3);
-	$sql = mysql_query('SELECT DID, LPLID FROM design_lower_plugin_order WHERE LPLID='.$row['LPLID'].'') or die(mysql_error());
+	$sql = mysql_query('SELECT DID, LPLID FROM design_lower_plugin_order WHERE LPLID='.mysql_real_escape_string($row['LPLID']).'');
 			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
 }
-		if(! $sql || $reihe['LPLID']!=$lpl)
+		if($sql==false || $reihe['LPLID']!=$lpl || $reihe['LPLID']==false)
 		{
-			$this->css($rsp);
+			return $this->css($rsp);
 		}
 		else {
-			$this->css_head_lower_plugin_normal($rsp);
+		return	$this->css_head_lower_plugin_normal($rsp);
 		}
 			}
 			else if(isset($_GET['lpl'])=="" && isset($_GET['plf'])!="" && isset($_GET['hpl'])!=""){
 				$plf=$_GET['plf'];
 			if (preg_match ("/^([0-9]+)$/",$plf)) {
-				$sql = mysql_query('SELECT DID, PLFID FROM design_plugin_funktion_order WHERE PLFID='.$plf.'');
+				$sql = mysql_query('SELECT DID, PLFID FROM design_plugin_funktion_order WHERE PLFID='.mysql_real_escape_string($plf).'');
 			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
 				}
 				else {
-					$sql3=mysql_query("SELECT PLFID, funktionsname FROM plugin_funktion WHERE funktionsname='".$plf."'") or die (mysql_error());
+					$sql3=mysql_query("SELECT PLFID, funktionsname FROM plugin_funktion WHERE funktionsname='".mysql_real_escape_string($plf)."'");
 					$row=mysql_fetch_array($sql3);
-					$sql = mysql_query('SELECT DID, PLFID FROM design_plugin_funktion_order WHERE PLFID='.$row['PLFID'].'');
+					$sql = mysql_query('SELECT DID, PLFID FROM design_plugin_funktion_order WHERE PLFID='.mysql_real_escape_string($row['PLFID']).'');
 			   		$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
 				}
 		if(! $sql || $reihe['PLFID']!=$plf)
 		{
-			$this->css($rsp);
+		return	$this->css($rsp);
 		}
 		else {
-		$this->css_plugin_funktion_normal($rsp);	
+		return $this->css_plugin_funktion_normal($rsp);	
 		}
 			}		
 			else if($_GET['plf']!="" && $_GET['lpl']!="" && isset($_GET['hpl'])!="")
@@ -162,27 +226,148 @@ else {
 $plf=$_GET['plf'];
 		if (preg_match ("/^([0-9]+)$/",$plf)) {
 			
-				$sql = mysql_query('SELECT DID, PLFID FROM design_plugin_funktion_order WHERE PLFID='.$plf.'');
+				$sql = mysql_query('SELECT DID, PLFID FROM design_plugin_funktion_order WHERE PLFID='.mysql_real_escape_string($plf).'');
 			   	$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
 				}
 				else {
-					$sql3=mysql_query("SELECT PLFID, funktionsname FROM plugin_funktion WHERE funktionsname='".$plf."'") or die (mysql_error());
+					$sql3=mysql_query("SELECT PLFID, funktionsname FROM plugin_funktion WHERE funktionsname='".mysql_real_escape_string($plf)."'");
 					$row=mysql_fetch_array($sql3);
-					$sql = mysql_query('SELECT DID, PLFID FROM design_plugin_funktion_order WHERE PLFID='.$row['PLFID'].'');
+					$sql = mysql_query('SELECT DID, PLFID FROM design_plugin_funktion_order WHERE PLFID='.mysql_real_escape_string($row['PLFID']).'');
 			   		$reihe = mysql_fetch_array($sql, MYSQL_ASSOC);
 				}
-		if(! $sql || $reihe['PLFID']!=$plf)
+		if(!$sql || $reihe['PLFID']!=$plf || $sql==false)
 		{
-			$this->css($rsp);
+		return	$this->css($rsp);
 		}
 		else {
-		$this->css_plugin_funktion_normal($rsp);	
+		return $this->css_plugin_funktion_normal($rsp);	
 		}
 			}
-		}	
+		}
 	}
 	}
-	}	
+// Give use the path to the design
+	public function path_order_design($path)
+{
+	return $path;
+}
+public function plugin_check()
+{
+	$plugin=$this->plugin_search();
+	if($plugin==false)
+	{
+		return "Error!";
+	}
+	else {
+		return $plugin;
+	}
+}
+// Private Header Template Variable
 
+    private $templateDir = "data/design/";
+
+    private $languageDir = "language/";
+
+    private $leftDelimiter = '{$';
+
+    private $rightDelimiter = '}';
+
+    private $leftDelimiterF = '{';
+
+    private $rightDelimiterF = '}';
+
+   	private $leftDelimiterC = '\{\*';
+
+   	private $rightDelimiterC = '\*\}';
+
+    private $leftDelimiterL = '\{L_';
+
+    private $rightDelimiterL = '\}';
+
+    private $templateFile = "";
+
+    private $languageFile = "";
+
+    private $templateName = "";
+
+    private $template = "";
+
+
+    public function __construct($tpl_dir = "", $lang_dir = "") {
+       
+        if ( !empty($tpl_dir) ) {
+            $this->templateDir = $tpl_dir;
+        }
+
+       
+        if ( !empty($lang_dir) ) {
+            $this->languageDir = $lang_dir;
+        }
+    }
+
+    public function load($file, $rsp)    {
+        $this->templateName = $file;
+        $this->templateFile = $this->templateDir.$this->css_script($rsp).$file;
+
+        if(isset($this->templateFile) ) {
+            if( file_exists($this->templateFile) ) {
+                $this->template = file_get_contents($this->templateFile);
+            } else {
+                return false;
+            }
+        } else {
+           return false;
+        }
+
+        $this->parseFunctions();
+    }
+
+   public function assign($replace, $replacement) {
+      $this->template = str_replace( $this->leftDelimiter .$replace.$this->rightDelimiter,
+                                    $replacement, $this->template );
+    }
+   
+
+    public function loadLanguage($files) {
+        $this->languageFiles = $files;
+
+        for( $i = 0; $i < count( $this->languageFiles ); $i++ ) {
+            if ( !file_exists( $this->languageDir .$this->languageFiles[$i] ) ) {
+                return false;
+            } else {
+                 include_once( $this->languageDir .$this->languageFiles[$i] );
+            }
+        }
+
+        $this->replaceLangVars($lang);
+
+        return $lang;
+    }
+
+
+    private function replaceLangVars($lang) {
+        $this->template = preg_replace("/\{L_(.*)\}/isUe", "\$lang[strtolower('\\1')]", $this->template);
+    }
+
+    private function parseFunctions() {
+      
+        while( preg_match( "/" .$this->leftDelimiterF ."include file=\"(.*)\.(.*)\""
+                           .$this->rightDelimiterF ."/isUe", $this->template) )
+        {
+            $this->template = preg_replace( "/" .$this->leftDelimiterF ."include file=\"(.*)\.(.*)\""
+                                            .$this->rightDelimiterF."/isUe",
+                                            "file_get_contents(\$this->templateDir.'\\1'.'.'.'\\2')",
+                                            $this->template );
+        }
+
+
+        $this->template = preg_replace( "/" .$this->leftDelimiterC ."(.*)" .$this->rightDelimiterC ."/isUe",
+                                        "", $this->template );
+    }
+
+    public function display() {
+        echo $this->template;
+    }
+	}
 $objhead = new headp();
 ?>

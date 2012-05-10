@@ -2,7 +2,7 @@
 /*
  * AL-CMS -- Gernal Information --
  * 
- * Copyright (C) Dennis Falkenberg (http://www.sunrising-network.de) Email: DFalkenberg@gmx.de
+ * Copyright (C) 2011-2012 Dennis Falkenberg (http://www.sunrising-network.de) Email: DFalkenberg@gmx.de
  * 
  * AL-CMS is a free software, you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,24 +12,24 @@
  */
 
  // Wird ausgeführt wenn man das Datum + die Uhrzeit für die Bestellung angegeben hat.
-if(isset($_POST['submite']))
+if(isset($_POST['submit']))
 {
 	include('ubbf.php');
 }
 /* Hier her werden die Bestellungsdaten versand und danach wird die.
  * Bezahlungsart abgefragt
  */
-else if(isset($_POST['sumbitz'])) {
+else if(isset($_POST['sumbit2'])) {
 	include('ubpaf.php');
 }
  /*Ausgewählte Bezahlungsart wird angezeigt
   *Bezahlungsdaten werden eingegeben 
   */
- else if(isset($_POST['sumbitd'])) {
+ else if(isset($_POST['sumbit3'])) {
 	include('ubpf.php');
 }
 // Beendung der Bestellung in dem die Bezahlungsdaten eingetragen werden.
-else if(isset($_POST['sumbitv'])) {
+else if(isset($_POST['sumbit4'])) {
 	include('ubef.php');
 }
 // Die Standartseite die gelanden wird wenn nichts von dem beiden oben zutrifft.

@@ -64,8 +64,7 @@ if ($reihe['aktiv']==1) {
 	if(! $ergebnisg || $reiheg['GID']!=$group)
 	{
 	echo "Auf ihre Gruppe wurde keine Berechtigung gesetzt.";
-		mysql_close();
-		exit;
+		
 	}
 else
 {
@@ -124,7 +123,7 @@ else {
 		$plhaa=mysql_fetch_array($plha);
 		if($plhaa['PLID']!=$funktion)
 		{
-			echo "Error: The Plugin Funktion is not the Funktion for the Head Plugin.";
+			echo "Error: The Plugin Funktion is not the Funktion for the Head Plugin. 1";
 			exit;
 		}
 	}
@@ -135,7 +134,8 @@ else {
 		$plhaa=mysql_fetch_array($plha);
 			if($plhaan['PLFID']!=$plhaa['PLFID'])
 		{
-			echo "Error: The Plugin Funktion is not the Funktion for the Head Plugin.";
+			echo "".$plhaan['PLFID']."".$funktion."";
+			echo "Error: The Plugin Funktion is not the Funktion for the Head Plugin. 2";
 			exit;
 		}
 	}

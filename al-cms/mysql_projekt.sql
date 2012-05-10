@@ -43,6 +43,7 @@ CREATE TABLE IF NOT EXISTS `plugin_funktion` (
   `PLFID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `funktionsname` varchar(30),
   `data` varchar(100),
+  `html_data` varchar(100),
   `nf` int(1),
   `definition` text,
   `parent_id` int(1),
@@ -314,6 +315,7 @@ CREATE TABLE IF NOT EXISTS `head_plugins` (
   `HPLID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(45),
   `data` varchar(100),
+  `html_data` varchar(100),
   `definition` text,
   `sysp` int(1) NOT NULL,
   `aktiv` int(1) NOT NULL,
@@ -330,6 +332,7 @@ CREATE TABLE IF NOT EXISTS `lower_plugins` (
   `LPLID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(45),
   `data` varchar(100),
+  `html_data` varchar(100),
   `definition` text,
   `aktiv` int(1) NOT NULL,
   PRIMARY KEY (`LPLID`)
