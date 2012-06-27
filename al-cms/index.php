@@ -31,10 +31,10 @@ define('ON_ALCMS', true);
 $srdp="data/";
 
 // Include Datein
-include(''.$srdp.'config/dbcon.php'); // Der Datenbank-Connctor wird eingefügt
-include(''.$srdp.'system/design/design.php'); //Designsystem wird reingeladen
+require_once(''.$srdp.'config/dbcon.php'); // Der Datenbank-Connctor wird eingefügt
+require_once(''.$srdp.'system/design/design.php');
 // Der Headbereich wird ausgeführt.
-head($srdp);
+
 // Body-Bereich
-body($srdp);
+design::display($srdp);
 ?>

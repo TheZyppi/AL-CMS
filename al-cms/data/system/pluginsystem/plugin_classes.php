@@ -15,39 +15,39 @@ class pluginsystem {
 	
 	private function head_funktion($srdp)
 	{
-		include('head_funktion.php');
+	return	require_once('head_funktion.php');
 	}
 	private function lower_funktion($srdp)
 	{
-		include('lower_funktion.php');
+	return	require_once('lower_funktion.php');
 	}
 	public function show()
 	{
-		include('show.php');
+	return	require_once('show.php');
 	}
 	private function head_plugin ($srdp)
 	{
-		include('head_plugin.php');
+	return require_once('head_plugin.php');
 	}
 	private function lower_plugin ($srdp)
 	{
-		include('lower_plugin.php');
+	return	require_once('lower_plugin.php');
 	}
 	public function plugin($srdp)
 	{	
-		include('plugin.php');
+	return require_once('plugin.php');
 	}
 	private function extplugina($srdp, $plugin=0)
 	{
-		include('extplugin.php');
+	return	require_once('extplugin.php');
 	}
 	public function extplugin($srdp, $plugin=0)
 	{
-		$this->extplugina($srdp, $plugin);
+	return	$this->extplugina($srdp, $plugin);
 	}
 	public static function funktionin($srdp, $funktion='no', $h_or_l='', $head_plugin='no', $lower_plugin='no', $s='')
 	{
-		include('funktionin.php');	
+	return	require_once('funktionin.php');	
 	}
 
 

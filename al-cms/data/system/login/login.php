@@ -21,22 +21,29 @@ function login()
 {
 
 // Benutzer und Passwort aus POST-Request holen...
-$benutzer = ( isset($_POST['benutzer']) ) ? $_POST['benutzer'] : '';
+$user = ( isset($_POST['benutzer']) ) ? $_POST['benutzer'] : '';
 // Hat der Benutzer abgeschickt?
 $absenden = ( isset($_POST['absenden']) ) ? true : false;
 
-if( $absenden )
+if(isset($absenden)==true)
 {
-  db_con(); // Führt die Funktion db_con aus
-   $sql = "SELECT UID, username, GID, passwort, passwort_salt FROM user WHERE username = \"".mysql_real_escape_string($benutzer)."\" LIMIT 1"; // Fragt den Datensatz vom Benutzer X ab
-   $ergebnis = mysql_query($sql);
-   $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC) or die (mysql_error());
-   $passsalt=$reihe['passwort_salt']; // Passwort wird aus der Datenbank geholt
-  $passsaltc=sha1(strtoupper($passsalt)); // Salt Gecryptet
-  $passn=$_POST['passwort']; // Passwort Normal
-  $passnc=sha1(strtoupper($passn)); //Passwort Gecryptet
-  $passall="$passnc $passsaltc"; // Passwort in SHA1 und SALT in SHA1 werden zusammengefügt
-   $passwort = ( isset($_POST['passwort']) ) ? sha1($passall) : ''; //Hier werden die beiden SHA1 gecrypteten Passwörter nochmals zusammen SHA1 gecryptet
+  	$username=htmlspecialchars($user , ENT_QUOTES);	
+  	db_con(); // Führt die Funktion db_con aus
+	$sql = "SELECT UID, username, GID, passwort, passwort_salt FROM user WHERE username = \"".mysql_real_escape_string($username)."\" LIMIT 1"; // Fragt den Datensatz vom Benutzer X ab
+   	if($sql==false || !$sql)
+	{
+	echo "Kein Benutzer mit dem Benutzernamen gefunden.";	
+	}
+	else {
+   	$ergebnis = mysql_query($sql);
+   	$reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC) or die (mysql_error());
+   	$passsalt=$reihe['passwort_salt']; // Passwort wird aus der Datenbank geholt
+   	$passsaltc=sha1(strtoupper($passsalt)); // Salt Gecryptet
+   	$passn=$_POST['passwort']; // Passwort Normal
+   	$passnc=sha1(strtoupper($passn)); //Passwort Gecryptet
+   	$passall="$passnc $passsaltc"; // Passwort in SHA1 und SALT in SHA1 werden zusammengefügt
+   	$passwort = (isset($_POST['passwort']) ) ? sha1($passall) : ''; //Hier werden die beiden SHA1 gecrypteten Passwörter nochmals zusammen SHA1 gecryptet
+	}
    if( $reihe['passwort'] == $passwort ) // Schaut nach ob das Passwort auch mit dem Eingegebenden überinstimmt
    {
       session_regenerate_id(); // Generiert aus Sicherheitsgründen eine neue Session
@@ -46,9 +53,7 @@ if( $absenden )
       $_SESSION['login'] = true; // Trage Login-Status ein
       $_SESSION['group'] = $reihe['GID']; // Die Gruppen ID wird in die Session abgespeichert
       $_SESSION['uid'] = $reihe['UID']; // BenutzerID wird in der Session abgespeichert
-      
-        db_con();
-       $sql1 = "UPDATE user SET session_id='$ses', ip_adresse='$ipadresse' WHERE username = '$benutzer' LIMIT 1";
+      $sql1 = "UPDATE user SET session_id='$ses', ip_adresse='$ipadresse' WHERE username = '$benutzer' LIMIT 1";
       $ergebnis=mysql_query($sql1);
       // Wichtig ist, dass die Eintragungen in die Session vor der Ausgabe stattfinden.
       // Mit der ersten Ausgabe werden die Header bereits gesendet und können dann nicht mehr

@@ -61,9 +61,9 @@ if ($reihe['aktiv']==1) {
 	$sqlg = "SELECT PLFID, GID, Y_N FROM plugin_funktion_rights WHERE PLFID=".mysql_real_escape_string($reihe['PLFID'])." AND GID=".$group."";
 	$ergebnisg = mysql_query($sqlg);
 	$reiheg = mysql_fetch_array($ergebnisg, MYSQL_ASSOC);
-	if(! $ergebnisg || $reiheg['GID']!=$group)
+	if(!$ergebnisg || $reiheg['GID']!=$group)
 	{
-	echo "Auf ihre Gruppe wurde keine Berechtigung gesetzt.";
+	return "Auf ihre Gruppe wurde keine Berechtigung gesetzt.";
 		
 	}
 else
@@ -186,20 +186,29 @@ $l_har=mysql_fetch_array($l_ha);
 			echo "Funktionsdatei konnte nicht geladen werden.";
 		}
 		else {
-		include(''.$srdp.'system/'.$reihe['data'].''); // Funktionsdatei wird reingeladen
-		return $reihe['funktionsname']($srdp, $s); // Funktion wird ausgeführt
+        if(file_exists(''.$srdp.'system/'.$reihe['data'].''))
+        {
+        require_once(''.$srdp.'system/'.$reihe['data'].''); // Funktionsdatei wird reingeladen
+		$plugin_out=$reihe['funktionsname']($srdp, $s); // Funktion wird ausgeführt
+		return $plugin_out;
+        }
+        else
+        {
+         return "File not exist.";   
+        }
 		}	
 		}
 		else {
-	
 		// Es wird geguckt ob eine Funktionsdatei vorhanden ist.
 		if ($reihe['data']=="")
 		{
 			echo "Funktionsdatei konnte nicht geladen werden.";
+			exit;
 		}
 		else {
-		include(''.$srdp.'plugins/'.$reihe['data'].''); // Funktionsdatei wird reingeladen
-		return $reihe['funktionsname']($srdp, $s); // Funktion wird ausgeführt
+		require_once(''.$srdp.'plugins/'.$reihe['data'].''); // Funktionsdatei wird reingeladen
+		$plugin_out=$reihe['funktionsname']($srdp, $s); // Funktion wird ausgeführt
+		return $plugin_out;
 		}
 		}
 		}

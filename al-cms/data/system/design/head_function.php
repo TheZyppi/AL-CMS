@@ -27,7 +27,7 @@ include('head_classes.php');
 $objhead->load("head_main.tpl", $rsp);
 // Platzhalter ersetzen
 $objhead->assign( "title", "MyHomepage");
-$objhead->assign( "css" , include_once(''.$rsp.'design/'.$objhead->css_script($rsp).'css/index.php'));
+$objhead->assign( "css" , require_once(''.$rsp.'design/'.$objhead->css_script($rsp).'css/index.php'));
 // Und die Seite anzeigen
 $objhead->display();
 	}

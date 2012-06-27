@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS `groups` (
 CREATE TABLE IF NOT EXISTS `plugin_funktion` (
   `PLFID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `funktionsname` varchar(30),
+  `àssagin` int(1),
   `data` varchar(100),
   `html_data` varchar(100),
   `nf` int(1),
@@ -71,7 +72,8 @@ CREATE TABLE IF NOT EXISTS `head_plugin_lower_plugin` (
 
 CREATE TABLE IF NOT EXISTS `head_plugin_funktion` (
   `HPLID` int(11) UNSIGNED NOT NULL,
-  `PLFID` int(11) UNSIGNED NOT NULL
+  `PLFID` int(11) UNSIGNED NOT NULL,
+  `load` int(1) UNSIGNED NOT NULL
 );
 
 -- --------------------------------------------------------
@@ -82,7 +84,8 @@ CREATE TABLE IF NOT EXISTS `head_plugin_funktion` (
 
 CREATE TABLE IF NOT EXISTS `lower_plugin_funktion` (
   `LPLID` int(11) UNSIGNED NOT NULL,
-  `PLFID` int(11) UNSIGNED NOT NULL
+  `PLFID` int(11) UNSIGNED NOT NULL,
+  `load` in(1) UNSIGNED NOT NULL
 );
 
 
@@ -426,7 +429,6 @@ CREATE TABLE IF NOT EXISTS `panel_plf_order` (
 );
 
 -- --------------------------------------------------------
-
 
 --
 -- Fremdschlüssel setzen

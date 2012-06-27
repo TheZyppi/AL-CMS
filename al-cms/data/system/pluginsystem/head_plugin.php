@@ -23,7 +23,7 @@ $group=$_SESSION['group'];
 // Die Datei zum Datenbank Connecten wird reingeladen
 
 // Es wird nachgeguckt ob eine PluginID angegeben wurde.
-if (isset($_GET['hpl'])=="" || $_GET['hpl']=="") {
+if (isset($_GET['hpl'])=="" || $_GET['hpl']=="" || $_GET['hpl']==false) {
 // Wenn kein Plugin anegeben wurde
 
 // Verbindung zur Datenbank wird aufgebaut in dem die Funktion db_con aufgerufen wird.
@@ -32,7 +32,7 @@ if (isset($_GET['hpl'])=="" || $_GET['hpl']=="") {
 	$splugin="SELECT * FROM al_config WHERE CID='3'";
 	$ergebnis = mysql_query($splugin);
    	$reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);
-	if ($reihe['funktion']=="")
+	if ($reihe['funktion']=="" || $ergebnis==false || $reihe==false)
 	{
 		echo "Sie haben kein Standart-Plugin angegeben.";
 		mysql_close();
@@ -61,7 +61,7 @@ db_con();
    $ergebnis = mysql_query($sql);
 	$reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);   
 	  // Überprüfung ob es das Plugin überhaupt gibt	
-   if(! $ergebnis || $reihe['HPLID']!=$hpl)
+   if(!$ergebnis || $reihe['HPLID']!=$hpl)
    {
    	echo "Kein Plugin mit der Angegeben ID gefunden.";
 	mysql_close();
@@ -102,11 +102,9 @@ if ($reihe['aktiv']==1) {
 	$ergebnisg = mysql_query($sqlg);
 	$reiheg = mysql_fetch_array($ergebnisg, MYSQL_ASSOC);
 	// Überprüfung ob die Gruppe das Plugin ausführen darf
-   if (! $ergebnisg || $reiheg['GID']!=$group)
+   if (!$ergebnisg || $ergebnisg==false || $reiheg['GID']!=$group)
    {
-   	echo "Auf ihre Gruppe wurde keine Berechtigung gesetzt.";
-   	mysql_close();
-	exit;
+   	return "Auf ihre Gruppe wurde keine Berechtigung gesetzt.";
    }
    else {
    	// Prüfung ob die Gruppe das Plugin ausführen darf
@@ -123,18 +121,40 @@ if ($reihe['aktiv']==1) {
 			echo "Plugindatei konnte nicht geladen werden.";
 		}
 		else {
-		include(''.$srdp.'system/'.$reihe['data'].''); // Funktionsdatei wird reingeladen
+			if(file_exists(''.$srdp.'design/'.''.design::css_script().'/plugin/'.$reihe['data'].''))
+			{
+		 design::load_body_plugin(''.$srdp.'design/'.''.design::css_script().'/plugin/'.$reihe['data'].''); // Funktionsdatei wird reingeladen
+			}
+else {
+	return "The File not exist.";
+}
+		$load_functions=mysql_query("SELECT head_plugin_funktion.HPLID, head_plugin_funktion.PLFID, head_plugin_funktion.load, plugin_funktion.PLFID, plugin_funktion.funktionsname, plugin_funktion.assagin, plugin_funktion.aktiv  FROM head_plugin_funktion, plugin_funktion WHERE head_plugin_funktion.HPLID='".$reihe['HPLID']."' AND head_plugin_funktion.load='1' AND head_plugin_funktion.PLFID=plugin_funktion.PLFID");
+		if($load_functions==false || !$load_functions || mysql_num_rows($load_functions)==false)
+		{
+			return "No functions found!";
+		}
+		else {
+			while($row=mysql_fetch_array($load_functions))
+			{
+				if($row['assign']=='1')
+				{
+			design::assign($row['funktionsname'], pluginsystem::funktionin($row['funktionsname']));	
+				}
+				else {
+			design::assignEach($row['funktionsname'], pluginsystem::funktionin($row['funktionsname']));
+				}
+				}
+		}
 		}	
 		}
 		else {
-	
 		// Es wird geguckt ob eine Funktionsdatei vorhanden ist.
 		if ($reihe['data']=="")
 		{
 			echo "Plugindatei konnte nicht geladen werden.";
 		}
 		else {
-		include(''.$srdp.'plugins/'.$reihe['data'].''); // Funktionsdatei wird reingeladen
+		require_once(''.$srdp.'plugins/'.$reihe['data'].''); // Funktionsdatei wird reingeladen
 		}
 		}
 		}

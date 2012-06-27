@@ -20,7 +20,6 @@ if (!defined('ON_ALCMS') || isset($_SESSION['group'])=="")
 else {
 // Wichtige Daten werden aus der URL und Session ausgelesen
 $group=$_SESSION['group'];
-
 // Es wird überprüft ob oben oder in der Funktion eine Plugin FunktionsID angegeben wurde
 if (isset($_GET['plf'])=="" || $_GET['plf']=="") {
 echo "Es wurde keine Plugin Funktion angegeben.";
@@ -39,7 +38,7 @@ if (preg_match ("/^([0-9]+)$/",$hpl)) {
 }
 else {
 	$sql = "SELECT HPLID, name, data, sysp, aktiv FROM head_plugins WHERE name = '".mysql_real_escape_string($hpl)."'";
-   $ergebnis = mysql_query($sql) or die (mysql_error());
+   $ergebnis = mysql_query($sql);
    $reihe = mysql_fetch_array($ergebnis, MYSQL_ASSOC);
    $hplid=$reihe['HPLID'];	
 }
@@ -59,8 +58,7 @@ $sql = "SELECT PLFID, funktionsname, data, nf, aktiv FROM plugin_funktion WHERE 
 else {
 $sql2 = "SELECT PLFID, GID, Y_N FROM plugin_funktion_rights WHERE PLFID=".mysql_real_escape_string($plf)." LIMIT 1";
 	$ergebnis2 = mysql_query($sql2);
-   $reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
-  	
+   $reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC); 	
 }
    }
 else {
@@ -129,11 +127,11 @@ else {
 		else {
 			if($reihe['nf']==1)
 			{
-		include(''.$srdp.'system/'.$reihe['data'].''); // Funktionsdatei wird reingeladen
+		include_once(''.$srdp.'system/'.$reihe['data'].''); // Funktionsdatei wird reingeladen
 		}
 			else {
-		include(''.$srdp.'system/'.$reihe['data'].'');
-		$reihe['funktionsname']($srdp); // Funktion wird ausgeführt
+		include_once(''.$srdp.'system/'.$reihe['data'].'');
+		$reihe['funktionsname']($srdp);
 			}
 		}	
 		}
@@ -147,10 +145,10 @@ else {
 		else {
 			if($reihe['nf']==1)
 			{
-				include(''.$srdp.'plugins/'.$reihe['data'].'');
+				include_once(''.$srdp.'plugins/'.$reihe['data'].'');
 			}
 		else {
-		include(''.$srdp.'plugins/'.$reihe['data'].''); // Funktionsdatei wird reingeladen
+		include_once(''.$srdp.'plugins/'.$reihe['data'].''); // Funktionsdatei wird reingeladen
 		$reihe['funktionsname']($srdp); // Funktion wird ausgeführt
 		}
 		}
@@ -162,16 +160,13 @@ else {
 			mysql_close();
 			exit;
 			}	
-
 		}
-	
 	}
 	else {
 	// Wenn es nicht aktiv ist
 	mysql_close();
 	exit;	
 		}
-	
 		}	
 mysql_close();
 }

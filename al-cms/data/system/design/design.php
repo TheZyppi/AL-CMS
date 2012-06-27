@@ -18,15 +18,15 @@ $dv_a = "SELECT CID, name, funktion FROM al_config WHERE CID='5' LIMIT 1";
    // Check the stade of Developmentsade or normale stade
 if($row['funktion']=='1')
 {
-include('design_classes.php');
+require_once('design_classes.php');
 $sql2 = "SELECT PLFID, aktiv FROM plugin_funktion WHERE PLFID='5' LIMIT 1";
 	$ergebnis2 = mysql_query($sql2);
    $reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
-if (! $ergebnis2 || $reihe2['PLFID']!='5')
+if (!$ergebnis2 || $reihe2['PLFID']!='5' || $reihe2==false || $ergebnis2==false)
 {
-echo "Es wurde keine Mobile Funktion deklariert.";
-mysql_close();
-exit;	
+design::load("data/default-scripts/error/error.tpl", $srdp);
+// Platzhalter ersetzen
+design::assign("error" ,"No mobile function set.");	
 }   
 else {
    if($reihe2['aktiv']==1)
@@ -40,15 +40,15 @@ else {
 }
 else {
 ini_set('display_errors', 'off');
-include('design_classes.php');
+require_once('design_classes.php');
 $sql2 = "SELECT PLFID, aktiv FROM plugin_funktion WHERE PLFID='5' LIMIT 1";
 	$ergebnis2 = mysql_query($sql2);
    $reihe2 = mysql_fetch_array($ergebnis2, MYSQL_ASSOC);
 if (! $ergebnis2 || $reihe2['PLFID']!='5')
 {
-echo "Es wurde keine Mobile Funktion deklariert.";
-mysql_close();
-exit;	
+design::load("data/default-scripts/error/error.tpl", $srdp);
+// Platzhalter ersetzen
+design::assign("error" ,"No mobile function set.");	
 }   
 else {
    if($reihe2['aktiv']==1)
