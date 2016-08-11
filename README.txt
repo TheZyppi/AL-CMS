@@ -1,6 +1,6 @@
 AL-CMS -- Gernal Information --
   
-Copyright (C) 2011-2014 Dennis Falkenberg und Nicolai Kamphenkel (http://www.sunrising-network.de) Email: DFalkenberg@gmx.de
+Copyright (C) 2011-2014 Dennis Falkenberg und Nicolai Kamphenkel 
   
 AL-CMS is a free software, you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
